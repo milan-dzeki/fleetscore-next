@@ -1,5 +1,6 @@
 import { dir } from 'i18next';
 import { languages } from '@/i18n/settings';
+import '@/styles/global.scss';
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
@@ -15,7 +16,9 @@ function RootLayout({
   return (
     <html lang={lng} dir={dir(lng)}>
       <body>
-        {children}
+        <main>
+          {children}
+        </main>
       </body>
     </html>
   );
