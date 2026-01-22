@@ -2,7 +2,9 @@ import { dir } from 'i18next';
 import { languages } from '@/i18n/settings';
 import '@/styles/global.scss';
 
-export async function generateStaticParams() {
+export function generateStaticParams(): {
+  lng: string;
+}[] {
   return languages.map((lng) => ({ lng }))
 }
 
