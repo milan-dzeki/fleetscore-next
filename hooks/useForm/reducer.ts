@@ -67,6 +67,24 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
         }
       };
     }
+    case UseFormActionTypes.ON_PASSWORD_VISIBILITY_TOGGLE: {
+      const { inputName } = action;
+      const targetInput = state.inputs[inputName];
+
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [inputName]: {
+            ...targetInput,
+            attributes: {
+              ...targetInput.attributes,
+              type: targetInput.attributes.type === 'password' ? 'text' : 'password'
+            }
+          }
+        }
+      };
+    }
     default:
       return state;
   }

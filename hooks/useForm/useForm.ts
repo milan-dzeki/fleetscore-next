@@ -40,11 +40,19 @@ export const useForm = (providedForm: FormType) => {
     });
   };
 
+  const onPasswordVisibilityToggle = (inputName: string) => {
+    dispatch({
+      type: UseFormActionTypes.ON_PASSWORD_VISIBILITY_TOGGLE,
+      inputName
+    });
+  };
+
   return {
     form: state,
     onInputFocus,
     onInputUnfocus,
     onInputChange,
-    onClearInput
+    onClearInput,
+    onPasswordVisibilityToggle
   };
 };

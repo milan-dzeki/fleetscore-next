@@ -15,7 +15,8 @@ function Form({ generatedForm }: Props) {
     onInputFocus,
     onInputUnfocus,
     onInputChange,
-    onClearInput
+    onClearInput,
+    onPasswordVisibilityToggle
   } = useForm(generatedForm);
 
   return (
@@ -32,6 +33,7 @@ function Form({ generatedForm }: Props) {
                 onUnfocus={onInputUnfocus}
                 onChange={onInputChange}
                 onClear={onClearInput}
+                onPasswordVisibilityToggle={onPasswordVisibilityToggle}
               />
             );
           })}

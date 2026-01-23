@@ -2,7 +2,8 @@ export const UseFormActionTypes = {
   ON_INPUT_FOCUS: 'ON_INPUT_FOCUS',
   ON_INPUT_UNFOCUS: 'ON_INPUT_UNFOCUS',
   ON_INPUT_CHANGE: 'ON_INPUT_CHANGE',
-  ON_CLEAR_INPUT: 'ON_CLEAR_INPUT'
+  ON_CLEAR_INPUT: 'ON_CLEAR_INPUT',
+  ON_PASSWORD_VISIBILITY_TOGGLE: 'ON_PASSWORD_VISIBILITY_TOGGLE'
 } as const;
 
 interface OnInputFocusAction {
@@ -26,9 +27,15 @@ interface OnClearInputAction {
   inputName: string;
 }
 
+interface OnPasswordVisibilityToggleAction {
+  type: typeof UseFormActionTypes.ON_PASSWORD_VISIBILITY_TOGGLE;
+  inputName: string;
+}
+
 export type UserFormAction = (
   OnInputFocusAction |
   OnInputUnfocusAction |
   OnInputChangeAction |
-  OnClearInputAction
+  OnClearInputAction |
+  OnPasswordVisibilityToggleAction
 );

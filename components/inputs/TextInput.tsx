@@ -18,6 +18,7 @@ interface Props {
   onUnfocus: FocusEventHandler<HTMLInputElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
   onClear: (inputName: string) => void;
+  onPasswordVisibilityToggle?: (inputName: string) => void;
 }
 
 function TextInput({
@@ -33,7 +34,8 @@ function TextInput({
   onFocus,
   onUnfocus,
   onChange,
-  onClear
+  onClear,
+  onPasswordVisibilityToggle
 }: Props) {
   const setupInputClassname = useCallback((): string => {
     if (focused) {
@@ -68,8 +70,12 @@ function TextInput({
         onChange={onChange}
       />
       <div className={classes.inputActions}>
-        {attributes.name.toLowerCase().includes('password') && (
-          <button type="button">
+        {attributes.name.toLowerCase().includes('password') && onPasswordVisibilityToggle && (
+          <button
+            type="button"
+            className={classes.inputPasswordToggler}
+            onClick={() => onPasswordVisibilityToggle(attributes.name)}
+          >
             {attributes.type === 'text' ? <CrossedEyeIcon /> : <EyeIcon />}
           </button>
         )}
@@ -77,7 +83,7 @@ function TextInput({
           <XFatIcon className={classes.clearBtn} onClick={onClear.bind(null, attributes.name)} />
         )}
       </div>
-      <InputErrorMsg visible={!focused && !valid} text={errorMsg} />
+      <InputErrorMsg visible={!focused && touched && !valid} text={errorMsg} />
     </div>
   );
 }
