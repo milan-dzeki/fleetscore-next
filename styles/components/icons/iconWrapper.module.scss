@@ -1,3 +1,5 @@
+@use '../../utils/variables' as *;
+
 .icon {
   display: flex;
   justify-content: center;
@@ -6,6 +8,28 @@
   svg {
     height: 100%;
     width: 100%;
+  }
+
+  &_default {
+    svg {
+      fill: $main-dark;
+    }
+  }
+
+  &_errorRed {
+    svg {
+      fill: $error-red;
+    }
+  }
+
+  &_small {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  &_medium {
+    height: 2rem;
+    width: 2rem;
   }
 }
 

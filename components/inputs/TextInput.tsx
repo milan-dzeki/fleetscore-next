@@ -8,6 +8,7 @@ import {
 import type { TextInputType } from '@/types/inputs';
 import classes from '@/styles/components/inputs/textInput.module.scss';
 import XFatIcon from '../icons/XFatIcon';
+import InputErrorMsg from './InputErrorMsg';
 
 interface Props {
   data: TextInputType;
@@ -24,7 +25,8 @@ function TextInput({
     focused,
     touched,
     valid,
-    value
+    value,
+    errorMsg
   },
   onFocus,
   onUnfocus,
@@ -66,6 +68,7 @@ function TextInput({
       {value.trim() && (
         <XFatIcon className={classes.clearBtn} onClick={onClear.bind(null, attributes.name)} />
       )}
+      <InputErrorMsg visible={!focused && !valid} text={errorMsg} />
     </div>
   );
 }

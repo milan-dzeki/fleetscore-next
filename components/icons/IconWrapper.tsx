@@ -1,27 +1,42 @@
 import type { ReactNode } from 'react';
+import type { IconPropsType } from '@/types/props/common';
 import classes from '@/styles/components/icons/iconWrapper.module.scss';
 
 interface Props {
   children: ReactNode;
-  className?: string;
   onClick?: () => void;
 }
 
 function IconWrapper({
   children,
+  size = 'small',
+  color = 'default',
   className = '',
   onClick
-}: Props) {
+}: Props & IconPropsType) {
+  const classNames = `
+    ${classes.icon}
+    ${classes[`icon_${size}`]}
+    ${classes[`icon_${color}`]}
+    ${className}
+  `;
   if (onClick) {
     return (
-      <button className={`${classes.icon} ${classes.iconBtn} ${className}`} type="button" onClick={onClick}>
+      <button
+        className={`
+          ${classNames}
+          ${classes.iconBtn}
+        `}
+        type="button"
+        onClick={onClick}
+      >
         {children}
       </button>
     );
   }
 
   return (
-    <span className={`${className}`}>
+    <span className={classNames}>
       {children}
     </span>
   );
