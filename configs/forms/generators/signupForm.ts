@@ -1,4 +1,5 @@
 import type { FormType } from '@/types/forms';
+import { SIGNUP_RULES } from '../validations/signup';
 
 export const generateSignupForm = (
   t: (key: string) => string
@@ -33,8 +34,8 @@ export const generateSignupForm = (
         label: t('passwordLabel'),
         validation: {
           required: true,
-          minLength: 8,
-          maxLength: 20
+          minLength: SIGNUP_RULES.password.minLength,
+          maxLength: SIGNUP_RULES.password.maxLength
         },
         focused: false,
         touched: false,

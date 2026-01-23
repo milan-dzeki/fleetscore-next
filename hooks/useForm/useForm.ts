@@ -2,7 +2,8 @@ import {
   type ChangeEventHandler,
   type FocusEventHandler,
   useReducer,
-  useCallback
+  useCallback,
+  useEffect
 } from 'react'
 import type { FormType } from '@/types/forms';
 import reducer from './reducer';
@@ -10,6 +11,13 @@ import { UseFormActionTypes } from '@/types/hooks/useForm';
 
 export const useForm = (providedForm: FormType) => {
   const [state, dispatch] = useReducer(reducer, providedForm);
+
+  useEffect(() => {
+    dispatch({
+      type: UseFormActionTypes.ON_CHECK_FORM_VALIDITY,
+      isValid: Object.keys(state.inputs).every((input) => state.inputs[input].valid)
+    });
+  }, [state.inputs]);
 
   const onInputFocus: FocusEventHandler<HTMLInputElement> = useCallback((event) => {
     dispatch({

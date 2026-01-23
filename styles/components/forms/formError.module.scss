@@ -1,0 +1,14 @@
+@use '../../utils/variables' as *;
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 2rem 0;
+
+  .errorText {
+    color: $error-red;
+    font-weight: 800;
+    margin-left: 0.25rem;
+  }
+}

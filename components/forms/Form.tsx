@@ -1,19 +1,23 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
+import { useFormState } from 'react-dom';
+import type { BaseApiResponseType } from '@/types/serverActions/common';
 import type { FormType } from '@/types/forms';
 import { useForm } from '@/hooks/useForm/useForm';
 import TextInput from '../inputs/TextInput';
 import classes from '@/styles/components/forms/form.module.scss';
 import Button from '../buttons/Button';
+import FormError from './FormError';
 
-interface Props {
+interface Props<S extends BaseApiResponseType> {
   generatedForm: FormType;
   submitText: string;
+  action: (prevState: S, formData: FormData) => Promise<S>;
   children?: ReactNode;
 }
 
-const Form = ({ generatedForm, submitText, children }: Props) => {
+const Form = <S extends BaseApiResponseType>({ generatedForm, submitText, action, children }: Props<S>) => {
   const {
     form,
     onInputFocus,
@@ -23,9 +27,17 @@ const Form = ({ generatedForm, submitText, children }: Props) => {
     onPasswordVisibilityToggle
   } = useForm(generatedForm);
 
+  const [state, formAction] = useFormState<S, FormData>(action, {
+    success: false,
+    message: ''
+  } as Awaited<S>);
+
   return (
     <div className={classes.form}>
-      <form className={classes.formEl} autoComplete="new-password">
+      {!state.success && state.message && (
+        <FormError errorMsg={state.message} />
+      )}
+      <form className={classes.formEl} autoComplete="new-password" action={formAction}>
         <div className={classes.inputs}>
           {Object.keys(form.inputs).map((input) => {
             const inputData = form.inputs[input];

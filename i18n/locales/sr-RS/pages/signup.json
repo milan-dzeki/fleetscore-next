@@ -11,5 +11,6 @@
   "passwordConfirmErrorMsg": "Lozinke moraju biti iste",
   "haveAccount": "Imate nalog?",
   "switchLogin": "ulogujte se",
-  "create": "Kreiraj"
+  "create": "Kreiraj",
+  "invalidFields": "Nevalidna polja"
 }

@@ -7,6 +7,6 @@
   "passwordPlaceholder": "Unesite Lozinku",
   "passwordErrorMsg": "Lozinka je obavezna",
   "dontHaveAccount": "Nemate nalog?",
-  "createAccount": "kreirajte balog",
+  "createAccount": "kreirajte nalog",
   "login": "uloguj se"
 }

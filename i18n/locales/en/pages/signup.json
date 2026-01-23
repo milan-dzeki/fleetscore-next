@@ -11,5 +11,6 @@
   "passwordConfirmErrorMsg": "Passwords must be the same",
   "haveAccount": "Already have account?",
   "switchLogin": "login instead",
-  "create": "Create"
+  "create": "Create",
+  "invalidFields": "Invalid fields"
 }

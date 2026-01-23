@@ -39,7 +39,7 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
       const targetInput = state.inputs[inputName];
 
       if (inputName === 'password' && Object.keys(state.inputs).includes('passwordConfirm')) {
-        const isPasswordValid = validateInput(targetInput.value, targetInput.validation);
+        const isPasswordValid = validateInput(inputValue, targetInput.validation);
 
         return {
           ...state,
@@ -117,6 +117,12 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
             }
           }
         }
+      };
+    }
+    case UseFormActionTypes.ON_CHECK_FORM_VALIDITY: {
+      return {
+        ...state,
+        isValid: action.isValid
       };
     }
     default:
