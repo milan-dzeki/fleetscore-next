@@ -6,8 +6,8 @@ import { EMAIL_SENT_PAGE_NS } from '@/i18n/namespaces/pages';
 import { getTranslations } from '@/i18n';
 import PageTitle from '@/components/layout/PageTitle';
 import TextBox from '@/components/boxes/TextBox';
-import Button from '@/components/buttons/Button';
 import Container from '@/components/layout/Container';
+import ResendVerificationForm from '@/components/forms/ResendVerificationForm';
 
 const EmailSentPage = async ({ params: { lng } }: LngParamsType) => {
   const cookieStore = cookies();
@@ -39,7 +39,7 @@ const EmailSentPage = async ({ params: { lng } }: LngParamsType) => {
         <TextBox 
           text={t('noEmail')}
         />
-        <Button type="button" text={t('resend')} />
+        <ResendVerificationForm btnText={t('resend')} />
       </Container>
     </>
   );

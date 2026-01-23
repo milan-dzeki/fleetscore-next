@@ -1,0 +1,20 @@
+@use '../../utils/variables' as *;
+
+.formActionMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+
+  .formActionMessageText {
+    color: $success-green;
+    font-weight: 800;
+    margin-left: 0.25rem;
+  }
+
+  &.formActionMessageError {
+    .formActionMessageText {
+      color: $error-red;
+    }
+  }
+}

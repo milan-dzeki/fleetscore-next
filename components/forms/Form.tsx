@@ -9,7 +9,7 @@ import { useForm } from '@/hooks/useForm/useForm';
 import TextInput from '../inputs/TextInput';
 import classes from '@/styles/components/forms/form.module.scss';
 import Button from '../buttons/Button';
-import FormError from './FormError';
+import FormActionMessage from './FormActionMessage';
 
 interface Props<S extends BaseApiResponseType> {
   generatedForm: FormType;
@@ -50,8 +50,8 @@ const Form = <S extends BaseApiResponseType>({
 
   return (
     <div className={classes.form}>
-      {!state.success && state.message && (
-        <FormError errorMsg={state.message} />
+      {state.message && (
+        <FormActionMessage isError={!state.success} message={state.message} />
       )}
       <form className={classes.formEl} autoComplete="new-password" action={formAction}>
         <div className={classes.inputs}>

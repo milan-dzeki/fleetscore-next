@@ -10,6 +10,8 @@ const FIELD_ERRORS = {
   'sr-RS': 'Uneseni podaci su nevalidni'
 };
 
+const BASE_URL = `${process.env.API_BASE_URL}/auth`;
+
 export const signup = async (
   _: BaseApiResponseType,
   formData: FormData,
@@ -40,7 +42,7 @@ export const signup = async (
   }
 
   try {
-    const response = await fetch('http://localhost:8080/api/auth/register', {
+    const response = await fetch(`${BASE_URL}/register`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -104,12 +106,52 @@ export const login = async (
   }
 
   try {
-    const response = await fetch('http://localhost:8080/api/auth/login', {
+    const response = await fetch(`${BASE_URL}/login`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: data.message
+      }
+    }
+
+    return {
+      success: true,
+      message: data.message
+    }
+  } catch (error: unknown) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'Network error'
+    };
+  }
+};
+
+export const resendVerification = async () => {
+  const cookieStore = cookies();
+  const email = cookieStore.get('pending_email')?.value;
+  if (!email) {
+    return {
+      success: false,
+      message: 'Email not provided'
+    }
+  }
+
+  try {
+    const response = await fetch(`${BASE_URL}/resend-verification`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email })
     });
 
     const data = await response.json();
