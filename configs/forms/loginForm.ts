@@ -32,9 +32,7 @@ export const generateLoginForm = (
         },
         label: t('passwordLabel'),
         validation: {
-          required: true,
-          minLength: 8,
-          maxLength: 20
+          required: true
         },
         focused: false,
         touched: false,
