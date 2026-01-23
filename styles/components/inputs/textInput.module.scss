@@ -28,7 +28,7 @@
     border-radius: 2px;
     width: 100%;
     height: 2.25rem;
-    padding: 0.2rem 0.5rem;
+    padding: 0.2rem 2.25rem 0.2rem 0.5rem;
     font: inherit;
   }
 
@@ -42,5 +42,24 @@
 
   .inputValid {
     box-shadow: 0 0 2px 2px rgba(0, 140, 255, 0.2);
+  }
+
+  .clearBtn {
+    height: 2rem;
+    width: 2rem;
+    position: absolute;
+    top: 50%;
+    right: 0.25rem;
+    transform: translateY(-50%);
+
+    svg {
+      fill: $main-dark;
+    }
+
+    &:hover {
+      svg {
+        fill: $dark-grey;
+      }
+    }
   }
 }

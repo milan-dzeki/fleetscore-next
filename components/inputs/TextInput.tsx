@@ -7,12 +7,14 @@ import {
 } from 'react';
 import type { TextInputType } from '@/types/inputs';
 import classes from '@/styles/components/inputs/textInput.module.scss';
+import XFatIcon from '../icons/XFatIcon';
 
 interface Props {
   data: TextInputType;
   onFocus: FocusEventHandler<HTMLInputElement>;
   onUnfocus: FocusEventHandler<HTMLInputElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  onClear: (inputName: string) => void;
 }
 
 function TextInput({
@@ -26,7 +28,8 @@ function TextInput({
   },
   onFocus,
   onUnfocus,
-  onChange
+  onChange,
+  onClear
 }: Props) {
   const setupInputClassname = useCallback((): string => {
     if (focused) {
@@ -60,6 +63,9 @@ function TextInput({
         onBlur={onUnfocus}
         onChange={onChange}
       />
+      {value.trim() && (
+        <XFatIcon className={classes.clearBtn} onClick={onClear.bind(null, attributes.name)} />
+      )}
     </div>
   );
 }

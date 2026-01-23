@@ -33,10 +33,18 @@ export const useForm = (providedForm: FormType) => {
     });
   };
 
+  const onClearInput = (inputName: string) => {
+    dispatch({
+      type: UseFormActionTypes.ON_CLEAR_INPUT,
+      inputName
+    });
+  };
+
   return {
     form: state,
     onInputFocus,
     onInputUnfocus,
-    onInputChange
+    onInputChange,
+    onClearInput
   };
 };

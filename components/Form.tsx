@@ -14,7 +14,8 @@ function Form({ generatedForm }: Props) {
     form,
     onInputFocus,
     onInputUnfocus,
-    onInputChange
+    onInputChange,
+    onClearInput
   } = useForm(generatedForm);
 
   return (
@@ -30,6 +31,7 @@ function Form({ generatedForm }: Props) {
                 onFocus={onInputFocus}
                 onUnfocus={onInputUnfocus}
                 onChange={onInputChange}
+                onClear={onClearInput}
               />
             );
           })}

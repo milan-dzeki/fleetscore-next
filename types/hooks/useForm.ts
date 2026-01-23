@@ -1,7 +1,8 @@
 export const UseFormActionTypes = {
   ON_INPUT_FOCUS: 'ON_INPUT_FOCUS',
   ON_INPUT_UNFOCUS: 'ON_INPUT_UNFOCUS',
-  ON_INPUT_CHANGE: 'ON_INPUT_CHANGE'
+  ON_INPUT_CHANGE: 'ON_INPUT_CHANGE',
+  ON_CLEAR_INPUT: 'ON_CLEAR_INPUT'
 } as const;
 
 interface OnInputFocusAction {
@@ -14,14 +15,20 @@ interface OnInputUnfocusAction {
   inputName: string;
 }
 
-interface OnInputChange {
+interface OnInputChangeAction {
   type: typeof UseFormActionTypes.ON_INPUT_CHANGE;
   inputName: string;
   inputValue: string;
 }
 
+interface OnClearInputAction {
+  type: typeof UseFormActionTypes.ON_CLEAR_INPUT;
+  inputName: string;
+}
+
 export type UserFormAction = (
   OnInputFocusAction |
   OnInputUnfocusAction |
-  OnInputChange
+  OnInputChangeAction |
+  OnClearInputAction
 );
