@@ -29,8 +29,7 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
           ...state.inputs,
           [inputName]: {
             ...targetInput,
-            focused: false,
-            valid: validateInput(targetInput.value, targetInput.validation)
+            focused: false
           }
         }
       };
@@ -38,6 +37,41 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
     case UseFormActionTypes.ON_INPUT_CHANGE: {
       const { inputName, inputValue } = action;
       const targetInput = state.inputs[inputName];
+
+      if (inputName === 'password' && Object.keys(state.inputs).includes('passwordConfirm')) {
+        const isPasswordValid = validateInput(targetInput.value, targetInput.validation);
+
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              value: inputValue,
+              valid: isPasswordValid
+            },
+            passwordConfirm: {
+              ...state.inputs.passwordConfirm,
+              valid: isPasswordValid && state.inputs.passwordConfirm.value === inputValue
+            }
+          }
+        };
+      }
+
+      if (inputName === 'passwordConfirm' && Object.keys(state.inputs).includes('password')) {
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              value: inputValue,
+              valid: validateInput(state.inputs.password.value, state.inputs.password.validation)
+                && inputValue === state.inputs.password.value
+            }
+          }
+        };
+      }
 
       return {
         ...state,
