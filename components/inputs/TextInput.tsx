@@ -6,9 +6,11 @@ import {
   useCallback
 } from 'react';
 import type { TextInputType } from '@/types/inputs';
-import classes from '@/styles/components/inputs/textInput.module.scss';
 import XFatIcon from '../icons/XFatIcon';
 import InputErrorMsg from './InputErrorMsg';
+import CrossedEyeIcon from '../icons/CrossedEyeIcon';
+import EyeIcon from '../icons/EyeIcon';
+import classes from '@/styles/components/inputs/textInput.module.scss';
 
 interface Props {
   data: TextInputType;
@@ -51,7 +53,7 @@ function TextInput({
 
   return (
     <div className={classes.input}>
-      <label className={`${classes.inputLabel} ${value.trim() &&  classes.inputLabelVisible}`} htmlFor={attributes.id}>
+      <label className={`${classes.inputLabel} ${value.trim() && classes.inputLabelVisible}`} htmlFor={attributes.id}>
         {label}
       </label>
       <input
@@ -65,9 +67,16 @@ function TextInput({
         onBlur={onUnfocus}
         onChange={onChange}
       />
-      {value.trim() && (
-        <XFatIcon className={classes.clearBtn} onClick={onClear.bind(null, attributes.name)} />
-      )}
+      <div className={classes.inputActions}>
+        {attributes.name.toLowerCase().includes('password') && (
+          <button type="button">
+            {attributes.type === 'text' ? <CrossedEyeIcon /> : <EyeIcon />}
+          </button>
+        )}
+        {value.trim() && (
+          <XFatIcon className={classes.clearBtn} onClick={onClear.bind(null, attributes.name)} />
+        )}
+      </div>
       <InputErrorMsg visible={!focused && !valid} text={errorMsg} />
     </div>
   );
