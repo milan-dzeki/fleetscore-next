@@ -1,0 +1,12 @@
+{
+  "title": "Login",
+  "emailLabel": "Email",
+  "emailPlaceholder": "Enter Email",
+  "emailErrorMsg": "Email is required",
+  "passwordLabel": "Password",
+  "passwordPlaceholder": "Enter Password",
+  "passwordErrorMsg": "Password is required",
+  "dontHaveAccount": "Dont't have account?",
+  "createAccount": "create account",
+  "login": "login"
+}
