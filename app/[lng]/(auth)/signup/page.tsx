@@ -18,6 +18,7 @@ const SignupPage = async ({ params: { lng } }: LngParamsType) => {
         generatedForm={signupForm}
         submitText={t('create')}
         action={signup}
+        redirectUrl={`/${lng}/email-sent`}
       >
         <AuthFormSwitch switchText={t('haveAccount')} linkPath={`/${lng}/login`} linkText={t('switchLogin')} />
       </Form>

@@ -1,0 +1,6 @@
+{
+  "title": "You have been emailed!",
+  "emailSent": "We have sent confirmation message to your <1>{{email}}</1>.",
+  "noEmail": "Haven't received email? Resend verification request:",
+  "resend": "Resend"
+}

@@ -1,6 +1,7 @@
 'use client';
 
-import { type ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
+import { type ReactNode, useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import type { BaseApiResponseType } from '@/types/serverActions/common';
 import type { FormType } from '@/types/forms';
@@ -14,10 +15,19 @@ interface Props<S extends BaseApiResponseType> {
   generatedForm: FormType;
   submitText: string;
   action: (prevState: S, formData: FormData) => Promise<S>;
+  redirectUrl?: string;
   children?: ReactNode;
 }
 
-const Form = <S extends BaseApiResponseType>({ generatedForm, submitText, action, children }: Props<S>) => {
+const Form = <S extends BaseApiResponseType>({
+  generatedForm,
+  submitText,
+  action,
+  redirectUrl,
+  children
+}: Props<S>) => {
+  const router = useRouter();
+
   const {
     form,
     onInputFocus,
@@ -31,6 +41,12 @@ const Form = <S extends BaseApiResponseType>({ generatedForm, submitText, action
     success: false,
     message: ''
   } as Awaited<S>);
+
+  useEffect(() => {
+    if (redirectUrl && state.success) {
+      router.push(redirectUrl);
+    }
+  }, [redirectUrl, state.success, router]);
 
   return (
     <div className={classes.form}>

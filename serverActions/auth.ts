@@ -57,6 +57,19 @@ export const signup = async (
       }
     }
 
+    cookieStore.set('signup_success', 'true', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 60 * 1000,
+      path: `/${locale}/email-sent`
+    });
+
+    cookieStore.set('pending_email', email, {
+      maxAge: 60 * 1000,
+      path: `/${locale}/email-sent`,
+    });
+
     return {
       success: true,
       message: data.message
@@ -100,7 +113,7 @@ export const login = async (
     });
 
     const data = await response.json();
-    console.log('DATA', data);
+
     if (!response.ok) {
       return {
         success: false,
