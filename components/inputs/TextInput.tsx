@@ -3,7 +3,8 @@
 import {
   type FocusEventHandler,
   type ChangeEventHandler,
-  useCallback
+  useCallback,
+  memo
 } from 'react';
 import type { TextInputType } from '@/types/inputs';
 import XFatIcon from '../icons/XFatIcon';
@@ -21,7 +22,7 @@ interface Props {
   onPasswordVisibilityToggle?: (inputName: string) => void;
 }
 
-function TextInput({
+const TextInput = ({
   data: {
     attributes,
     label,
@@ -36,7 +37,7 @@ function TextInput({
   onChange,
   onClear,
   onPasswordVisibilityToggle
-}: Props) {
+}: Props) => {
   const setupInputClassname = useCallback((): string => {
     if (focused) {
       return classes.inputFocused;
@@ -88,4 +89,4 @@ function TextInput({
   );
 }
 
-export default TextInput;
+export default memo(TextInput);

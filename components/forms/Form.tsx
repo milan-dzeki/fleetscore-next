@@ -13,7 +13,7 @@ interface Props {
   children?: ReactNode;
 }
 
-function Form({ generatedForm, submitText, children }: Props) {
+const Form = ({ generatedForm, submitText, children }: Props) => {
   const {
     form,
     onInputFocus,
