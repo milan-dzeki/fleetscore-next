@@ -20,5 +20,13 @@ export const validateInput = (
     isValid = isValid && emailPattern.test(value.trim());
   }
 
+  if (validation.minLength) {
+    isValid = isValid && value.trim().length >= validation.minLength;
+  }
+
+  if (validation.maxLength) {
+    isValid = isValid && value.trim().length < validation.maxLength;
+  }
+
   return isValid;
 };

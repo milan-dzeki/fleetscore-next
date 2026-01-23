@@ -9,6 +9,8 @@ export interface TextInputType {
   validation: {
     required: boolean;
     isEmail?: boolean;
+    minLength?: number;
+    maxLength?: number;
   };
   focused: boolean;
   touched: boolean;

@@ -5,7 +5,7 @@
   "emailErrorMsg": "Email with valid format is required",
   "passwordLabel": "Password",
   "passwordPlaceholder": "Enter Password",
-  "passwordErrorMsg": "Password with at least 8 characters is required",
+  "passwordErrorMsg": "Password between 8 and 20 characters is required",
   "passwordConfirmLabel": "Confirm Password",
   "passwordConfirmPlaceholder": "Confirm Password",
   "passwordConfirmErrorMsg": "Passwords must be the same"
