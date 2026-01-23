@@ -1,0 +1,12 @@
+{
+  "title": "Create Account",
+  "emailLabel": "Email",
+  "emailPlaceholder": "Enter Email",
+  "emailErrorMsg": "Email with valid format is required",
+  "passwordLabel": "Password",
+  "passwordPlaceholder": "Enter Password",
+  "passwordErrorMsg": "Password with at least 8 characters is required",
+  "passwordConfirmLabel": "Confirm Password",
+  "passwordConfirmPlaceholder": "Confirm Password",
+  "passwordConfirmErrorMsg": "Passwords must be the same"
+}

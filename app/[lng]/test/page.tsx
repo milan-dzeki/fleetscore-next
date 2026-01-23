@@ -1,3 +1,4 @@
+
 import { getTranslations } from '@/i18n';
 
 async function TestPage({ params: { lng } }: { params: { lng: string } }) {
