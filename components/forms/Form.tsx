@@ -5,13 +5,15 @@ import type { FormType } from '@/types/forms';
 import { useForm } from '@/hooks/useForm/useForm';
 import TextInput from '../inputs/TextInput';
 import classes from '@/styles/components/forms/form.module.scss';
+import Button from '../buttons/Button';
 
 interface Props {
   generatedForm: FormType;
+  submitText: string;
   children?: ReactNode;
 }
 
-function Form({ generatedForm, children }: Props) {
+function Form({ generatedForm, submitText, children }: Props) {
   const {
     form,
     onInputFocus,
@@ -41,6 +43,7 @@ function Form({ generatedForm, children }: Props) {
           })}
         </div>
         {children || null}
+        <Button type="submit" text={submitText} disabled={!form.isValid} />
       </form>
     </div>
   );

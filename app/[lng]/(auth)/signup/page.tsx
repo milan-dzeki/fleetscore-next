@@ -12,7 +12,7 @@ async function SignupPage({ params: { lng } }: { params: { lng: string } }) {
   return (
     <>
       <PageTitle title={t('title')} />
-      <Form generatedForm={signupForm}>
+      <Form generatedForm={signupForm} submitText={t('create')}>
         <AuthFormSwitch switchText={t('haveAccount')} linkPath={`/${lng}/login`} linkText={t('switchLogin')} />
       </Form>
     </>

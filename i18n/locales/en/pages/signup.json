@@ -10,5 +10,6 @@
   "passwordConfirmPlaceholder": "Confirm Password",
   "passwordConfirmErrorMsg": "Passwords must be the same",
   "haveAccount": "Already have account?",
-  "switchLogin": "login instead"
+  "switchLogin": "login instead",
+  "create": "Create"
 }
