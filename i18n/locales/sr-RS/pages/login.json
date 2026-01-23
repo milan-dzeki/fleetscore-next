@@ -1,0 +1,12 @@
+{
+  "title": "Uloguj se",
+  "emailLabel": "Email",
+  "emailPlaceholder": "Unseite Email",
+  "emailErrorMsg": "Email je obavezan",
+  "passwordLabel": "Lozinka",
+  "passwordPlaceholder": "Unesite Lozinku",
+  "passwordErrorMsg": "Lozinka je obavezna",
+  "dontHaveAccount": "Nemate nalog?",
+  "createAccount": "kreirajte balog",
+  "login": "uloguj se"
+}

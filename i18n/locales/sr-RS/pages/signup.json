@@ -1,0 +1,15 @@
+{
+  "title": "Kreiraj nalog",
+  "emailLabel": "Email",
+  "emailPlaceholder": "Unesite Email",
+  "emailErrorMsg": "Email u validnom formatu je obavezan",
+  "passwordLabel": "Lozinka",
+  "passwordPlaceholder": "Unesite lozinku",
+  "passwordErrorMsg": "Lozinka mora imate izmedju 8 i 20 karaktera",
+  "passwordConfirmLabel": "Potvrdite Lozinku",
+  "passwordConfirmPlaceholder": "Potvrdite Lozinku",
+  "passwordConfirmErrorMsg": "Lozinke moraju biti iste",
+  "haveAccount": "Imate nalog?",
+  "switchLogin": "ulogujte se",
+  "create": "Kreiraj"
+}
