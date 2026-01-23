@@ -1,15 +1,17 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import type { FormType } from '@/types/forms';
 import { useForm } from '@/hooks/useForm/useForm';
-import TextInput from './inputs/TextInput';
-import classes from '@/styles/components/form.module.scss';
+import TextInput from '../inputs/TextInput';
+import classes from '@/styles/components/forms/form.module.scss';
 
 interface Props {
   generatedForm: FormType;
+  children?: ReactNode;
 }
 
-function Form({ generatedForm }: Props) {
+function Form({ generatedForm, children }: Props) {
   const {
     form,
     onInputFocus,
@@ -38,6 +40,7 @@ function Form({ generatedForm }: Props) {
             );
           })}
         </div>
+        {children || null}
       </form>
     </div>
   );

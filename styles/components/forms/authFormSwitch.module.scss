@@ -1,0 +1,19 @@
+@use '../../utils/variables' as *;
+
+.switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .switchLink {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+    font-weight: 700;
+    color: $main-blue;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

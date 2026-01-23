@@ -8,5 +8,7 @@
   "passwordErrorMsg": "Password between 8 and 20 characters is required",
   "passwordConfirmLabel": "Confirm Password",
   "passwordConfirmPlaceholder": "Confirm Password",
-  "passwordConfirmErrorMsg": "Passwords must be the same"
+  "passwordConfirmErrorMsg": "Passwords must be the same",
+  "haveAccount": "Already have account?",
+  "switchLogin": "login instead"
 }

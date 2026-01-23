@@ -1,4 +1,5 @@
-import Form from '@/components/Form';
+import AuthFormSwitch from '@/components/forms/AuthFormSwitch';
+import Form from '@/components/forms/Form';
 import PageTitle from '@/components/layout/PageTitle';
 import { generateSignupForm } from '@/configs/forms/signupForm';
 import { getTranslations } from '@/i18n';
@@ -11,7 +12,9 @@ async function SignupPage({ params: { lng } }: { params: { lng: string } }) {
   return (
     <>
       <PageTitle title={t('title')} />
-      <Form generatedForm={signupForm} />
+      <Form generatedForm={signupForm}>
+        <AuthFormSwitch switchText={t('haveAccount')} linkPath={`/${lng}/login`} linkText={t('switchLogin')} />
+      </Form>
     </>
   );
 }
