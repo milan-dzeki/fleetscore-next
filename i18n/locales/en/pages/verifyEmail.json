@@ -1,0 +1,5 @@
+{
+  "verifying": "Verifying",
+  "invalidToken": "Invalid token provided. Try clicking the link from your email again.",
+  "verificationSuccess": "Email verified. You can now log in."
+}

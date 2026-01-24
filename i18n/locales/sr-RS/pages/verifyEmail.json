@@ -1,0 +1,5 @@
+{
+  "verifying": "Verifikacija u toku",
+  "invalidToken": "Token nije validan. Pokušajte ponovni klik na link u emailu.",
+  "verificationSuccess": "Verkfikacija uspesna. Možete se ulogovati."
+}

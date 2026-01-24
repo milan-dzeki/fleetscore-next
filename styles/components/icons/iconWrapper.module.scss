@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1 0 auto;
 
   svg {
     height: 100%;
@@ -29,14 +28,28 @@
     }
   }
 
+  &_white {
+    svg {
+      fill: white;
+    }
+  }
+
   &_small {
     height: 1.5rem;
     width: 1.5rem;
+    flex: 0 0 1.5rem;
   }
 
   &_medium {
     height: 2rem;
     width: 2rem;
+    flex: 0 0 2rem;
+  }
+
+  &_big {
+    height: 4rem;
+    width: 4rem;
+    flex: 0 0 4rem;
   }
 }
 

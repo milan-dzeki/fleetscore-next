@@ -4,6 +4,6 @@ export interface LngParamsType {
 
 export interface IconPropsType {
   size?: 'small' | 'medium' | 'big';
-  color?: 'default' | 'errorRed' | 'successGreen';
+  color?: 'default' | 'errorRed' | 'successGreen' | 'white';
   className?: string;
 }
