@@ -115,13 +115,31 @@ export const login = async (
     });
 
     const data = await response.json();
-
+    console.log('res', response);
+    console.log('data', data);
     if (!response.ok) {
       return {
         success: false,
         message: data.message
       }
     }
+
+    if (!data.data?.accessToken) {
+      return {
+        success: false,
+        message: 'Token not provided. Try again.'
+      };
+    }
+
+    cookieStore.set({
+      name: 'fleetscore_access_token',
+      value: data.data.accessToken,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      expires: new Date(data.data.expiresAt)
+    });
 
     return {
       success: true,
