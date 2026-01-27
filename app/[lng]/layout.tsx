@@ -2,6 +2,7 @@ import { Roboto } from 'next/font/google';
 import { dir } from 'i18next';
 import { languages } from '@/i18n/settings';
 import '@/styles/global.scss';
+import StoreProvider from '@/store/StoreProvider';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -25,7 +26,9 @@ const RootLayout = ({
     <html lang={lng} dir={dir(lng)} className={roboto.className}>
       <body>
         <main>
-          {children}
+          <StoreProvider>
+            {children}
+          </StoreProvider>
         </main>
       </body>
     </html>

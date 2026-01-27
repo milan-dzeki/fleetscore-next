@@ -9,13 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.11.2",
     "accept-language": "^3.0.20",
     "i18next": "^25.8.0",
     "i18next-resources-to-backend": "^1.2.1",
     "next": "14.2.35",
     "react": "^18",
     "react-dom": "^18",
-    "react-i18next": "^16.5.3"
+    "react-i18next": "^16.5.3",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",
