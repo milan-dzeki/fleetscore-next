@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { type ReactNode, useEffect } from 'react';
+import { ComponentType, type ReactNode, useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import type { BaseApiRawResponseType, BaseApiResponseType } from '@/types/customApi/baseApi';
 import type { FormType } from '@/types/forms';
@@ -17,6 +17,7 @@ interface Props<D, S extends BaseApiResponseType<D> | BaseApiRawResponseType> {
   action: (prevState: S, formData: FormData) => Promise<S>;
   redirectUrl?: string;
   children?: ReactNode;
+  HandlerComp?: ComponentType<{ data: D | null }>;
 }
 
 const Form = <D, S extends BaseApiResponseType<D> | BaseApiRawResponseType>({
@@ -24,7 +25,8 @@ const Form = <D, S extends BaseApiResponseType<D> | BaseApiRawResponseType>({
   submitText,
   action,
   redirectUrl,
-  children
+  children,
+  HandlerComp
 }: Props<D, S>) => {
   const router = useRouter();
 
@@ -39,7 +41,8 @@ const Form = <D, S extends BaseApiResponseType<D> | BaseApiRawResponseType>({
 
   const [state, formAction] = useFormState<S, FormData>(action, {
     success: false,
-    message: ''
+    message: '',
+    data: null
   } as Awaited<S>);
 
   useEffect(() => {
@@ -71,6 +74,7 @@ const Form = <D, S extends BaseApiResponseType<D> | BaseApiRawResponseType>({
           })}
         </div>
         {children || null}
+        {HandlerComp && 'data' in state ? <HandlerComp data={state.data} /> : null}
         <Button type="submit" text={submitText} disabled={!form.isValid} />
       </form>
     </div>

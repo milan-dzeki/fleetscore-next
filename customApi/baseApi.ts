@@ -106,8 +106,7 @@ abstract class BaseApi {
       } catch {
         data = { message: defaultErrorMsg };
       }
-      console.log('res', response);
-      console.log('data', data);
+
       if (!response.ok) {
         return {
           success: false,
