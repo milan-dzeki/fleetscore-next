@@ -1,0 +1,10 @@
+{
+  "title": "Create Profile",
+  "firstNameLabel": "First Name",
+  "firstNamePlaceholder": "Enter First Name",
+  "firstNameErrorMsg": "First Name with at least 2 characters is required",
+  "lastNameLabel": "Last Name",
+  "lastNamePlaceholder": "Enter Last Name",
+  "lastNameErrorMsg": "Last Name with at least 2 characters is required",
+  "createProfile": "create profile"
+}

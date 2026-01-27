@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { type ReactNode, useEffect } from 'react';
 import { useFormState } from 'react-dom';
-import type { BaseApiResponseType } from '@/types/serverActions/common';
+import type { BaseApiRawResponseType, BaseApiResponseType } from '@/types/customApi/baseApi';
 import type { FormType } from '@/types/forms';
 import { useForm } from '@/hooks/useForm/useForm';
 import TextInput from '../inputs/TextInput';
@@ -11,7 +11,7 @@ import classes from '@/styles/components/forms/form.module.scss';
 import Button from '../buttons/Button';
 import FormActionMessage from './FormActionMessage';
 
-interface Props<S extends BaseApiResponseType> {
+interface Props<D, S extends BaseApiResponseType<D> | BaseApiRawResponseType> {
   generatedForm: FormType;
   submitText: string;
   action: (prevState: S, formData: FormData) => Promise<S>;
@@ -19,13 +19,13 @@ interface Props<S extends BaseApiResponseType> {
   children?: ReactNode;
 }
 
-const Form = <S extends BaseApiResponseType>({
+const Form = <D, S extends BaseApiResponseType<D> | BaseApiRawResponseType>({
   generatedForm,
   submitText,
   action,
   redirectUrl,
   children
-}: Props<S>) => {
+}: Props<D, S>) => {
   const router = useRouter();
 
   const {
@@ -43,10 +43,10 @@ const Form = <S extends BaseApiResponseType>({
   } as Awaited<S>);
 
   useEffect(() => {
-    if (redirectUrl && state.success) {
-      router.push(redirectUrl);
+    if ((redirectUrl || state.redirectUrl) && state.success) {
+      router.push(redirectUrl || state.redirectUrl || '/');
     }
-  }, [redirectUrl, state.success, router]);
+  }, [redirectUrl, state, router]);
 
   return (
     <div className={classes.form}>

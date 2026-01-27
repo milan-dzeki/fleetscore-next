@@ -1,161 +1,69 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import type { BaseApiResponseType } from '@/types/serverActions/common';
-import { emailPattern } from '@/utils/inputValidators';
-import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
+import { redirect } from 'next/navigation';
+import type { BaseApiRawResponseType, BaseApiResponseType } from '@/types/customApi/baseApi';
+import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
+import AuthApi from '@/customApi/auth/authApi';
+import { ProfileApiResponseType } from '@/types/customApi/profileApi';
+import { getProfile } from '@/customApi/auth/authUtils';
 
-const FIELD_ERRORS = {
-  'en': 'Invalid fields',
-  'sr-RS': 'Uneseni podaci su nevalidni'
-};
-
-const BASE_URL = `${process.env.API_BASE_URL}/auth`;
+// const FIELD_ERRORS = {
+//   'en': 'Invalid fields',
+//   'sr-RS': 'Uneseni podaci su nevalidni'
+// };
 
 export const signup = async (
-  _: BaseApiResponseType,
+  _: BaseApiRawResponseType,
   formData: FormData,
-): Promise<{
-  success: boolean;
-  message: string;
-}> => {
-  const email = formData.get('email')?.toString().trim();
-  const password = formData.get('password')?.toString();
-  const passwordConfirm = formData.get('passwordConfirm')?.toString();
-
+): Promise<BaseApiRawResponseType> => {
   const cookieStore = cookies();
   const locale = cookieStore.get('i18next')?.value || 'en';
 
-  if (
-    !email ||
-    !emailPattern.test(email) ||
-    !password ||
-    password.length < SIGNUP_RULES.password.minLength ||
-    password.length > SIGNUP_RULES.password.maxLength ||
-    !passwordConfirm ||
-    passwordConfirm !== password
-  ) {
-    return {
-      success: false,
-      message: FIELD_ERRORS[locale as keyof typeof FIELD_ERRORS]
-    };
-  }
+  const authApi = new AuthApi({
+    locale,
+    cookieStore,
+    formData
+  });
 
-  try {
-    const response = await fetch(`${BASE_URL}/register`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return {
-        success: false,
-        message: data.message
-      }
-    }
-
-    cookieStore.set('signup_success', 'true', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 60 * 1000,
-      path: `/${locale}/email-sent`
-    });
-
-    cookieStore.set('pending_email', email, {
-      maxAge: 60 * 1000,
-      path: `/${locale}/email-sent`,
-    });
-
-    return {
-      success: true,
-      message: data.message
-    }
-  } catch (error: unknown) {
-    return {
-      success: false,
-      message: error instanceof Error ? error.message : 'Network error'
-    };
-  }
+  return await authApi
+    .setHeaders({ useDefaultHeaders: true })
+    .validateFields('signup')
+    .setBody()
+    .signup({ defaultErrorMsg: 'error' });
 };
 
 export const login = async (
-  _: BaseApiResponseType,
-  formData: FormData,
-) => {
-  const email = formData.get('email')?.toString().trim();
-  const password = formData.get('password')?.toString();
-
+  _: BaseApiResponseType<ProfileApiResponseType>,
+  formData: FormData
+): Promise<BaseApiResponseType<ProfileApiResponseType>> => {
   const cookieStore = cookies();
   const locale = cookieStore.get('i18next')?.value || 'en';
 
-  if (
-    !email ||
-    !emailPattern.test(email) ||
-    !password
-  ) {
-    return {
-      success: false,
-      message: FIELD_ERRORS[locale as keyof typeof FIELD_ERRORS]
-    };
+  const authApiLogin = new AuthApi({
+    locale,
+    cookieStore,
+    formData
+  });
+
+  const loginResponse = await authApiLogin
+    .setHeaders({ useDefaultHeaders: true })
+    .validateFields('login')
+    .setBody()
+    .login({ defaultErrorMsg: 'error login' });
+
+  if (!loginResponse.success) {
+    return loginResponse;
   }
 
-  try {
-    const response = await fetch(`${BASE_URL}/login`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password })
-    });
-
-    const data = await response.json();
-    console.log('res', response);
-    console.log('data', data);
-    if (!response.ok) {
-      return {
-        success: false,
-        message: data.message
-      }
-    }
-
-    if (!data.data?.accessToken) {
-      return {
-        success: false,
-        message: 'Token not provided. Try again.'
-      };
-    }
-
-    cookieStore.set({
-      name: 'fleetscore_access_token',
-      value: data.data.accessToken,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      expires: new Date(data.data.expiresAt)
-    });
-
-    return {
-      success: true,
-      message: data.message
-    }
-  } catch (error: unknown) {
-    return {
-      success: false,
-      message: error instanceof Error ? error.message : 'Network error'
-    };
-  }
+  return await getProfile(locale, loginResponse.data.accessToken);
 };
 
 export const resendVerification = async () => {
   const cookieStore = cookies();
-  const email = cookieStore.get('pending_email')?.value;
+  const locale = cookieStore.get('i18next')?.value || 'en';
+  const email = cookieStore.get(COOKIE_NAMES.VERIFY_EMAIL_PENDING)?.value;
+
   if (!email) {
     return {
       success: false,
@@ -163,32 +71,26 @@ export const resendVerification = async () => {
     }
   }
 
-  try {
-    const response = await fetch(`${BASE_URL}/resend-verification`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email })
-    });
+  const authApi = new AuthApi({
+    locale,
+    cookieStore,
+    customBody: { email }
+  });
 
-    const data = await response.json();
+  return await authApi
+    .setHeaders({ useDefaultHeaders: true })
+    .setBody()
+    .resendVerificationEmail({ defaultErrorMsg: 'error email' });
+};
 
-    if (!response.ok) {
-      return {
-        success: false,
-        message: data.message
-      }
-    }
+export const removeVerificationEmailCookie = async (redirectLink: string) => {
+  const cookieStore = cookies();
+  cookieStore.delete(COOKIE_NAMES.VERIFY_EMAIL_PENDING);
+  const locale = cookieStore.get('i18next')?.value || 'en';
+  redirect(`/${locale}${redirectLink}`);
+};
 
-    return {
-      success: true,
-      message: data.message
-    }
-  } catch (error: unknown) {
-    return {
-      success: false,
-      message: error instanceof Error ? error.message : 'Network error'
-    };
-  }
+export const removeVerificationEmailCookieNoredirect = async () => {
+  const cookieStore = cookies();
+  cookieStore.delete(COOKIE_NAMES.VERIFY_EMAIL_PENDING);
 };

@@ -1,6 +1,8 @@
 {
   "title": "Email vam je poslat!",
-  "emailSent": "Poslali smo vam verifikacioni mejl na <1>{{email}}</1>.",
+  "emailSent": "Poslali smo vam verifikacioni mejl na <1>{{email}}</1> koji je koršćen u ovom pretraživaču.",
+  "notYourEmail": "Nije vaš email?",
+  "redirectSignup": "registrujte se",
   "noEmail": "Niste dobili email? Pošaljite zahtev za verifikaciju ponovo:",
   "resend": "Pošalji"
 }

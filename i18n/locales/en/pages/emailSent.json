@@ -1,6 +1,8 @@
 {
   "title": "You have been emailed!",
-  "emailSent": "We have sent confirmation message to your <1>{{email}}</1>.",
+  "emailSent": "We have sent confirmation message to your <1>{{email}}</1>, used in this browser.",
+  "notYourEmail": "Not your email?",
+  "redirectSignup": "Go to signup",
   "noEmail": "Haven't received email? Resend verification request:",
   "resend": "Resend"
 }

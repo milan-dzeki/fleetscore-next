@@ -1,0 +1,18 @@
+@use '../../utils/variables' as *;
+
+.button {
+  font: inherit;
+  display: inline-block;
+  color: $main-blue;
+  font-weight: 800;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.buttonCenter {
+    margin: 0 auto;
+    display: block;
+  }
+}

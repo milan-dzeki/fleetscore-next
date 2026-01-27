@@ -2,7 +2,7 @@ import ShipIcon from '@/components/icons/ShipIcon';
 import classes from '@/styles/components/loaders/mainLoader.module.scss';
 
 interface Props {
-  text: string;
+  text?: string;
 }
 
 const MainLoader = ({ text }: Props) => {
@@ -13,7 +13,7 @@ const MainLoader = ({ text }: Props) => {
         <ShipIcon size="big" color="white" />
         <ShipIcon size="big" color="white" />
       </div>
-      <p className={classes.mainLoaderText}>{text}</p>
+      {text && <p className={classes.mainLoaderText}>{text}</p>}
     </div>
   );
 };

@@ -14,13 +14,13 @@ export function generateStaticParams(): {
   return languages.map((lng) => ({ lng }))
 }
 
-function RootLayout({
+const RootLayout = ({
   children,
   params: { lng }
 }: Readonly<{
   children: React.ReactNode;
   params: { lng: string };
-}>) {
+}>) => {
   return (
     <html lang={lng} dir={dir(lng)} className={roboto.className}>
       <body>

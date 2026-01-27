@@ -1,0 +1,10 @@
+{
+  "title": "Kreiraj Profil",
+  "firstNameLabel": "Ime",
+  "firstNamePlaceholder": "Unesi ime",
+  "firstNameErrorMsg": "Ime je obavezno (minimum 2 karaktera)",
+  "lastNameLabel": "Prezime",
+  "lastNamePlaceholder": "Unsei Prezime",
+  "lastNameErrorMsg": "Prezime je obavezno (minimum 2 karaktera)",
+  "createProfile": "Pošalji"
+}

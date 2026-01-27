@@ -3,6 +3,10 @@ import { VERIFY_EMAIL_PAGE_NS } from '@/i18n/namespaces/pages';
 import { getTranslations } from '@/i18n';
 import Container from '@/components/layout/Container';
 import FormActionMessage from '@/components/forms/FormActionMessage';
+import { redirect } from 'next/navigation';
+import RedirectButton from '@/components/buttons/RedirectButton';
+import { removeVerificationEmailCookie } from '@/serverActions/auth';
+import ROUTE_PATHS from '@/configs/routePaths';
 
 interface Props {
   searchParams: { token: string };
@@ -15,35 +19,35 @@ const VerifyEmailPage = async ({
   const { t } = await getTranslations(lng, VERIFY_EMAIL_PAGE_NS);
 
   if (!token) {
-    return (
-      <Container>
-        <FormActionMessage isError message={t('invalidToken')} />
-      </Container>
-    );
+    redirect(ROUTE_PATHS.AUTH.login);
   }
 
   const response = await fetch(`${process.env.API_BASE_URL}/auth/verify?token=${token}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    cache: 'no-store'
   });
-
-  console.log('response', response);
+  
   if (!response.ok) {
     return (
       <Container>
         <FormActionMessage isError message={t('invalidToken')} />
+        <form>
+          <RedirectButton text="login" center />
+        </form>
       </Container>
     );
   }
   const data = await response.json();
 
-  console.log('date', data);
-
   return (
     <Container>
       <FormActionMessage isError={false} message={data.message || t('verificationSuccess')} />
+      <form action={removeVerificationEmailCookie.bind(null, '/login')}>
+        <RedirectButton text="login" center />
+      </form>
     </Container>
   );
 };

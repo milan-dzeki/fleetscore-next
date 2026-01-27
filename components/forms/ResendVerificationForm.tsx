@@ -14,6 +14,7 @@ const ResendVerificationForm = ({ btnText }: Props) => {
     success: false,
     message: ''
   });
+
   return (
     <form action={formAction}>
       {state.message && (
