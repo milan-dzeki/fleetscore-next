@@ -2,7 +2,7 @@ import { UserSliceIntialStateType } from '@/types/store/slices/userSlice';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: UserSliceIntialStateType = {
-  user: null
+  data: null
 };
 
 const userSlice = createSlice({
@@ -10,7 +10,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser (state, action) {
-      state.user = action.payload;
+      state.data = action.payload;
     }
   }
 });
