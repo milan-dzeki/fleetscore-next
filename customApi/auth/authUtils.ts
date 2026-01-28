@@ -1,6 +1,7 @@
+import { cache } from 'react';
 import AuthApi from './authApi';
 
-export const getProfile = async (locale: string, accessToken: string) => {
+export const getProfile = cache(async (locale: string, accessToken: string) => {
   const authApiProfile = new AuthApi({ locale });
 
   return await authApiProfile
@@ -11,4 +12,4 @@ export const getProfile = async (locale: string, accessToken: string) => {
       }
     })
     .getProfile({ defaultErrorMsg: 'error create profile' });
-};
+});

@@ -1,5 +1,5 @@
 export interface UserSliceIntialStateType {
-  user: {
+  data: {
     authenticated: boolean;
     email: string;
     firstName: string | null;

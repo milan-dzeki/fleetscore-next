@@ -1,8 +1,9 @@
 import { Roboto } from 'next/font/google';
 import { dir } from 'i18next';
 import { languages } from '@/i18n/settings';
-import '@/styles/global.scss';
 import StoreProvider from '@/store/StoreProvider';
+import GetUserOnRefresh from '@/components/handlers/GetUserOnRefresh';
+import '@/styles/global.scss';
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -15,7 +16,7 @@ export function generateStaticParams(): {
   return languages.map((lng) => ({ lng }))
 }
 
-const RootLayout = ({
+const RootLayout = async ({
   children,
   params: { lng }
 }: Readonly<{
@@ -28,6 +29,7 @@ const RootLayout = ({
         <main>
           <StoreProvider>
             {children}
+            <GetUserOnRefresh />
           </StoreProvider>
         </main>
       </body>

@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import type { BaseApiResponseType } from '@/types/serverActions/common';
 import { PROFILE_RULES } from '@/configs/forms/validations/profile';
+import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
 
 const BASE_URL = `${process.env.API_BASE_URL}/profile`;
 
@@ -11,7 +12,7 @@ export const createProfile = async (
   formData: FormData,
 ) => {
   const cookieStore = cookies();
-  const accessToken = cookieStore.get('fleetscore_access_token')?.value;
+  const accessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 
   if (!accessToken) {
     return {
