@@ -11,6 +11,10 @@ const ROUTE_PATHS = {
     emailSent: '/onboarding/email-sent',
     verifyEmail: '/onboarding/verify-email',
     createProfile: '/onboarding/create-profile'
+  },
+  ORGANISATIONS: {
+    root: '/organisations',
+    create: '/organisations/create'
   }
 };
 
