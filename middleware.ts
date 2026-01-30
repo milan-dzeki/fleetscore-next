@@ -25,11 +25,22 @@ export function middleware(req: NextRequest) {
     lng = fallbackLng;
   }
 
+  const { pathname } = req.nextUrl;
+
   if (
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
-    !req.nextUrl.pathname.startsWith('/_next')
+    !pathname.startsWith('/_next')
   ) {
-    return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
+    const redirectResponse = NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
+    if (pathname.includes('/auth') || pathname.includes('/onboarding')) {
+    redirectResponse.headers.set('Cache-Control', 'no-store, max-age=0, must-revalidate');
+  }
+    return redirectResponse;
+  }
+
+  const response = NextResponse.next();
+  if (pathname.includes('/auth') || pathname.includes('/onboarding')) {
+    response.headers.set('Cache-Control', 'no-store, max-age=0, must-revalidate');
   }
 
   const headerRef = req.headers.get('referer');
@@ -37,7 +48,6 @@ export function middleware(req: NextRequest) {
   if (headerRef) {
     const refererUrl = new URL(headerRef);
     const lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`));
-    const response = NextResponse.next();
     if (lngInReferer) {
       response.cookies.set(cookieName, lngInReferer)
     }
@@ -45,5 +55,5 @@ export function middleware(req: NextRequest) {
     return response;
   }
 
-  return NextResponse.next();
+  return response;
 }
