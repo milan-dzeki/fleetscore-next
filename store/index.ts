@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
+import type { UserSliceIntialStateType } from '@/types/store/slices/userSlice';
 import userReducer from './slices/userSlice';
 
-export const makeStore = () => {
+export const makeStore = (preloadedState?: { user: UserSliceIntialStateType; }) => {
   return configureStore({
     reducer: {
       user: userReducer
-    }
+    },
+    preloadedState
   });
 };
 

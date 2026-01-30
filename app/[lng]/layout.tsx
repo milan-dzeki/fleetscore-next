@@ -1,8 +1,8 @@
 import { Roboto } from 'next/font/google';
 import { dir } from 'i18next';
 import { languages } from '@/i18n/settings';
+import { getProfile } from '@/customApi/auth/authUtils';
 import StoreProvider from '@/store/StoreProvider';
-import GetUserOnRefresh from '@/components/handlers/GetUserOnRefresh';
 import Header from '@/components/layout/header/Header';
 import '@/styles/global.scss';
 
@@ -24,11 +24,11 @@ const RootLayout = async ({
   children: React.ReactNode;
   params: { lng: string };
 }>) => {
+  const profileResponse = await getProfile(lng);
   return (
     <html lang={lng} dir={dir(lng)} className={roboto.className}>
       <body>
-        <StoreProvider>
-          <GetUserOnRefresh />
+        <StoreProvider initialUser={profileResponse.success ? profileResponse.data : null}>
           <Header lng={lng} />
           <main>
             {children}
