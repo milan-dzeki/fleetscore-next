@@ -1,6 +1,7 @@
 const SERVER_METHODS = {
   GET: 'GET',
-  POST: 'POST'
+  POST: 'POST',
+  PUT: 'PUT'
 };
 
 export default SERVER_METHODS;

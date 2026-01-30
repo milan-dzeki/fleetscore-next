@@ -1,4 +1,6 @@
 export interface UserSliceIntialStateType {
+  loading: boolean;
+  error: string | null;
   data: {
     authenticated: boolean;
     email: string;

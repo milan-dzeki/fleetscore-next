@@ -1,22 +1,28 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { useAppDispatch } from '@/types/store/hooks';
+import { useAppDispatch } from '@/hooks/store';
 import { setUser } from '@/store/slices/userSlice';
 import { ProfileApiResponseType } from '@/types/customApi/profileApi';
+import ROUTE_PATHS from '@/configs/routePaths';
 
 interface Props {
   data: ProfileApiResponseType | null;
+  redirectUrl?: string;
 }
 
 const StoreLoginUserHandler = ({ data }: Props) => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     if (data) {
       dispatch(setUser(data));
+
+      router.refresh();
+      router.replace(data.profileCreated ? ROUTE_PATHS.HOME.root : ROUTE_PATHS.ONBOARDING.createProfile);
     }
-  }, [data, dispatch]);
+  }, [data, dispatch, router]);
   return null;
 };
 

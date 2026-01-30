@@ -1,0 +1,28 @@
+@use '../../../utils/variables' as *;
+
+.header {
+  .headerContent {
+    height: 3rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 3;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $main-dark;
+    padding: 0 1rem;
+  }
+
+  .headerBcg {
+    height: 3rem;
+    width: 100%;
+  }
+
+  .headerLink {
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+}

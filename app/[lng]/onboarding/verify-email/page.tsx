@@ -5,8 +5,9 @@ import Container from '@/components/layout/Container';
 import FormActionMessage from '@/components/forms/FormActionMessage';
 import { redirect } from 'next/navigation';
 import RedirectButton from '@/components/buttons/RedirectButton';
-import { removeVerificationEmailCookie } from '@/serverActions/auth';
 import ROUTE_PATHS from '@/configs/routePaths';
+import DeleteCookoe from '@/components/DeleteCookoe';
+import SERVER_METHODS from '@/configs/server/methods';
 
 interface Props {
   searchParams: { token: string };
@@ -23,7 +24,7 @@ const VerifyEmailPage = async ({
   }
 
   const response = await fetch(`${process.env.API_BASE_URL}/auth/verify?token=${token}`, {
-    method: 'POST',
+    method: SERVER_METHODS.POST,
     headers: {
       'Content-Type': 'application/json'
     },
@@ -44,10 +45,8 @@ const VerifyEmailPage = async ({
 
   return (
     <Container>
+      <DeleteCookoe />
       <FormActionMessage isError={false} message={data.message || t('verificationSuccess')} />
-      <form action={removeVerificationEmailCookie.bind(null, '/login')}>
-        <RedirectButton text="login" center />
-      </form>
     </Container>
   );
 };

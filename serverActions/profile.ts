@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import type { BaseApiResponseType } from '@/types/serverActions/common';
 import { PROFILE_RULES } from '@/configs/forms/validations/profile';
 import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
+import SERVER_METHODS from '@/configs/server/methods';
 
 const BASE_URL = `${process.env.API_BASE_URL}/profile`;
 
@@ -36,7 +37,7 @@ export const createProfile = async (
   }
 
   const response = await fetch(`${BASE_URL}/me`, {
-    method: 'PUT',
+    method: SERVER_METHODS.PUT,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${accessToken}`
@@ -49,6 +50,6 @@ export const createProfile = async (
   return {
     success: true,
     message: 'true',
-    data
+    data: data.data
   };
 };

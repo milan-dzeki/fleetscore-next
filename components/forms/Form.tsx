@@ -1,33 +1,42 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { ComponentType, type ReactNode, useEffect } from 'react';
-import { useFormState } from 'react-dom';
-import type { BaseApiRawResponseType, BaseApiResponseType } from '@/types/customApi/baseApi';
+import {
+  type ComponentType,
+  type ReactNode,
+  type FormEventHandler,
+  useState,
+  useEffect
+} from 'react';
 import type { FormType } from '@/types/forms';
 import { useForm } from '@/hooks/useForm/useForm';
 import TextInput from '../inputs/TextInput';
 import classes from '@/styles/components/forms/form.module.scss';
 import Button from '../buttons/Button';
+import SERVER_METHODS from '@/configs/server/methods';
 import FormActionMessage from './FormActionMessage';
+import { useRouter } from 'next/navigation';
 
-interface Props<D, S extends BaseApiResponseType<D> | BaseApiRawResponseType> {
+interface Props<D> {
   generatedForm: FormType;
   submitText: string;
-  action: (prevState: S, formData: FormData) => Promise<S>;
-  redirectUrl?: string;
+  apiConfig: {
+    endpoint: string;
+    method: typeof SERVER_METHODS[keyof typeof SERVER_METHODS];
+    credentials?: 'include' | 'omit' | 'same-origin';
+  };
   children?: ReactNode;
-  HandlerComp?: ComponentType<{ data: D | null }>;
+  HandlerComp?: ComponentType<{ data: D | null; }>;
+  redirectUrl?: string;
 }
 
-const Form = <D, S extends BaseApiResponseType<D> | BaseApiRawResponseType>({
+const Form = <D extends object>({
   generatedForm,
   submitText,
-  action,
-  redirectUrl,
+  apiConfig,
   children,
-  HandlerComp
-}: Props<D, S>) => {
+  HandlerComp,
+  redirectUrl
+}: Props<D>) => {
   const router = useRouter();
 
   const {
@@ -39,24 +48,83 @@ const Form = <D, S extends BaseApiResponseType<D> | BaseApiRawResponseType>({
     onPasswordVisibilityToggle
   } = useForm(generatedForm);
 
-  const [state, formAction] = useFormState<S, FormData>(action, {
-    success: false,
-    message: '',
-    data: null
-  } as Awaited<S>);
+  const [serverResponse, setServerResponse] = useState<{
+    loading: boolean;
+    error: string | null;
+    success: boolean | null;
+    data: D | null;
+    message: string | null;
+  }>({
+    loading: false,
+    error: null,
+    success: null,
+    data: null,
+    message: null
+  });
 
   useEffect(() => {
-    if ((redirectUrl || state.redirectUrl) && state.success) {
-      router.push(redirectUrl || state.redirectUrl || '/');
+    if (!HandlerComp && redirectUrl && serverResponse.success) {
+      router.refresh();
+      router.replace(redirectUrl);
     }
-  }, [redirectUrl, state, router]);
+  }, [HandlerComp, redirectUrl, router, serverResponse.success]);
 
+  const fetchUser: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+
+    setServerResponse((prev) => ({ ...prev, loading: true, error: null }));
+    
+    try {
+      const inputFields: {[inputName: string]: string} = {};
+      for (const input in form.inputs) {
+        inputFields[input] = form.inputs[input].value;
+      }
+      const response = await fetch(apiConfig.endpoint, {
+        method: apiConfig.method,
+        body: JSON.stringify(inputFields),
+        ...(apiConfig.credentials ? {
+          credentials: apiConfig.credentials
+        } : {})
+      });
+
+      const resData = await response.json();
+
+      if (!response.ok) {
+        return setServerResponse((prev) => ({
+          ...prev,
+          success: false,
+          error: resData.message
+        }));
+      }
+
+      if (!!HandlerComp) {
+        setServerResponse((prev) => ({ ...prev, loading: false, data: resData.data, message: resData.message }));
+      } else {
+        setServerResponse((prev) => ({ ...prev, loading: false, message: resData.message }));
+
+        if (redirectUrl) {
+          router.refresh();
+          router.replace(redirectUrl);
+        }
+      }
+    } catch (e: unknown) {
+      setServerResponse((prev) => ({
+        ...prev,
+        loading: false,
+        success: false,
+        error: e instanceof Error ? e.message : 'Network error'
+      }));
+    }
+  };
+
+  const message = serverResponse.error || serverResponse.message;
+  
   return (
     <div className={classes.form}>
-      {state.message && (
-        <FormActionMessage isError={!state.success} message={state.message} />
+      {message && (
+        <FormActionMessage isError={serverResponse.error !== null || serverResponse.success === false} message={message} />
       )}
-      <form className={classes.formEl} autoComplete="new-password" action={formAction}>
+      <form className={classes.formEl} autoComplete="new-password" onSubmit={fetchUser}>
         <div className={classes.inputs}>
           {Object.keys(form.inputs).map((input) => {
             const inputData = form.inputs[input];
@@ -74,8 +142,8 @@ const Form = <D, S extends BaseApiResponseType<D> | BaseApiRawResponseType>({
           })}
         </div>
         {children || null}
-        {HandlerComp && 'data' in state ? <HandlerComp data={state.data} /> : null}
-        <Button type="submit" text={submitText} disabled={!form.isValid} />
+        {HandlerComp && serverResponse.data ? <HandlerComp data={serverResponse.data} /> : null}
+        <Button type="submit" text={submitText} disabled={!form.isValid || serverResponse.loading} />
       </form>
     </div>
   );

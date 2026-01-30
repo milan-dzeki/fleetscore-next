@@ -16,8 +16,13 @@ import ROUTE_PATHS from '@/configs/routePaths';
 const EmailSentPage = async ({ params: { lng } }: LngParamsType) => {
   const cookieStore = cookies();
   const pendingEmail = cookieStore.get(COOKIE_NAMES.VERIFY_EMAIL_PENDING)?.value;
+  const createProfilePending = cookieStore.get(COOKIE_NAMES.CREATE_PROFILE_PENDING)?.value;
   if (!pendingEmail) {
-    redirect(ROUTE_PATHS.AUTH.signup);
+    if (!createProfilePending) {
+      redirect(ROUTE_PATHS.AUTH.signup);
+    }
+    
+    redirect(ROUTE_PATHS.ONBOARDING.createProfile);
   }
 
   const { t } = await getTranslations(lng, EMAIL_SENT_PAGE_NS);

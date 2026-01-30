@@ -1,40 +1,36 @@
-import SERVER_METHODS from '@/configs/server/methods';
 import type {
   ApiHeadersType,
-  ApiParamsType
+  ApiParamsType,
+  ApiRequestBodyType
 } from '@/types/customApi/baseApi';
 import type { BaseApiResponseType } from '@/types/customApi/baseApi';
-import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+import SERVER_METHODS from '@/configs/server/methods';
 
 abstract class BaseApi {
   private headers: ApiHeadersType | null;
-  protected formData: FormData | null;
-  private requestBody: string | null;
-  protected fieldsError: string | null;
   protected locale: string;
-  protected cookieStore: ReadonlyRequestCookies | null;
-  private customBody: { [field: string]: string } | null;
+  protected requestBody: ApiRequestBodyType;
+  protected fieldsError: string | null;
+  private returnRawHeaders: boolean;
 
   constructor ({
-    formData = null,
     locale,
-    cookieStore = null,
-    customBody = null
+    requestBody = null,
+    returnRawHeaders = false
   }: ApiParamsType) {
     this.headers = null;
-    this.formData = formData;
     this.requestBody = null;
     this.fieldsError = null;
     this.locale = locale;
-    this.cookieStore = cookieStore;
-    this.customBody = customBody;
+    this.requestBody = requestBody;
+    this.returnRawHeaders = returnRawHeaders;
   }
 
   abstract validateFields (api: string): this;
 
   setHeaders (params: {
     useDefaultHeaders: boolean;
-    headers?: ApiHeadersType
+    headers?: ApiHeadersType;
   }): this {
     const { useDefaultHeaders, headers } = params;
     if (!useDefaultHeaders && !headers) {
@@ -53,40 +49,11 @@ abstract class BaseApi {
     return this;
   }
 
-  setBody (): this {
-    if (this.formData) {
-      const data: Record<string, unknown> = {};
-
-      const entries = Array.from(this.formData.entries());
-
-      for (const [key, value] of entries) {
-        if (typeof value === 'string') {
-          data[key] = value.trim();
-        } else {
-          data[key] = value;
-        }
-      }
-
-      this.requestBody = JSON.stringify(data);
-    } else if (this.customBody) {
-      this.requestBody = JSON.stringify(this.customBody);
-    } 
-
-    return this;
-  }
-
   protected async execute <D>(params: {
     endpoint: string;
     method: typeof SERVER_METHODS[keyof typeof SERVER_METHODS];
-    setCookies?: (() => void) | null;
-    defaultErrorMsg: string;
   }): Promise<BaseApiResponseType<D>> {
-    const {
-      endpoint,
-      method,
-      setCookies,
-      defaultErrorMsg
-    } = params;
+    const { endpoint, method } = params;
 
     try {
       const response = await fetch(endpoint, {
@@ -94,17 +61,17 @@ abstract class BaseApi {
         ...(this.headers ? {
           headers: this.headers
         } : {}),
-        ...(this.requestBody ? {
-          body: this.requestBody
+        ...(method !== SERVER_METHODS.GET && this.requestBody ? {
+          body: JSON.stringify(this.requestBody)
         } : {})
       });
-
+      
       let data;
 
       try {
         data = await response.json();
       } catch {
-        data = { message: defaultErrorMsg };
+        data = { message: 'Network error' };
       }
 
       if (!response.ok) {
@@ -113,15 +80,14 @@ abstract class BaseApi {
           message: data.message || data.data.message
         };
       }
-      
-      if (setCookies) {
-        setCookies();
-      }
-      
+
       return {
         success: true,
         message: data.message || data.data.message,
-        data: data.data || data
+        data: data.data || data,
+        ...(this.returnRawHeaders ? {
+          rawHeaders: response.headers
+        } : {})
       };
     } catch (error: unknown) {
       return {

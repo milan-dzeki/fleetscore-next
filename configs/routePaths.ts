@@ -3,13 +3,13 @@ const ROUTE_PATHS = {
     root: '/'
   },
   AUTH: {
-    signup: '/signup',
-    login: '/login'
+    signup: '/auth/signup',
+    login: '/auth/login'
   },
   ONBOARDING: {
-    emailSent: '/email-sent',
-    verifyEmail: '/verify-email',
-    createProfile: '/create-profile'
+    emailSent: '/onboarding/email-sent',
+    verifyEmail: '/onboarding/verify-email',
+    createProfile: '/onboarding/create-profile'
   }
 };
 

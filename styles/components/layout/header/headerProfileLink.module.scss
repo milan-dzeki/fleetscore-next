@@ -1,0 +1,36 @@
+@use '../../../utils/variables' as *;
+
+.link {
+  display: flex;
+  align-items: center;
+  height: 2.25rem;
+  font: inherit;
+  color: $main-dark;
+  border-right: 1px solid white;
+  padding-right: 0.25rem;
+  margin-right: 0.5rem;
+
+  &:hover {
+    color: $main-blue;
+  }
+
+  .linkName {
+    display: block;
+    background-color: white;
+    height: 2.25rem;
+    width: 2.25rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: $medium-font-size;
+    margin-right: 0.25rem;
+  }
+
+  .linkText {
+    color: white;
+    font-weight: 800;
+  }
+}

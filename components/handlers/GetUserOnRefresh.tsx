@@ -1,8 +1,8 @@
 'use client';
 
 import SERVER_METHODS from '@/configs/server/methods';
-import { setUser } from '@/store/slices/userSlice';
-import { useAppDispatch, useAppSelector } from '@/types/store/hooks';
+import { setUser, startLoading } from '@/store/slices/userSlice';
+import { useAppSelector, useAppDispatch } from '@/hooks/store';
 import { useEffect, useRef, useCallback } from 'react';
 
 const GetUserOnRefresh = () => {
@@ -14,6 +14,8 @@ const GetUserOnRefresh = () => {
     if (fetched.current || authUser) {
       return;
     }
+
+    dispatch(startLoading());
 
     try {
       const response = await fetch('/api/auth', {

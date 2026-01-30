@@ -3,6 +3,7 @@ import { dir } from 'i18next';
 import { languages } from '@/i18n/settings';
 import StoreProvider from '@/store/StoreProvider';
 import GetUserOnRefresh from '@/components/handlers/GetUserOnRefresh';
+import Header from '@/components/layout/header/Header';
 import '@/styles/global.scss';
 
 const roboto = Roboto({
@@ -26,12 +27,13 @@ const RootLayout = async ({
   return (
     <html lang={lng} dir={dir(lng)} className={roboto.className}>
       <body>
-        <main>
-          <StoreProvider>
+        <StoreProvider>
+          <GetUserOnRefresh />
+          <Header />
+          <main>
             {children}
-            <GetUserOnRefresh />
-          </StoreProvider>
-        </main>
+          </main>
+        </StoreProvider>
       </body>
     </html>
   );

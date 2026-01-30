@@ -15,7 +15,7 @@ const AuthFormSwitch = ({
   return (
     <div className={classes.switch}>
       <p>{switchText}</p>
-      <Link href={linkPath} className={classes.switchLink}>
+      <Link href={linkPath} replace className={classes.switchLink}>
         {linkText}
       </Link>
     </div>

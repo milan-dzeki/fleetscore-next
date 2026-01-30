@@ -1,10 +1,13 @@
-import type { ApiParamsType, BaseApiRawResponseType, BaseApiResponseType } from '@/types/customApi/baseApi';
+import type {
+  ApiParamsType,
+  BaseApiResponseType,
+  RefreshTokenResponseType,
+  SignupResponseType
+} from '@/types/customApi/baseApi';
 import BaseApi from '../baseApi';
 import SERVER_METHODS from '@/configs/server/methods';
 import { emailPattern } from '@/utils/inputValidators';
 import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
-import { cookies } from 'next/headers';
-import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
 import { LoginApiResponseType } from '@/types/customApi/authApi';
 import { ProfileApiResponseType } from '@/types/customApi/profileApi';
 import ROUTE_PATHS from '@/configs/routePaths';
@@ -16,55 +19,56 @@ const FIELD_ERRORS = {
 
 class AuthApi extends BaseApi {
   private baseUrl: string;
-  private cookieValue: string | null;
 
   constructor (params: ApiParamsType) {
     super(params);
 
     this.baseUrl = `${process.env.API_BASE_URL}/auth`;
-    this.cookieValue = null;
   }
 
   private validators = {
     signup: (): this => {
-      if (!this.formData) {
+      if (!this.requestBody) {
         this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
         return this;
       }
-      const email = this.formData.get('email')?.toString().trim();
-      const password = this.formData.get('password')?.toString();
-      const passwordConfirm = this.formData.get('passwordConfirm')?.toString();
+      
+      const { email, password, passwordConfirm } = this.requestBody;
+
+      const emailToCheck = email?.toString().trim();
+      const passwordToCheck = password?.toString().trim();
+      const passwordConfirmToCheck = passwordConfirm?.toString().trim();
 
       if (
-        !email ||
-        !emailPattern.test(email) ||
-        !password ||
-        password.length < SIGNUP_RULES.password.minLength ||
-        password.length > SIGNUP_RULES.password.maxLength ||
-        !passwordConfirm ||
-        passwordConfirm !== password
+        !emailToCheck ||
+        !emailPattern.test(emailToCheck) ||
+        !passwordToCheck ||
+        passwordToCheck.length < SIGNUP_RULES.password.minLength ||
+        passwordToCheck.length > SIGNUP_RULES.password.maxLength ||
+        !passwordConfirmToCheck ||
+        passwordConfirmToCheck !== password
       ) {
         this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
         return this;
       }
-
-      this.cookieValue = email;
 
       return this;
     },
     login: (): this => {
-      if (!this.formData) {
+      if (!this.requestBody) {
         this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
         return this;
       }
 
-      const email = this.formData.get('email')?.toString().trim();
-      const password = this.formData.get('password')?.toString();
+      const { email, password } = this.requestBody;
+
+      const emailToCheck = email?.toString().trim();
+      const passwordToCheck = password?.toString().trim();
 
       if (
-        !email ||
-        !emailPattern.test(email) ||
-        !password
+        !emailToCheck ||
+        !emailPattern.test(emailToCheck) ||
+        !passwordToCheck
       ) {
         this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
         return this;
@@ -73,64 +77,35 @@ class AuthApi extends BaseApi {
       return this;
     }
   };
-
-  private cookieSetters = {
-    setPendingVerifyEmail: () => {
-      if (!this.cookieValue) {
-        return;
-      }
-
-      const cookieStore = this.cookieStore || cookies();
-      cookieStore.set(COOKIE_NAMES.VERIFY_EMAIL_PENDING, this.cookieValue, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        maxAge: 60 * 1000,
-        path: '/'
-      });
-    },
-    setAccessToken: (accessToken: string, expiresAt: string) => {
-      const cookieStore = this.cookieStore || cookies();
-
-      cookieStore.set({
-        name: COOKIE_NAMES.ACCESS_TOKEN,
-        value: accessToken,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-        expires: new Date(expiresAt)
-      });
-    }
-  };
-
+  
   validateFields(api: string): this {
     this.validators[api as keyof typeof this.validators]();
     return this;
   }
 
-  async signup (params: {
-    defaultErrorMsg: string;
-  }): Promise<BaseApiRawResponseType> {
-    const { defaultErrorMsg } = params;
+  async signup (): Promise<BaseApiResponseType<SignupResponseType>> {
     if (this.fieldsError) {
       return {
         success: false,
         message: this.fieldsError
       };
     }
-    return await this.execute({
+    
+    const response = await this.execute({
       endpoint: `${this.baseUrl}/register`,
-      method: SERVER_METHODS.POST,
-      defaultErrorMsg,
-      setCookies: this.cookieSetters.setPendingVerifyEmail
+      method: SERVER_METHODS.POST
     });
+
+    return {
+      success: response.success,
+      message: response.message,
+      data: {
+        email: this.requestBody!.email
+      }
+    };
   }
 
-  async login (params: {
-    defaultErrorMsg: string;
-  }): Promise<BaseApiResponseType<{ accessToken: string; }>> {
-    const { defaultErrorMsg } = params;
+  async login (): Promise<BaseApiResponseType<LoginApiResponseType>> {
     if (this.fieldsError) {
       return {
         success: false,
@@ -139,36 +114,49 @@ class AuthApi extends BaseApi {
     }
     const response = await this.execute<LoginApiResponseType>({
       endpoint: `${this.baseUrl}/login`,
-      method: SERVER_METHODS.POST,
-      defaultErrorMsg
+      method: SERVER_METHODS.POST
     });
 
     if (!response.success) {
       return response;
     }
 
-    this.cookieSetters.setAccessToken(
-      response.data.accessToken,
-      response.data.expiresAt
-    );
+    return {
+      success: response.success,
+      message: response.message,
+      data: {
+        accessToken: response.data.accessToken,
+        expiresAt: response.data.expiresAt
+      },
+      rawHeaders: response.rawHeaders
+    };
+  }
+
+  async refreshToken () {
+    const response = await this.execute<RefreshTokenResponseType>({
+      endpoint: `${this.baseUrl}/refresh`,
+      method: SERVER_METHODS.POST
+    });
+
+    if (!response.success) {
+      return response;
+    }
 
     return {
       success: response.success,
       message: response.message,
       data: {
-        accessToken: response.data.accessToken
-      }
+        accessToken: response.data.accessToken,
+        expiresAt: response.data.expiresAt
+      },
+      rawHeaders: response.rawHeaders
     };
   }
 
-  async getProfile (params: {
-    defaultErrorMsg: string;
-  }): Promise<BaseApiResponseType<ProfileApiResponseType>> {
-    const { defaultErrorMsg } = params;
+  async getProfile (): Promise<BaseApiResponseType<ProfileApiResponseType>> {
     const response = await this.execute<ProfileApiResponseType>({
       endpoint: `${this.baseUrl}/me`,
-      method: SERVER_METHODS.GET,
-      defaultErrorMsg
+      method: SERVER_METHODS.GET
     });
 
     if (!response.success) {
@@ -185,14 +173,10 @@ class AuthApi extends BaseApi {
     }
   }
 
-  async resendVerificationEmail (params: {
-    defaultErrorMsg: string;
-  }) {
-    const { defaultErrorMsg } = params;
+  async resendVerificationEmail () {
     return await this.execute({
       endpoint: `${this.baseUrl}/resend-verification`,
-      method: SERVER_METHODS.POST,
-      defaultErrorMsg
+      method: SERVER_METHODS.POST
     });
   }
 }
