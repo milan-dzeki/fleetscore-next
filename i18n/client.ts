@@ -9,6 +9,13 @@ import { getOptions, languages, cookieName } from './settings';
 
 const runsOnServerSide = typeof window === 'undefined';
 
+const getDetectedLng = () => {
+  if (runsOnServerSide) return undefined;
+  // Simple check: does URL start with /sr-RS?
+  const path = window.location.pathname;
+  return languages.find(l => path.startsWith(`/${l}`));
+}
+
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
@@ -17,7 +24,7 @@ i18next
     namespace: string
   ) => import(`./locales/${language}/${namespace}.json`)))
   .init({
-    ...getOptions,
+    ...getOptions(getDetectedLng()),
     lng: undefined,
     detection: {
       order: ['path', 'htmlTag', 'cookie', 'navigator'],
@@ -38,8 +45,8 @@ export function useTranslation (lng: string, ns: string, options?: object) {
     const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-      if (activeLng === i18n.resolvedLanguage) return
-      setActiveLng(i18n.resolvedLanguage)
+      if (activeLng === i18n.resolvedLanguage) return;
+      setActiveLng(i18n.resolvedLanguage);
     }, [activeLng, i18n.resolvedLanguage])
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {

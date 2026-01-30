@@ -2,32 +2,36 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslation } from '@/i18n/client';
 import { languages } from '@/i18n/settings';
 import { HEADER_LNG_SWITCHER_NS } from '@/i18n/namespaces/components';
 import ArrowDownMinimalIcon from '@/components/icons/ArrowDownMinimalIcon';
 import LngFlagIcon from '@/components/icons/LngFlagIcon';
 import classes from '@/styles/components/layout/header/headerLngSwitcher.module.scss';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 interface Props {
   lng: string;
 }
 
 const HeaderLngSwitcher = ({ lng }: Props) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
   const [lngListOpen, setLngListOpen] = useState(false);
 
-  const { t } = useTranslation(lng, HEADER_LNG_SWITCHER_NS);
+  const { t, i18n } = useTranslation(lng, HEADER_LNG_SWITCHER_NS);
 
-  const pathnameWithNoLocale = pathname.replace(lng, '');
+  const pathnameWithNoLocale = pathname.replace(new RegExp(`^/${lng}`), '') || '/';
 
   const onCloseLngList = () => {
     setLngListOpen(false);
   };
 
+  useOutsideClick<HTMLDivElement>(containerRef, onCloseLngList);
+
   return (
-    <div className={classes.switcher}>
+    <div className={classes.switcher} ref={containerRef}>
       <button
         type="button"
         className={`${classes.switcherBtn} ${lngListOpen ? classes.switcherBtnActive : ''}`}
@@ -38,38 +42,24 @@ const HeaderLngSwitcher = ({ lng }: Props) => {
           <ArrowDownMinimalIcon color='white' size='small' />
         </span>
       </button>
-      <div className={`${classes.switcherList} ${lngListOpen ? classes.switcherListOpen : ''}`}>
-        <p className={classes.switcherListText}>{t('chooseLng')}</p>
+      <div
+        className={`${classes.switcherList} ${lngListOpen ? classes.switcherListOpen : ''}`}
+      >
+        <p className={classes.switcherListText}>{i18n.resolvedLanguage === lng ? t('chooseLng') : ''}</p>
         <ul>
           {languages.map((lang) => {
             const langValue = t(lang);
-            const linkPathname = `/${lang}${pathnameWithNoLocale}`;
-            const LinkContent = (
-              <>
-                <LngFlagIcon locale={lang} />
-                <span className={classes.switcherItemText}>{langValue}</span>
-              </>
-            );
+            const linkPathname = `/${lang}${pathnameWithNoLocale.startsWith('/') ? '' : '/'}${pathnameWithNoLocale}`;
             return (
               <li key={lang}>
-                {
-                  lang === lng
-                    ? (
-                      <button className={classes.switcherItem} onClick={onCloseLngList}>
-                        {LinkContent}
-                      </button>
-                    )
-                    : (
-                      <Link
-                        href={linkPathname}
-                        className={classes.switcherItem}
-                        onClick={onCloseLngList}
-                      >
-                        {LinkContent}
-                      </Link>
-                    )
-                }
-                
+                <Link
+                  href={linkPathname}
+                  className={classes.switcherItem}
+                  onClick={onCloseLngList}
+                >
+                  <LngFlagIcon locale={lang} />
+                  <span className={classes.switcherItemText}>{langValue}</span>
+                </Link>
               </li>
             );
           })}
