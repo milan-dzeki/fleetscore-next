@@ -8,5 +8,7 @@
   "passwordErrorMsg": "Password is required",
   "dontHaveAccount": "Dont't have account?",
   "createAccount": "create account",
-  "login": "login"
+  "login": "login",
+  "forgotPasswordText": "Forgot Password?",
+  "forgotPasswordLinkText": "reset here"
 }

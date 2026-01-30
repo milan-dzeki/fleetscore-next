@@ -8,5 +8,7 @@
   "passwordErrorMsg": "Lozinka je obavezna",
   "dontHaveAccount": "Nemate nalog?",
   "createAccount": "kreirajte nalog",
-  "login": "uloguj se"
+  "login": "uloguj se",
+  "forgotPasswordText": "Zaboravili ste lozinku?",
+  "forgotPasswordLinkText": "restujte ovde"
 }

@@ -1,15 +1,23 @@
 @use '../../utils/variables' as *;
 
 .switch {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-bottom: 2rem;
+
+  .switchPassword {
+    margin-bottom: 0.5rem;
+  }
+
+  .switchContent,
+  .switchPassword {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   .switchLink {
     display: flex;
     align-items: center;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     font-weight: 700;
     color: $main-blue;
 
