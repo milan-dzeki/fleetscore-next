@@ -20,7 +20,7 @@ const HeaderLngSwitcher = ({ lng }: Props) => {
   const pathname = usePathname();
   const [lngListOpen, setLngListOpen] = useState(false);
 
-  const { t, i18n } = useTranslation(lng, HEADER_LNG_SWITCHER_NS);
+  const { t } = useTranslation(lng, HEADER_LNG_SWITCHER_NS);
 
   const pathnameWithNoLocale = pathname.replace(new RegExp(`^/${lng}`), '') || '/';
 
@@ -45,7 +45,7 @@ const HeaderLngSwitcher = ({ lng }: Props) => {
       <div
         className={`${classes.switcherList} ${lngListOpen ? classes.switcherListOpen : ''}`}
       >
-        <p className={classes.switcherListText}>{i18n.resolvedLanguage === lng ? t('chooseLng') : ''}</p>
+        <p className={classes.switcherListText}>{t('chooseLng')}</p>
         <ul>
           {languages.map((lang) => {
             const langValue = t(lang);
