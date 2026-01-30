@@ -1,0 +1,1 @@
+export const HEADER_LNG_SWITCHER_NS = 'components/layout/header/headerLngSwitcher';

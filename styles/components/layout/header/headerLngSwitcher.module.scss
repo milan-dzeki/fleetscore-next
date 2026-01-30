@@ -1,0 +1,67 @@
+@use '../../../utils/variables' as *;
+
+.switcher {
+  .switcherBtn {
+    display: flex;
+    align-items: center;
+    border: 1px solid $main-dark;
+    border-radius: 2px;
+    padding: 0.2rem;
+    cursor: pointer;
+
+    &:hover,
+    &.switcherBtnActive {
+      border-color: white;
+    }
+  }
+
+  .switcherBtnIcon {
+    transition: transform 0.3s ease-in;
+
+    &.switcherBtnIconActive {
+      transform: rotate(180deg);
+    }
+  }
+
+  .switcherList {
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    background-color: $main-dark;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    border-top: 1px solid white;
+    border-bottom-left-radius: 3px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: all 0.2s ease-out;
+
+    &.switcherListOpen {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+  }
+
+  .switcherListText {
+    border-bottom: 1px solid white;
+    padding: 0.25rem;
+  }
+
+  .switcherItem {
+    display: flex;
+    padding: 0.3rem;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.75;
+    }
+
+    .switcherItemText {
+      display: block;
+      margin-left: 0.5rem;
+    }
+  }
+}

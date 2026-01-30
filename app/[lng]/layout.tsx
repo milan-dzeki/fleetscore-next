@@ -29,7 +29,7 @@ const RootLayout = async ({
       <body>
         <StoreProvider>
           <GetUserOnRefresh />
-          <Header />
+          <Header lng={lng} />
           <main>
             {children}
           </main>

@@ -24,8 +24,13 @@ button {
   border: none;
   outline: none;
   background-color: unset;
+  font: inherit;
 }
 
 a {
   text-decoration: none;
+}
+
+ul {
+  list-style: none;
 }

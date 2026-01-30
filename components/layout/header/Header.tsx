@@ -4,13 +4,18 @@ import ROUTE_PATHS from '@/configs/routePaths';
 import classes from '@/styles/components/layout/header/header.module.scss';
 import ShipIcon from '../../icons/ShipIcon';
 import HeaderLinks from './HeaderLinks';
+import HeaderLngSwitcher from './HeaderLngSwitcher';
 
 const titanOne = Titan_One({
   subsets: ['latin'],
   weight: '400'
 });
 
-const Header = () => {
+interface Props {
+  lng: string;
+}
+
+const Header = ({ lng }: Props) => {
   return (
     <header className={classes.header}>
       <div className={classes.headerBcg} />
@@ -21,7 +26,10 @@ const Header = () => {
             <span>Fleet</span><span>Score</span>
           </p>
         </Link>
-        <HeaderLinks />
+        <nav className={classes.headerNav}>
+          <HeaderLinks />
+          <HeaderLngSwitcher lng={lng} />
+        </nav>
       </div>
     </header>
   );
