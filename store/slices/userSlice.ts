@@ -1,5 +1,5 @@
 import { UserSliceIntialStateType } from '@/types/store/slices/userSlice';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: UserSliceIntialStateType = {
   loading: false,
@@ -14,11 +14,11 @@ const userSlice = createSlice({
     startLoading (state) {
       state.loading = true;
     },
-    setUser (state, action) {
+    setUser (state, action: PayloadAction<UserSliceIntialStateType['data'] | null>) {
       state.data = action.payload;
       state.loading = false;
     },
-    updateNames (state, action) {
+    updateNames (state, action: PayloadAction<{ firstName: string; lastName: string; }>) {
       if (state.data) {
         state.data.firstName = action.payload.firstName;
         state.data.lastName = action.payload.lastName;
