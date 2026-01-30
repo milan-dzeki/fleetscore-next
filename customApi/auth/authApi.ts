@@ -1,16 +1,17 @@
 import type {
   ApiParamsType,
+  BaseApiRawResponseType,
   BaseApiResponseType,
   RefreshTokenResponseType,
   SignupResponseType
 } from '@/types/customApi/baseApi';
+import type { LoginApiResponseType } from '@/types/customApi/authApi';
+import type { ProfileApiResponseType } from '@/types/customApi/profileApi';
 import BaseApi from '../baseApi';
-import SERVER_METHODS from '@/configs/server/methods';
-import { emailPattern } from '@/utils/inputValidators';
-import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
-import { LoginApiResponseType } from '@/types/customApi/authApi';
-import { ProfileApiResponseType } from '@/types/customApi/profileApi';
 import ROUTE_PATHS from '@/configs/routePaths';
+import SERVER_METHODS from '@/configs/server/methods';
+import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
+import { emailPattern } from '@/utils/inputValidators';
 
 const FIELD_ERRORS = {
   'en': 'Invalid fields',
@@ -70,6 +71,23 @@ class AuthApi extends BaseApi {
         !emailPattern.test(emailToCheck) ||
         !passwordToCheck
       ) {
+        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        return this;
+      }
+
+      return this;
+    },
+    forgotPassword: (): this => {
+      if (!this.requestBody) {
+        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        return this;
+      }
+
+      const { email } = this.requestBody;
+
+      const emailToCheck = email?.toString().trim();
+
+      if (!emailToCheck || !emailPattern.test(emailToCheck)) {
         this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
         return this;
       }
@@ -179,8 +197,15 @@ class AuthApi extends BaseApi {
   }
 
   async resendVerificationEmail () {
-    return await this.execute({
+    return await this.execute<BaseApiRawResponseType>({
       endpoint: `${this.baseUrl}/resend-verification`,
+      method: SERVER_METHODS.POST
+    });
+  }
+
+  async forgotPassword () {
+    return await this.execute<BaseApiRawResponseType>({
+      endpoint: `${this.baseUrl}/forgot-password`,
       method: SERVER_METHODS.POST
     });
   }
