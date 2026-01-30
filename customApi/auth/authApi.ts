@@ -87,17 +87,19 @@ class AuthApi extends BaseApi {
     if (this.fieldsError) {
       return {
         success: false,
+        statusCode: 400,
         message: this.fieldsError
       };
     }
     
-    const response = await this.execute({
+    const response = await this.execute<BaseApiResponseType<SignupResponseType>>({
       endpoint: `${this.baseUrl}/register`,
       method: SERVER_METHODS.POST
     });
 
     return {
       success: response.success,
+      statusCode: response.statusCode,
       message: response.message,
       data: {
         email: this.requestBody!.email
@@ -109,6 +111,7 @@ class AuthApi extends BaseApi {
     if (this.fieldsError) {
       return {
         success: false,
+        statusCode: 400,
         message: this.fieldsError
       };
     }
@@ -123,6 +126,7 @@ class AuthApi extends BaseApi {
 
     return {
       success: response.success,
+      statusCode: response.statusCode,
       message: response.message,
       data: {
         accessToken: response.data.accessToken,
@@ -165,6 +169,7 @@ class AuthApi extends BaseApi {
 
     return {
       success: true,
+      statusCode: response.statusCode,
       message: response.message,
       data: response.data,
       redirectUrl: response.data.profileCreated

@@ -77,12 +77,14 @@ abstract class BaseApi {
       if (!response.ok) {
         return {
           success: false,
+          statusCode: response.status,
           message: data.message || data.data.message
         };
       }
 
       return {
         success: true,
+        statusCode: response.status,
         message: data.message || data.data.message,
         data: data.data || data,
         ...(this.returnRawHeaders ? {
@@ -92,6 +94,7 @@ abstract class BaseApi {
     } catch (error: unknown) {
       return {
         success: false,
+        statusCode: 500,
         message: error instanceof Error ? error.message : 'Network error'
       };
     }

@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import AuthApi from "@/customApi/auth/authApi";
-import COOKIE_NAMES from "@/configs/server/auth/cookieNames";
-import { getProfile } from "@/customApi/auth/authUtils";
+import { NextRequest, NextResponse } from 'next/server';
+import AuthApi from '@/customApi/auth/authApi';
+import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
+import { getProfile } from '@/customApi/auth/authUtils';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -18,17 +18,14 @@ export async function POST(req: NextRequest) {
     .validateFields('login')
     .login();
 
-  if (!loginResponse.success) {
-    return NextResponse.json(loginResponse, { status: 401 });
+  if (
+    !loginResponse.success || !loginResponse.rawHeaders) {
+    return NextResponse.json(loginResponse, { status: loginResponse.statusCode });
   }
 
-  let refreshToken: string | undefined = undefined;
+  const RESTServerCookies = loginResponse.rawHeaders.getSetCookie();
 
-  if (loginResponse.rawHeaders) {
-    const RESTServerCookies = loginResponse.rawHeaders.getSetCookie();
-
-    refreshToken = RESTServerCookies.find((cookie) => cookie.trim().startsWith(`${COOKIE_NAMES.REFRESH_TOKEN}=`));
-  }
+  const refreshToken = RESTServerCookies.find((cookie) => cookie.trim().startsWith(`${COOKIE_NAMES.REFRESH_TOKEN}=`));
 
   if (!refreshToken) {
     return NextResponse.json({
@@ -40,6 +37,9 @@ export async function POST(req: NextRequest) {
   }
 
   const profileResponse = await getProfile(locale, loginResponse.data.accessToken);
+  if (!profileResponse.success) {
+    return NextResponse.json(profileResponse, { status: profileResponse.statusCode })
+  }
 
   const response = NextResponse.json(profileResponse);
   
@@ -61,30 +61,20 @@ export async function POST(req: NextRequest) {
     path: '/',
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 604800, // 7 days (matches your Java Max-Age)
+    maxAge: 604800, // 7 days (matches Java Max-Age)
   });
 
-  if ('data' in profileResponse) {
-    if (!profileResponse.data.profileCreated) {
-      response.cookies.set({
-        name: COOKIE_NAMES.CREATE_PROFILE_PENDING,
-        value: profileResponse.data.email,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        path: '/',
-      });
-    }
+
+  if (!profileResponse.data.profileCreated) {
+    response.cookies.set({
+      name: COOKIE_NAMES.CREATE_PROFILE_PENDING,
+      value: profileResponse.data.email,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
   }
+
   return response;
 }
-
-// const refreshToken = req.cookies.get('refresh_token')?.value;
-
-// const res = await fetch('java-api/refresh', {
-//   method: 'POST',
-//   headers: {
-//     // You MUST manually pass the cookie to Java here
-//     'Cookie': `refresh_token=${refreshToken}`
-//   }
-// });

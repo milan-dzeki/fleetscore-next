@@ -21,6 +21,7 @@ export interface RefreshTokenResponseType {
 
 export interface BaseApiRawResponseType {
   success: boolean;
+  statusCode: number;
   message: string;
   redirectUrl?: string;
   rawHeaders?: Headers;
@@ -29,11 +30,13 @@ export interface BaseApiRawResponseType {
 export interface BaseApiResponseErrorType {
   success: false;
   message: string;
+  statusCode: number;
   redirectUrl?: string;
 }
 
 export interface BaseApiResponseSuccessType<D = null> {
   success: true;
+  statusCode: number;
   message: string;
   data: D;
   redirectUrl?: string;

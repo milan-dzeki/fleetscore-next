@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import {
   type ComponentType,
   type ReactNode,
@@ -8,13 +9,13 @@ import {
   useEffect
 } from 'react';
 import type { FormType } from '@/types/forms';
+import type { ServerResponseStateType } from '@/types/components/forms/form';
+import SERVER_METHODS from '@/configs/server/methods';
 import { useForm } from '@/hooks/useForm/useForm';
 import TextInput from '../inputs/TextInput';
-import classes from '@/styles/components/forms/form.module.scss';
-import Button from '../buttons/Button';
-import SERVER_METHODS from '@/configs/server/methods';
+import Button from '@/components/buttons/Button';
 import FormActionMessage from './FormActionMessage';
-import { useRouter } from 'next/navigation';
+import classes from '@/styles/components/forms/form.module.scss';
 
 interface Props<D> {
   generatedForm: FormType;
@@ -22,7 +23,7 @@ interface Props<D> {
   apiConfig: {
     endpoint: string;
     method: typeof SERVER_METHODS[keyof typeof SERVER_METHODS];
-    credentials?: 'include' | 'omit' | 'same-origin';
+    credentials?: RequestCredentials;
   };
   children?: ReactNode;
   HandlerComp?: ComponentType<{ data: D | null; }>;
@@ -48,13 +49,7 @@ const Form = <D extends object>({
     onPasswordVisibilityToggle
   } = useForm(generatedForm);
 
-  const [serverResponse, setServerResponse] = useState<{
-    loading: boolean;
-    error: string | null;
-    success: boolean | null;
-    data: D | null;
-    message: string | null;
-  }>({
+  const [serverResponse, setServerResponse] = useState<ServerResponseStateType<D>>({
     loading: false,
     error: null,
     success: null,
@@ -100,12 +95,7 @@ const Form = <D extends object>({
       if (!!HandlerComp) {
         setServerResponse((prev) => ({ ...prev, loading: false, data: resData.data, message: resData.message }));
       } else {
-        setServerResponse((prev) => ({ ...prev, loading: false, message: resData.message }));
-
-        if (redirectUrl) {
-          router.refresh();
-          router.replace(redirectUrl);
-        }
+        setServerResponse((prev) => ({ ...prev, loading: false, success: resData.success, message: resData.message }));
       }
     } catch (e: unknown) {
       setServerResponse((prev) => ({

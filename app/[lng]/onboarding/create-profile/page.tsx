@@ -14,7 +14,7 @@ import SERVER_METHODS from '@/configs/server/methods';
 
 const apiConfig = {
   endpoint: API_ENDPOINTS.PROFILE.create,
-  method: SERVER_METHODS.POST
+  method: SERVER_METHODS.PUT
 };
 
 const CreateProfilePage = async ({ params: { lng } }: LngParamsType) => {

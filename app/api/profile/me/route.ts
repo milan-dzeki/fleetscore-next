@@ -2,7 +2,7 @@ import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
 import ProfileApi from '@/customApi/profile/profileApi';
 import { type NextRequest, NextResponse } from 'next/server';
 
-export async function POST (req: NextRequest) {
+export async function PUT (req: NextRequest) {
   const body = await req.json();
   const locale = req.cookies.get('i18next')?.value || 'en';
   const accessToken = req.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
