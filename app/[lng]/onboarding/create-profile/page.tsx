@@ -1,7 +1,7 @@
 import type { LngParamsType } from '@/types/props/common';
 import { getTranslations } from '@/i18n';
 import { CREATE_PROFILE_PAGE_NS } from '@/i18n/namespaces/pages';
-import { generateCreateProfileForm } from '@/configs/forms/generators/createProfileForm';
+import { generateCreateProfileForm } from '@/configs/forms/generators/auth/createProfileForm';
 import PageTitle from '@/components/layout/PageTitle';
 import Form from '@/components/forms/Form';
 import { cookies } from 'next/headers';

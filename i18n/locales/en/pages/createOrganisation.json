@@ -1,0 +1,7 @@
+{
+  "title": "Create Organisation",
+  "namePlaceholder": "Enter Organisation Name",
+  "nameLabel": "Organisation Name",
+  "nameErrorMsg": "Organisation Name is required",
+  "create": "Create"
+}

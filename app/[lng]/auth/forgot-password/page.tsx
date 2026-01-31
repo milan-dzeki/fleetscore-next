@@ -1,6 +1,6 @@
 import type { LngParamsType } from '@/types/props/common';
 import { getTranslations } from '@/i18n';
-import { generateForgotPasswordForm } from '@/configs/forms/generators/forgotPasswordForm';
+import { generateForgotPasswordForm } from '@/configs/forms/generators/auth/forgotPasswordForm';
 import { FORGOT_PASSWORD_PAGE } from '@/i18n/namespaces/pages';
 import { API_ENDPOINTS } from '@/configs/server/apiEndpoints';
 import SERVER_METHODS from '@/configs/server/methods';

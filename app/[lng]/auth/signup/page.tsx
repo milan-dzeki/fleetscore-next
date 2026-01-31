@@ -1,7 +1,7 @@
 import { getTranslations } from '@/i18n';
 import type { LngParamsType } from '@/types/props/common';
 import ROUTE_PATHS from '@/configs/routePaths';
-import { generateSignupForm } from '@/configs/forms/generators/signupForm';
+import { generateSignupForm } from '@/configs/forms/generators/auth/signupForm';
 import { SIGNUP_PAGE_NS } from '@/i18n/namespaces/pages';
 import AuthFormSwitch from '@/components/forms/AuthFormSwitch';
 import Form from '@/components/forms/Form';

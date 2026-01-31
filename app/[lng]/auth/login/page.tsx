@@ -1,5 +1,5 @@
 import type { LngParamsType } from '@/types/props/common';
-import { generateLoginForm } from '@/configs/forms/generators/loginForm';
+import { generateLoginForm } from '@/configs/forms/generators/auth/loginForm';
 import { getTranslations } from '@/i18n';
 import { LOGIN_PAGE_NS } from '@/i18n/namespaces/pages';
 import { API_ENDPOINTS } from '@/configs/server/apiEndpoints';

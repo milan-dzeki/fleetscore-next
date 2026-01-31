@@ -1,0 +1,7 @@
+{
+  "title": "Kreirajte organizaciju",
+  "namePlaceholder": "Unesi ime organizacije",
+  "nameLabel": "Ime Organizacije",
+  "nameErrorMsg": "Ime Organizacije je obavezno",
+  "create": "Kreiraj"
+}

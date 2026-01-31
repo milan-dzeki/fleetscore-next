@@ -1,5 +1,5 @@
 import type { FormType } from '@/types/forms';
-import { SIGNUP_RULES } from '../validations/signup';
+import { SIGNUP_RULES } from '../../validations/signup';
 
 export const generateSignupForm = (
   t: (key: string) => string
