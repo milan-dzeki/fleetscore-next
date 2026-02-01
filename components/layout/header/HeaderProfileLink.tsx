@@ -5,11 +5,12 @@ import classes from '@/styles/components/layout/header/headerProfileLink.module.
 
 interface Props {
   firstName: string;
+  lng: string;
 }
 
-const HeaderProfileLink = ({ firstName }: Props) => {
+const HeaderProfileLink = ({ firstName, lng }: Props) => {
   return (
-    <Link href="/me" className={classes.link}>
+    <Link href={`/${lng}/me`} className={classes.link}>
       <span className={classes.linkName}>
         {firstName.charAt(0)}
       </span>

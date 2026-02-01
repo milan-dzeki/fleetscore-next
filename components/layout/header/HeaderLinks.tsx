@@ -6,13 +6,17 @@ import classes from '@/styles/components/layout/header/headerLinks.module.scss';
 import HeaderProfileLink from './HeaderProfileLink';
 import ROUTE_PATHS from '@/configs/routePaths';
 
-const HeaderLinks = () => {
+interface Props {
+  lng: string;
+}
+
+const HeaderLinks = ({ lng }: Props) => {
   const { data: authUser } = useAppSelector(({ user }) => user);
 
   return (
     <div className={classes.headerLinks}>
       {authUser?.emailVerified && authUser?.profileCreated && authUser?.firstName && (
-        <HeaderProfileLink firstName={authUser.firstName} />
+        <HeaderProfileLink firstName={authUser.firstName} lng={lng} />
       )}
       {authUser && !authUser.profileCreated && (
         <Link href={ROUTE_PATHS.ONBOARDING.createProfile} className={classes.headerLink}>

@@ -27,7 +27,7 @@ const Header = ({ lng }: Props) => {
           </p>
         </Link>
         <nav className={classes.headerNav}>
-          <HeaderLinks />
+          <HeaderLinks lng={lng} />
           <HeaderLngSwitcher lng={lng} />
         </nav>
       </div>
