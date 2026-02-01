@@ -74,7 +74,7 @@ const Form = <D extends object>({
       for (const input in form.inputs) {
         inputFields[input] = form.inputs[input].value;
       }
-      const response = await fetch(apiConfig.endpoint, {
+      const response = await fetch(`${window.location.origin}${apiConfig.endpoint}`, {
         method: apiConfig.method,
         body: JSON.stringify(inputFields),
         ...(apiConfig.credentials ? {

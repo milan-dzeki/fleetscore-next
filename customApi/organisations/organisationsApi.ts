@@ -36,6 +36,13 @@ class OrganisationsApi extends BaseApi {
     return this;
   }
 
+  async get () {
+    return await this.execute({
+      endpoint: this.baseUrl,
+      method: SERVER_METHODS.GET
+    });
+  }
+
   async create (): Promise<BaseApiRawResponseType> {
     return await this.execute<BaseApiRawResponseType>({
       endpoint: this.baseUrl,

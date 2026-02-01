@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
     create: '/api/profile/me'
   },
   ORGANISATIONS: {
+    get: '/api/organisations',
     create: '/api/organisations/'
   }
 };
