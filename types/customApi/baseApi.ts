@@ -7,6 +7,7 @@ export type ApiRequestBodyType = { [field: string]: string } | null;
 export interface ApiParamsType {
   locale: string;
   requestBody?:ApiRequestBodyType;
+  searchParams?: string | null;
   returnRawHeaders?: boolean;
 }
 

@@ -8,4 +8,5 @@ export const VERIFY_EMAIL_PAGE_NS = 'pages/verifyEmail';
 export const CREATE_PROFILE_PAGE_NS = 'pages/createProfile';
 
 export const ORGANISATIONS_PAGE_NS = 'pages/organisations';
+export const ORGANISATION_PAGE_NS = 'pages/organisation';
 export const CREATE_ORGANISATION_PAGE_NS = 'pages/createOrganisation';

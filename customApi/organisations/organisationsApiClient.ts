@@ -9,3 +9,12 @@ export const getOrganisations = unstable_cache(async () => {
 }, ['organisations'], {
   tags: ['organisations']
 });
+
+export const getOrganisationById = unstable_cache(async (id: string) => {
+  const organisationsApi = new OrganisationsApi({ locale: 'en', searchParams: `/${id}` });
+  const response = await organisationsApi.getById();
+
+  return response;
+}, ['organisations'], {
+  tags: ['organisations']
+});

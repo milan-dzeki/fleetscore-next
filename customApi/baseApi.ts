@@ -10,16 +10,19 @@ abstract class BaseApi {
   private headers: ApiHeadersType | null;
   protected locale: string;
   protected requestBody: ApiRequestBodyType;
+  protected searchParams: string | null;
   protected fieldsError: string | null;
   private returnRawHeaders: boolean;
 
   constructor ({
     locale,
     requestBody = null,
+    searchParams = null,
     returnRawHeaders = false
   }: ApiParamsType) {
     this.headers = null;
     this.requestBody = null;
+    this.searchParams = searchParams;
     this.fieldsError = null;
     this.locale = locale;
     this.requestBody = requestBody;
@@ -73,7 +76,7 @@ abstract class BaseApi {
     const { endpoint, method } = params;
 
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(`${endpoint}${this.searchParams || ''}`, {
         method,
         ...(this.headers ? {
           headers: this.headers

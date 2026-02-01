@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { LngParamsType } from '@/types/props/common';
 import { getTranslations } from '@/i18n';
 import { ORGANISATIONS_PAGE_NS } from '@/i18n/namespaces/pages';
@@ -18,7 +19,6 @@ const OrganisationsPage = async ({ params: { lng } }: LngParamsType) => {
     );
   }
 
-
   return (
     <>
       <PageTitle title={t('title')} />
@@ -28,7 +28,9 @@ const OrganisationsPage = async ({ params: { lng } }: LngParamsType) => {
         <ul>
           {response.data.map((org) => (
             <li key={org.id}>
-              {org.name}
+              <Link href={`/${lng}/organisations/${org.id}`}>
+                {org.name}
+              </Link>
             </li>
           ))}
         </ul>

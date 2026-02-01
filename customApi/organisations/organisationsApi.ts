@@ -1,4 +1,5 @@
 import type { ApiParamsType, BaseApiRawResponseType } from '@/types/customApi/baseApi';
+import type { OrganisationType } from '@/types/customApi/organisationsApi';
 import SERVER_METHODS from '@/configs/server/methods';
 import BaseApi from '@/customApi/baseApi';
 
@@ -37,7 +38,14 @@ class OrganisationsApi extends BaseApi {
   }
 
   async get () {
-    return await this.execute({
+    return await this.execute<OrganisationType[]>({
+      endpoint: this.baseUrl,
+      method: SERVER_METHODS.GET
+    });
+  }
+
+  async getById () {
+    return await this.execute<OrganisationType>({
       endpoint: this.baseUrl,
       method: SERVER_METHODS.GET
     });
