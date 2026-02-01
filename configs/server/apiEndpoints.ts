@@ -3,7 +3,8 @@ export const API_ENDPOINTS = {
     signup: '/api/auth/signup',
     login: '/api/auth/login',
     refreshToken: '/api/auth/refresh-token',
-    forgotPassword: '/api/auth/forgot-password'
+    forgotPassword: '/api/auth/forgot-password',
+    resetPassword: '/api/auth/reset-password'
   },
   PROFILE: {
     create: '/api/profile/me'

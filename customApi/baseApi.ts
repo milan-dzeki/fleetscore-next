@@ -49,6 +49,23 @@ abstract class BaseApi {
     return this;
   }
 
+  removeReqBodyFieldsAfterValidation (fieldNames: string[]): this {
+    if (!this.requestBody) {
+      return this;
+    }
+
+    const transformedReqBody = { ...this.requestBody };
+
+    for (const field in transformedReqBody) {
+      if (fieldNames.includes(field)) {
+        delete transformedReqBody[field];
+      }
+    }
+
+    this.requestBody = transformedReqBody;
+    return this;
+  }
+
   protected async execute <D>(params: {
     endpoint: string;
     method: typeof SERVER_METHODS[keyof typeof SERVER_METHODS];

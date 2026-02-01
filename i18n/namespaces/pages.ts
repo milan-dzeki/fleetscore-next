@@ -1,6 +1,7 @@
 export const SIGNUP_PAGE_NS = 'pages/signup';
 export const LOGIN_PAGE_NS = 'pages/login';
 export const FORGOT_PASSWORD_PAGE = 'pages/forgotPassword';
+export const RESET_PASSWORD_PAGE_NS = 'pages/resetPassword';
 
 export const EMAIL_SENT_PAGE_NS = 'pages/emailSent';
 export const VERIFY_EMAIL_PAGE_NS = 'pages/verifyEmail';

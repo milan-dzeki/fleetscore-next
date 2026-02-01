@@ -25,6 +25,7 @@ interface Props<D> {
     method: typeof SERVER_METHODS[keyof typeof SERVER_METHODS];
     credentials?: RequestCredentials;
   };
+  extraReqBodyFields?: { [fieldName: string]: string };
   children?: ReactNode;
   HandlerComp?: ComponentType<{ data: D | null; }>;
   redirectUrl?: string;
@@ -34,6 +35,7 @@ const Form = <D extends object>({
   generatedForm,
   submitText,
   apiConfig,
+  extraReqBodyFields,
   children,
   HandlerComp,
   redirectUrl
@@ -70,13 +72,21 @@ const Form = <D extends object>({
     setServerResponse((prev) => ({ ...prev, loading: true, error: null }));
     
     try {
-      const inputFields: {[inputName: string]: string} = {};
+      let requestBody: {[inputName: string]: string} = {};
       for (const input in form.inputs) {
-        inputFields[input] = form.inputs[input].value;
+        requestBody[input] = form.inputs[input].value;
       }
+
+      if (extraReqBodyFields) {
+        requestBody = {
+          ...requestBody,
+          ...extraReqBodyFields
+        };
+      }
+
       const response = await fetch(`${window.location.origin}${apiConfig.endpoint}`, {
         method: apiConfig.method,
-        body: JSON.stringify(inputFields),
+        body: JSON.stringify(requestBody),
         ...(apiConfig.credentials ? {
           credentials: apiConfig.credentials
         } : {})

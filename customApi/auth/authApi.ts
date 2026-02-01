@@ -93,6 +93,32 @@ class AuthApi extends BaseApi {
       }
 
       return this;
+    },
+    resetPassword: (): this => {
+      if (!this.requestBody) {
+        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        return this;
+      }
+      
+      const { token, password, passwordConfirm } = this.requestBody;
+
+      const tokenToCheck = token?.toString().trim();
+      const passwordToCheck = password?.toString().trim();
+      const passwordConfirmToCheck = passwordConfirm?.toString().trim();
+
+      if (
+        !tokenToCheck ||
+        !passwordToCheck ||
+        passwordToCheck.length < SIGNUP_RULES.password.minLength ||
+        passwordToCheck.length > SIGNUP_RULES.password.maxLength ||
+        !passwordConfirmToCheck ||
+        passwordConfirmToCheck !== password
+      ) {
+        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        return this;
+      }
+
+      return this;
     }
   };
   
@@ -206,6 +232,13 @@ class AuthApi extends BaseApi {
   async forgotPassword () {
     return await this.execute<BaseApiRawResponseType>({
       endpoint: `${this.baseUrl}/forgot-password`,
+      method: SERVER_METHODS.POST
+    });
+  }
+
+  async resetPassword () {
+    return await this.execute<BaseApiRawResponseType>({
+      endpoint: `${this.baseUrl}/reset-password`,
       method: SERVER_METHODS.POST
     });
   }
