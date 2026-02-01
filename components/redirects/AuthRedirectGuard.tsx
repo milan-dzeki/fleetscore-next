@@ -1,4 +1,3 @@
-// components/auth/AuthRedirectGuard.tsx
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import COOKIE_NAMES from "@/configs/server/auth/cookieNames";

@@ -25,7 +25,6 @@ const UpdateUserProfile = ({ data }: Props) => {
           lastName: data.lastName
         }));
 
-        router.refresh();
         router.replace(ROUTE_PATHS.HOME.root);
       }
     };

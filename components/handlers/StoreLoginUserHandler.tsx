@@ -18,8 +18,6 @@ const StoreLoginUserHandler = ({ data }: Props) => {
   useEffect(() => {
     if (data) {
       dispatch(setUser(data));
-
-      router.refresh();
       router.replace(data.profileCreated ? ROUTE_PATHS.HOME.root : ROUTE_PATHS.ONBOARDING.createProfile);
     }
   }, [data, dispatch, router]);

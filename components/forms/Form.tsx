@@ -61,7 +61,6 @@ const Form = <D extends object>({
 
   useEffect(() => {
     if (!HandlerComp && redirectUrl && serverResponse.success) {
-      router.refresh();
       router.replace(redirectUrl);
     }
   }, [HandlerComp, redirectUrl, router, serverResponse.success]);
