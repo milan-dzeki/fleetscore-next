@@ -98,6 +98,7 @@ const Form = <D extends object>({
         return setServerResponse((prev) => ({
           ...prev,
           success: false,
+          loading: false,
           error: resData.message
         }));
       }
