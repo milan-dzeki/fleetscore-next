@@ -1,4 +1,5 @@
 import type { FormType } from '@/types/forms';
+import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
 
 export const generateResetPasswordForm = (
   t: (key: string) => string
@@ -14,7 +15,9 @@ export const generateResetPasswordForm = (
         },
         label: t('newPasswordLabel'),
         validation: {
-          required: true
+          required: true,
+          minLength: SIGNUP_RULES.password.minLength,
+          maxLength: SIGNUP_RULES.password.maxLength
         },
         focused: false,
         touched: false,
