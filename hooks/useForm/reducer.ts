@@ -80,7 +80,7 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
           [inputName]: {
             ...targetInput,
             value: inputValue,
-            valid: validateInput(targetInput.value, targetInput.validation)
+            valid: validateInput(inputValue, targetInput.validation)
           }
         }
       };
