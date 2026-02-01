@@ -31,23 +31,16 @@ export function middleware(req: NextRequest) {
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
     !pathname.startsWith('/_next')
   ) {
-    const redirectResponse = NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
-    if (pathname.includes('/auth') || pathname.includes('/onboarding')) {
-    redirectResponse.headers.set('Cache-Control', 'no-store, max-age=0, must-revalidate');
-  }
-    return redirectResponse;
+    return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
   }
 
   const response = NextResponse.next();
-  if (pathname.includes('/auth') || pathname.includes('/onboarding')) {
-    response.headers.set('Cache-Control', 'no-store, max-age=0, must-revalidate');
-  }
-
   const headerRef = req.headers.get('referer');
 
   if (headerRef) {
     const refererUrl = new URL(headerRef);
     const lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`));
+    
     if (lngInReferer) {
       response.cookies.set(cookieName, lngInReferer)
     }
