@@ -102,6 +102,11 @@ const Form = <D extends object>({
         }));
       }
 
+      if (resData.redirectUrl) {
+        router.replace(resData.redirectUrl);
+        return;
+      }
+
       if (!!HandlerComp) {
         setServerResponse((prev) => ({ ...prev, loading: false, data: resData.data, message: resData.message }));
       } else {

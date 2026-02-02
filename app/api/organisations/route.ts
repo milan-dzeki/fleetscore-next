@@ -20,7 +20,7 @@ export async function POST (req: NextRequest) {
       }
     })
     .validateFields('create')
-    .create();
+    .create(locale);
 
   return NextResponse.json(response, { status: response.statusCode });
 }

@@ -1,7 +1,8 @@
-import type { ApiParamsType, BaseApiRawResponseType } from '@/types/customApi/baseApi';
+import type { ApiParamsType, BaseApiResponseType } from '@/types/customApi/baseApi';
 import type { OrganisationType } from '@/types/customApi/organisationsApi';
 import SERVER_METHODS from '@/configs/server/methods';
 import BaseApi from '@/customApi/baseApi';
+import ROUTE_PATHS from '@/configs/routePaths';
 
 class OrganisationsApi extends BaseApi {
   private baseUrl: string;
@@ -51,11 +52,18 @@ class OrganisationsApi extends BaseApi {
     });
   }
 
-  async create (): Promise<BaseApiRawResponseType> {
-    return await this.execute<BaseApiRawResponseType>({
+  async create (locale: string): Promise<BaseApiResponseType<OrganisationType>> {
+    const response = await this.execute<OrganisationType>({
       endpoint: this.baseUrl,
       method: SERVER_METHODS.POST
     });
+
+    return {
+      ...response,
+      ...('data' in response && response.data.id ? {
+        redirectUrl: `/${locale}${ROUTE_PATHS.ORGANISATIONS.root}/${response.data.id}`
+      } : {})
+    };
   }
 }
 
