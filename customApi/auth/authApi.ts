@@ -180,7 +180,7 @@ class AuthApi extends BaseApi {
     };
   }
 
-  async refreshToken () {
+  async refreshToken (): Promise<BaseApiResponseType<RefreshTokenResponseType>> {
     const response = await this.execute<RefreshTokenResponseType>({
       endpoint: `${this.baseUrl}/refresh`,
       method: SERVER_METHODS.POST
@@ -192,6 +192,7 @@ class AuthApi extends BaseApi {
 
     return {
       success: response.success,
+      statusCode: response.statusCode,
       message: response.message,
       data: {
         accessToken: response.data.accessToken,
