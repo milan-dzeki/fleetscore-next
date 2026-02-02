@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, MouseEventHandler } from 'react';
 import type { IconPropsType } from '@/types/props/common';
 import classes from '@/styles/components/icons/iconWrapper.module.scss';
 
 interface Props {
   children: ReactNode;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 function IconWrapper({

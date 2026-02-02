@@ -3,8 +3,10 @@
 import {
   type FocusEventHandler,
   type ChangeEventHandler,
+  type MouseEventHandler,
   useCallback,
-  memo
+  memo,
+  useRef
 } from 'react';
 import type { TextInputType } from '@/types/inputs';
 import XFatIcon from '../icons/XFatIcon';
@@ -38,6 +40,8 @@ const TextInput = ({
   onClear,
   onPasswordVisibilityToggle
 }: Props) => {
+  const ref = useRef<HTMLInputElement | null>(null);
+
   const setupInputClassname = useCallback((): string => {
     if (focused) {
       return classes.inputFocused;
@@ -47,12 +51,19 @@ const TextInput = ({
       return classes.inputInvalid;
     }
 
-    if (!focused && valid) {
+    if (!focused && touched && value && valid) {
       return classes.inputValid;
     }
 
     return '';
-  }, [focused, touched, valid]);
+  }, [focused, touched, valid, value]);
+
+  const handleClear: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onClear(attributes.name);
+    ref.current?.focus();
+  };
 
   return (
     <div className={classes.input}>
@@ -60,6 +71,7 @@ const TextInput = ({
         {label}
       </label>
       <input
+        ref={ref}
         className={setupInputClassname()}
         type={attributes.type}
         id={attributes.id}
@@ -81,10 +93,13 @@ const TextInput = ({
           </button>
         )}
         {value.trim() && (
-          <XFatIcon className={classes.clearBtn} onClick={onClear.bind(null, attributes.name)} />
+          <XFatIcon className={classes.clearBtn} onClick={handleClear} />
         )}
       </div>
-      <InputErrorMsg visible={!focused && touched && !valid} text={errorMsg} />
+      <InputErrorMsg
+        visible={!focused && touched && !valid}
+        text={errorMsg}
+      />
     </div>
   );
 }

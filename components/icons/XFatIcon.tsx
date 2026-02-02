@@ -1,8 +1,9 @@
+import type { MouseEventHandler } from 'react';
 import type { IconPropsType } from '@/types/props/common';
 import IconWrapper from './IconWrapper';
 
 interface Props {
-  onClick: () => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 function XFatIcon({

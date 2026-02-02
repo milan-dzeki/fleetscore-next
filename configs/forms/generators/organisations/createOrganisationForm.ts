@@ -40,7 +40,7 @@ export const generateCreateOrganisationForm = (
         },
         focused: false,
         touched: false,
-        valid: false,
+        valid: true,
         value: '',
         errorMsg: t('countryErrorMsg')
       },
@@ -59,7 +59,7 @@ export const generateCreateOrganisationForm = (
         },
         focused: false,
         touched: false,
-        valid: false,
+        valid: true,
         value: '',
         errorMsg: t('placeErrorMsg')
       },
@@ -78,7 +78,7 @@ export const generateCreateOrganisationForm = (
         },
         focused: false,
         touched: false,
-        valid: false,
+        valid: true,
         value: '',
         errorMsg: t('postCodeErrorMsg')
       },
@@ -97,7 +97,7 @@ export const generateCreateOrganisationForm = (
         },
         focused: false,
         touched: false,
-        valid: false,
+        valid: true,
         value: '',
         errorMsg: t('addressErrorMsg')
       },
@@ -115,7 +115,7 @@ export const generateCreateOrganisationForm = (
         },
         focused: false,
         touched: false,
-        valid: false,
+        valid: true,
         value: '',
         errorMsg: t('emailErrorMsg')
       },
@@ -134,7 +134,7 @@ export const generateCreateOrganisationForm = (
         },
         focused: false,
         touched: false,
-        valid: false,
+        valid: true,
         value: '',
         errorMsg: t('phoneErrorMsg')
       }

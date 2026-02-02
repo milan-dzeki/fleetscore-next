@@ -8,24 +8,40 @@ export const validateInput = (
 ) => {
   let isValid = true;
 
-  if (!validation.required) {
-    return true;
-  }
+  const hasValue = value && value.trim().length > 0;
 
-  if (!value.trim()) {
-    return false;
-  }
+  if (validation.required) {
+    if (!hasValue) {
+      return false;
+    }
 
-  if (validation.isEmail) {
-    isValid = isValid && emailPattern.test(value.trim());
-  }
+    if (validation.isEmail) {
+      isValid = isValid && emailPattern.test(value.trim());
+    }
 
-  if (validation.minLength) {
-    isValid = isValid && value.trim().length >= validation.minLength;
-  }
+    if (validation.minLength) {
+      isValid = isValid && value.trim().length >= validation.minLength;
+    }
 
-  if (validation.maxLength) {
-    isValid = isValid && value.trim().length < validation.maxLength;
+    if (validation.maxLength) {
+      isValid = isValid && value.trim().length < validation.maxLength;
+    }
+  } else {
+    if (Object.keys(validation).length <= 1) {
+      return true;
+    }
+
+    if (hasValue && validation.isEmail) {
+      isValid = isValid && emailPattern.test(value.trim());
+    }
+
+    if (hasValue && validation.minLength) {
+      isValid = isValid && value.trim().length >= validation.minLength;
+    }
+
+    if (hasValue && validation.maxLength) {
+      isValid = isValid && value.trim().length < validation.maxLength;
+    }
   }
 
   return isValid;
