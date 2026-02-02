@@ -1,6 +1,6 @@
 export interface TextInputType {
   attributes: {
-    type: 'text' | 'email' | 'password';
+    type: 'text' | 'email' | 'password' | 'tel';
     id: string;
     name: string;
     placeholder: string;

@@ -5,7 +5,7 @@
   "emailErrorMsg": "Email u validnom formatu je obavezan",
   "passwordLabel": "Lozinka",
   "passwordPlaceholder": "Unesite lozinku",
-  "passwordErrorMsg": "Lozinka mora imate izmedju 8 i 20 karaktera",
+  "passwordErrorMsg": "Lozinka mora imati izmedju 8 i 20 karaktera",
   "passwordConfirmLabel": "Potvrdite Lozinku",
   "passwordConfirmPlaceholder": "Potvrdite Lozinku",
   "passwordConfirmErrorMsg": "Lozinke moraju biti iste",
