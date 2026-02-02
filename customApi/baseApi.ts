@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache';
 import type {
   ApiHeadersType,
   ApiParamsType,
@@ -72,8 +73,9 @@ abstract class BaseApi {
   protected async execute <D>(params: {
     endpoint: string;
     method: typeof SERVER_METHODS[keyof typeof SERVER_METHODS];
+    revalidateTagOnSuccess?: string;
   }): Promise<BaseApiResponseType<D>> {
-    const { endpoint, method } = params;
+    const { endpoint, method, revalidateTagOnSuccess } = params;
 
     try {
       const response = await fetch(`${endpoint}${this.searchParams || ''}`, {
@@ -100,6 +102,10 @@ abstract class BaseApi {
           statusCode: response.status,
           message: data.message || data.data.message
         };
+      }
+
+      if (revalidateTagOnSuccess) {
+        revalidateTag(revalidateTagOnSuccess);
       }
 
       return {

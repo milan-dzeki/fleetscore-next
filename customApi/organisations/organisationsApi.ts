@@ -55,7 +55,8 @@ class OrganisationsApi extends BaseApi {
   async create (locale: string): Promise<BaseApiResponseType<OrganisationType>> {
     const response = await this.execute<OrganisationType>({
       endpoint: this.baseUrl,
-      method: SERVER_METHODS.POST
+      method: SERVER_METHODS.POST,
+      revalidateTagOnSuccess: 'organisations'
     });
 
     return {
