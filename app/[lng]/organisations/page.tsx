@@ -40,6 +40,7 @@ const OrganisationsPage = async ({ params: { lng } }: LngParamsType) => {
             {response.data.map((organisation) => (
               <Organisation
                 key={organisation.id}
+                locale={lng}
                 organisation={organisation}
                 translations={translations}  
               />

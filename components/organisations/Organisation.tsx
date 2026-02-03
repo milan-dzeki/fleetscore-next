@@ -1,10 +1,12 @@
 import type { OrganisationType } from '@/types/entities';
+import ROUTE_PATHS from '@/configs/routePaths';
 import RegularLink from '@/components/links/RegularLink';
 import ArrowLinkRightIcon from '../icons/ArrowLinkRightIcon';
-import classes from '@/styles/components/organisations/organisation.module.scss';
 import OrganisationOwnerFlag from './OrganisationOwnerFlag';
+import classes from '@/styles/components/organisations/organisation.module.scss';
 
 interface Props {
+  locale: string;
   organisation: OrganisationType;
   translations: {
     visit: string;
@@ -16,7 +18,7 @@ interface Props {
   };
 }
 
-const Organisation = ({ organisation, translations }: Props) => {
+const Organisation = ({ locale, organisation, translations }: Props) => {
   const setLocation = (): string => {
     const country = organisation.country ? `${organisation.country}${organisation.place || organisation.address ? ' / ' : ''}` : '';
     const place = organisation.place ? `${organisation.place}${organisation.address ? ' / ' : ''}` : '';
@@ -39,7 +41,7 @@ const Organisation = ({ organisation, translations }: Props) => {
             <OrganisationOwnerFlag organisationOwnerId={organisation.ownerId} translation={translations.ownerFlag} />
           </p>
         </div>
-        <RegularLink href="/" text={translations.visit} IconRight={<ArrowLinkRightIcon color="mainBlue" />} />
+        <RegularLink href={`/${locale}${ROUTE_PATHS.ORGANISATIONS.root}/${organisation.id}`} text={translations.visit} IconRight={<ArrowLinkRightIcon color="mainBlue" />} />
       </div>
       <div className={classes.organisationInfo}>
         <div className={classes.organisationLocation}>
