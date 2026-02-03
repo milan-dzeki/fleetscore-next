@@ -34,6 +34,10 @@
   .organisationName {
     font-weight: 800;
     font-size: $half-medium-font-size;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 15rem;
   }
 
   .organisationInfo {
