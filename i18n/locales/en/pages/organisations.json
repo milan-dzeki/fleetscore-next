@@ -1,3 +1,9 @@
 {
-  "title": "Organisations"
+  "title": "Organisations",
+  "noResults": "No organisations found",
+  "visit": "visit",
+  "location": "Location",
+  "email": "Email",
+  "phone": "Phone",
+  "unspecified": "unspecified"
 }

@@ -1,0 +1,46 @@
+@use '../../utils/variables' as *;
+
+.organisation {
+  margin-bottom: 2rem;
+
+  .organisationTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $light-grey;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .organisationTopInfo {
+    display: flex;
+    align-items: center;
+  }
+
+  .organisationImage {
+    height: 2.5rem;
+    width: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: $main-dark;
+    color: white;
+    text-transform: uppercase;
+    font-size: $medium-font-size;
+    font-weight: 800;
+    margin-right: 0.5rem;
+  }
+
+  .organisationName {
+    font-weight: 800;
+    font-size: $half-medium-font-size;
+  }
+
+  .organisationInfo {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .organisationLabel {
+    font-weight: 500;
+  }
+}

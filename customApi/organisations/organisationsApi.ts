@@ -1,5 +1,5 @@
 import type { ApiParamsType, BaseApiResponseType } from '@/types/customApi/baseApi';
-import type { OrganisationType } from '@/types/customApi/organisationsApi';
+import type { OrganisationType } from '@/types/entities';
 import SERVER_METHODS from '@/configs/server/methods';
 import BaseApi from '@/customApi/baseApi';
 import ROUTE_PATHS from '@/configs/routePaths';

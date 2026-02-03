@@ -1,0 +1,15 @@
+@use '../../utils/variables' as *;
+
+.link {
+  display: flex;
+  align-items: center;
+
+  .linkText {
+    color: $main-blue;
+  }
+
+  .linkTextWithIconRight {
+    display: block;
+    margin-right: 0.25rem;
+  }
+}

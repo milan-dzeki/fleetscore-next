@@ -1,3 +1,9 @@
 {
-  "title": "Organizacije"
+  "title": "Organizacije",
+  "noResults": "Nema kreiranih organizaciha",
+  "visit": "postetite",
+  "location": "Lokacija",
+  "email": "Email",
+  "phone": "Telefon",
+  "unspecified": "nema podataka"
 }

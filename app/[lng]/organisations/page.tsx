@@ -1,9 +1,10 @@
-import Link from 'next/link';
 import type { LngParamsType } from '@/types/props/common';
 import { getTranslations } from '@/i18n';
 import { ORGANISATIONS_PAGE_NS } from '@/i18n/namespaces/pages';
-import PageTitle from '@/components/layout/PageTitle';
 import { getOrganisations } from '@/customApi/organisations/organisationsApiClient';
+import PageTitle from '@/components/layout/PageTitle';
+import Organisation from '@/components/organisations/Organisation';
+import Container from '@/components/layout/Container';
 
 const OrganisationsPage = async ({ params: { lng } }: LngParamsType) => {
   const { t } = await getTranslations(lng, ORGANISATIONS_PAGE_NS);
@@ -19,21 +20,31 @@ const OrganisationsPage = async ({ params: { lng } }: LngParamsType) => {
     );
   }
 
+  const translations = {
+    visit: t('visit'),
+    location: t('location'),
+    email: t('email'),
+    phone: t('phone'),
+    unspecified: t('unspecified')
+  };
+
   return (
     <>
       <PageTitle title={t('title')} />
       {response.data.length === 0 ? (
-        <p>No organisations found</p>
+        <p>{t('noResults')}</p>
       ) : (
-        <ul>
-          {response.data.map((org) => (
-            <li key={org.id}>
-              <Link href={`/${lng}/organisations/${org.id}`}>
-                {org.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <Container>
+          <ul>
+            {response.data.map((organisation) => (
+              <Organisation
+                key={organisation.id}
+                organisation={organisation}
+                translations={translations}  
+              />
+            ))}
+          </ul>
+        </Container>
       )}
     </>
   );

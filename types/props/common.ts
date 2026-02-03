@@ -11,6 +11,6 @@ export interface PageWithIdParamsType {
 
 export interface IconPropsType {
   size?: 'small' | 'medium' | 'big';
-  color?: 'default' | 'errorRed' | 'successGreen' | 'white';
+  color?: 'default' | 'errorRed' | 'mainBlue' | 'successGreen' | 'white';
   className?: string;
 }

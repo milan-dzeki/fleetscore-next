@@ -16,6 +16,12 @@
     }
   }
 
+  &_mainBlue {
+    svg {
+      fill: $main-blue;
+    }
+  }
+
   &_errorRed {
     svg {
       fill: $error-red;
