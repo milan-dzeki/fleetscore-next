@@ -2,6 +2,7 @@ import type { OrganisationType } from '@/types/entities';
 import RegularLink from '@/components/links/RegularLink';
 import ArrowLinkRightIcon from '../icons/ArrowLinkRightIcon';
 import classes from '@/styles/components/organisations/organisation.module.scss';
+import OrganisationOwnerFlag from './OrganisationOwnerFlag';
 
 interface Props {
   organisation: OrganisationType;
@@ -11,6 +12,7 @@ interface Props {
     email: string;
     phone: string;
     unspecified: string;
+    ownerFlag: string;
   };
 }
 
@@ -32,7 +34,10 @@ const Organisation = ({ organisation, translations }: Props) => {
           <div  className={classes.organisationImage}>
             {organisation.name.charAt(0)}
           </div>
-          <p className={classes.organisationName}>{organisation.name}</p>
+          <p>
+            <span className={classes.organisationName}>{organisation.name}</span>
+            <OrganisationOwnerFlag organisationOwnerId={organisation.ownerId} translation={translations.ownerFlag} />
+          </p>
         </div>
         <RegularLink href="/" text={translations.visit} IconRight={<ArrowLinkRightIcon color="mainBlue" />} />
       </div>

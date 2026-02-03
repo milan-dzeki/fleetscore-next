@@ -5,5 +5,6 @@
   "location": "Lokacija",
   "email": "Email",
   "phone": "Telefon",
-  "unspecified": "nema podataka"
+  "unspecified": "nema podataka",
+  "ownerFlag": "vlasnik"
 }

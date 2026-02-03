@@ -1,0 +1,10 @@
+@use '../../utils/variables' as *;
+
+.flag {
+  background-color: $main-blue;
+  color: white;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  padding: 0 0.5rem;
+  display: inline-block;
+}

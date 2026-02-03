@@ -1,7 +1,7 @@
 export interface OrganisationType {
   id: number;
   name: string;
-  owberId: number;
+  ownerId: number;
   country?: string;
   place?: string;
   postCode?: string;

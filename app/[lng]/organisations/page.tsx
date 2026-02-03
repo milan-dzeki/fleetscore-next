@@ -25,7 +25,8 @@ const OrganisationsPage = async ({ params: { lng } }: LngParamsType) => {
     location: t('location'),
     email: t('email'),
     phone: t('phone'),
-    unspecified: t('unspecified')
+    unspecified: t('unspecified'),
+    ownerFlag: t('ownerFlag')
   };
 
   return (
