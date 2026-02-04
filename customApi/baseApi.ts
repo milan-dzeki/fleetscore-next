@@ -93,7 +93,7 @@ abstract class BaseApi {
       } catch {
         data = { message: 'Network error' };
       }
-      
+
       if (!response.ok) {
         return {
           success: false,

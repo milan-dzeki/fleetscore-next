@@ -136,7 +136,7 @@ class AuthApi extends BaseApi {
       };
     }
     
-    const response = await this.execute<BaseApiResponseType<SignupResponseType>>({
+    const response = await this.execute<SignupResponseType>({
       endpoint: `${this.baseUrl}/register`,
       method: SERVER_METHODS.POST
     });
