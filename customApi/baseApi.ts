@@ -30,8 +30,6 @@ abstract class BaseApi {
     this.returnRawHeaders = returnRawHeaders;
   }
 
-  abstract validateFields (api: string): this;
-
   setHeaders (params: {
     useDefaultHeaders: boolean;
     headers?: ApiHeadersType;
@@ -95,12 +93,12 @@ abstract class BaseApi {
       } catch {
         data = { message: 'Network error' };
       }
-
+      
       if (!response.ok) {
         return {
           success: false,
           statusCode: response.status,
-          message: data.message || data.data.message
+          message: data.message || data.data?.message || ''
         };
       }
 
@@ -111,7 +109,7 @@ abstract class BaseApi {
       return {
         success: true,
         statusCode: response.status,
-        message: data.message || data.data.message,
+        message: data.message || data.data?.message || '',
         data: data.data || data,
         ...(this.returnRawHeaders ? {
           rawHeaders: response.headers
