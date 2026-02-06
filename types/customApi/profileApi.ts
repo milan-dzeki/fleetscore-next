@@ -1,4 +1,5 @@
 export interface ProfileApiResponseType {
+  userId: number;
   authenticated: boolean;
   email: string;
   firstName: string | null;

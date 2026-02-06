@@ -103,7 +103,14 @@ abstract class BaseApi {
       }
 
       if (revalidateTagOnSuccess) {
-        revalidateTag(revalidateTagOnSuccess);
+        if (typeof revalidateTag === 'function') {
+          try {
+            revalidateTag(revalidateTagOnSuccess);
+          } catch {
+            // Silently fail if called in middleware
+            console.warn('revalidateTag is not supported in this runtime');
+          }
+        }
       }
 
       return {

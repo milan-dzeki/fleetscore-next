@@ -8,7 +8,6 @@ import type {
 import type { LoginApiResponseType } from '@/types/customApi/authApi';
 import type { ProfileApiResponseType } from '@/types/customApi/profileApi';
 import BaseApi from '../baseApi';
-import ROUTE_PATHS from '@/configs/routePaths';
 import SERVER_METHODS from '@/configs/server/methods';
 import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
 import { emailPattern } from '@/utils/inputValidators';
@@ -186,10 +185,10 @@ class AuthApi extends BaseApi {
       method: SERVER_METHODS.POST
     });
 
+    console.log('refresh token message', response.message)
     if (!response.success) {
       return response;
     }
-
     return {
       success: response.success,
       statusCode: response.statusCode,
@@ -217,9 +216,9 @@ class AuthApi extends BaseApi {
       statusCode: response.statusCode,
       message: response.message,
       data: response.data,
-      redirectUrl: response.data.profileCreated
-        ? ROUTE_PATHS.HOME.root
-        : ROUTE_PATHS.ONBOARDING.createProfile
+      // redirectUrl: response.data.profileCreated
+      //   ? ROUTE_PATHS.HOME.root
+      //   : ROUTE_PATHS.ONBOARDING.createProfile
     }
   }
 
