@@ -1,9 +1,13 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import COOKIE_NAMES from "@/configs/server/auth/cookieNames";
-import ROUTE_PATHS from "@/configs/routePaths";
+import { cookies } from 'next/headers';
+import { redirect, RedirectType } from 'next/navigation';
+import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
+import ROUTE_PATHS from '@/configs/routePaths';
 
-const AuthRedirectGuard = async () => {
+interface Props {
+  locale: string;
+}
+
+const AuthRedirectGuard = async ({ locale }: Props) => {
   const cookieStore = cookies();
 
   const accessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
@@ -13,15 +17,15 @@ const AuthRedirectGuard = async () => {
     cookieStore.get(COOKIE_NAMES.CREATE_PROFILE_PENDING)?.value;
 
   if (pendingEmailVerification && !accessToken) {
-    redirect(ROUTE_PATHS.ONBOARDING.emailSent);
+    redirect(`/${locale}${ROUTE_PATHS.ONBOARDING.emailSent}`, RedirectType.replace);
   }
 
   if (createProfilePending) {
-    redirect(ROUTE_PATHS.ONBOARDING.createProfile);
+    redirect(`/${locale}${ROUTE_PATHS.ONBOARDING.createProfile}`, RedirectType.replace);
   }
 
   if (accessToken) {
-    redirect(ROUTE_PATHS.HOME.root);
+    redirect(`/${locale}${ROUTE_PATHS.HOME.root}`, RedirectType.replace);
   }
 
   return null;

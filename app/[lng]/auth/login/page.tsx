@@ -28,7 +28,7 @@ const LoginPage = async ({ params: { lng } }: LngParamsType) => {
 
   return (
     <>
-      <AuthRedirectGuard />
+      <AuthRedirectGuard locale={lng} />
       <PageTitle title={t('title')} />
       <Form
         generatedForm={loginForm}
