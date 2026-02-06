@@ -83,7 +83,7 @@ const Form = <D extends object>({
         };
       }
 
-      const response = await fetch(`${window.location.origin}${apiConfig.endpoint}`, {
+      const response = await fetch(apiConfig.endpoint, {
         method: apiConfig.method,
         body: JSON.stringify(requestBody),
         ...(apiConfig.credentials ? {

@@ -16,7 +16,7 @@ const apiConfig = {
 };
 
 const CreateOrganisationPage = async ({ params: { lng } }: LngParamsType) => {
-  const profileResponse = await getProfile(lng);
+  const profileResponse = await getProfile();
   if (!profileResponse.success) {
     redirect(`/${lng}${ROUTE_PATHS.AUTH.login}`, RedirectType.replace);
   }

@@ -24,7 +24,7 @@ const RootLayout = async ({
   children: React.ReactNode;
   params: { lng: string };
 }>) => {
-  const profileResponse = await getProfile(lng);
+  const profileResponse = await getProfile();
   return (
     <html lang={lng} dir={dir(lng)} className={roboto.className}>
       <body>
