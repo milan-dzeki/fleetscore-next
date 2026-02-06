@@ -1,0 +1,35 @@
+@use '../../utils/variables' as *;
+
+.sailingClass {
+  margin-bottom: 2rem;
+
+  .sailingClassTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid $light-grey;
+    padding: 0.25rem;
+  }
+
+  .sailingClassName {
+    font-weight: 800;
+    font-size: $half-medium-font-size;
+  }
+
+  .sailingClassCreatorName {
+    font-weight: 500;
+  }
+
+  .sailingClassInfo {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .sailingClassInfoText {
+    background-color: $light-grey;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    margin: 0.25rem;
+  }
+}

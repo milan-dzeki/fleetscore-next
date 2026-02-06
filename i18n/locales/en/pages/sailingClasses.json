@@ -1,0 +1,16 @@
+{
+  "title": "Sailing Classes",
+  "hullLength": "Hull Length",
+  "hullType": "Hull Type",
+  "beamLength": "",
+  "boatWeight": "",
+  "classCode": "Class Code",
+  "headSailArea": "",
+  "mainSailArea": "",
+  "numCrew": "",
+  "numTrapaze": "",
+  "optCrewWeight": "",
+  "spinnakerArea": "",
+  "worldSailingStatus": "World Sailing Status",
+  "yearDesigned": ""
+}

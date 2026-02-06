@@ -26,6 +26,6 @@ export interface SailingClassType {
   headsailArea: string | null;
   mainsailArea: string | null;
   spinnakerArea: string | null;
-  classDesigner: string;
+  classDesigner: string | null;
   yearDesigned: string | null;
 }
