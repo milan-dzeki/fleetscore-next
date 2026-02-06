@@ -6,7 +6,6 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url); 
   const failRedirectUrl = searchParams.get('failRedirectUrl') || '/'; 
 
-  const locale = req.cookies.get('i18next')?.value || 'en';
   const refreshTokenCookie = req.cookies.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
 
   if (!refreshTokenCookie) {
@@ -30,7 +29,7 @@ export async function GET(req: NextRequest) {
   
   const successRedirectUrl = searchParams.get('successRedirectUrl') || '/';
 
-  const authApi = new AuthApi({ locale, returnRawHeaders: true });
+  const authApi = new AuthApi({ returnRawHeaders: true });
 
   const response = await authApi
     .setHeaders({

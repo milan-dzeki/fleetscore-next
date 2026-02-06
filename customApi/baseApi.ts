@@ -9,23 +9,20 @@ import SERVER_METHODS from '@/configs/server/methods';
 
 abstract class BaseApi {
   private headers: ApiHeadersType | null;
-  protected locale: string;
   protected requestBody: ApiRequestBodyType;
   protected searchParams: string | null;
   protected fieldsError: string | null;
   private returnRawHeaders: boolean;
 
   constructor ({
-    locale,
     requestBody = null,
     searchParams = null,
     returnRawHeaders = false
-  }: ApiParamsType) {
+  }: ApiParamsType = {}) {
     this.headers = null;
     this.requestBody = null;
     this.searchParams = searchParams;
     this.fieldsError = null;
-    this.locale = locale;
     this.requestBody = requestBody;
     this.returnRawHeaders = returnRawHeaders;
   }

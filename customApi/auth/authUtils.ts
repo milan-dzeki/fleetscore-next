@@ -3,8 +3,8 @@ import AuthApi from './authApi';
 import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
 import { cache } from 'react';
 
-export const getProfile = cache(async (locale: string, accessToken?: string) => {
-  const authApiProfile = new AuthApi({ locale });
+export const getProfile = cache(async (accessToken?: string) => {
+  const authApiProfile = new AuthApi({});
 
   const token = accessToken || cookies().get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 

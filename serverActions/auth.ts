@@ -7,7 +7,6 @@ import AuthApi from '@/customApi/auth/authApi';
 
 export const resendVerification = async () => {
   const cookieStore = cookies();
-  const locale = cookieStore.get('i18next')?.value || 'en';
   const email = cookieStore.get(COOKIE_NAMES.VERIFY_EMAIL_PENDING)?.value;
 
   if (!email) {
@@ -17,10 +16,7 @@ export const resendVerification = async () => {
     }
   }
 
-  const authApi = new AuthApi({
-    locale,
-    requestBody: { email }
-  });
+  const authApi = new AuthApi({ requestBody: { email } });
 
   return await authApi
     .setHeaders({ useDefaultHeaders: true })

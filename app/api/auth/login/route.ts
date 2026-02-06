@@ -5,10 +5,8 @@ import { getProfile } from '@/customApi/auth/authUtils';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const locale = req.cookies.get('i18next')?.value || 'en';
 
   const authApiLogin = new AuthApi({
-    locale,
     returnRawHeaders: true,
     requestBody: body
   });
@@ -36,7 +34,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const profileResponse = await getProfile(locale, loginResponse.data.accessToken);
+  const profileResponse = await getProfile(loginResponse.data.accessToken);
   if (!profileResponse.success) {
     return NextResponse.json(profileResponse, { status: profileResponse.statusCode })
   }

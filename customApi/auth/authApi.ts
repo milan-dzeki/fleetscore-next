@@ -12,11 +12,6 @@ import SERVER_METHODS from '@/configs/server/methods';
 import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
 import { emailPattern } from '@/utils/inputValidators';
 
-const FIELD_ERRORS = {
-  'en': 'Invalid fields',
-  'sr-RS': 'Uneseni podaci su nevalidni'
-};
-
 class AuthApi extends BaseApi {
   private baseUrl: string;
 
@@ -29,7 +24,7 @@ class AuthApi extends BaseApi {
   private validators = {
     signup: (): this => {
       if (!this.requestBody) {
-        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        this.fieldsError = 'Invalid fields.';
         return this;
       }
       
@@ -48,7 +43,7 @@ class AuthApi extends BaseApi {
         !passwordConfirmToCheck ||
         passwordConfirmToCheck !== password
       ) {
-        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        this.fieldsError = 'Invalid fields.';
         return this;
       }
 
@@ -56,7 +51,7 @@ class AuthApi extends BaseApi {
     },
     login: (): this => {
       if (!this.requestBody) {
-        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        this.fieldsError ='Invalid fields.';
         return this;
       }
 
@@ -70,7 +65,7 @@ class AuthApi extends BaseApi {
         !emailPattern.test(emailToCheck) ||
         !passwordToCheck
       ) {
-        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        this.fieldsError = 'Invalid fields.';
         return this;
       }
 
@@ -78,7 +73,7 @@ class AuthApi extends BaseApi {
     },
     forgotPassword: (): this => {
       if (!this.requestBody) {
-        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        this.fieldsError = 'Invalid fields.';
         return this;
       }
 
@@ -87,7 +82,7 @@ class AuthApi extends BaseApi {
       const emailToCheck = email?.toString().trim();
 
       if (!emailToCheck || !emailPattern.test(emailToCheck)) {
-        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        this.fieldsError = 'Invalid fields.';
         return this;
       }
 
@@ -95,7 +90,7 @@ class AuthApi extends BaseApi {
     },
     resetPassword: (): this => {
       if (!this.requestBody) {
-        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        this.fieldsError = 'Invalid fields.';
         return this;
       }
       
@@ -113,7 +108,7 @@ class AuthApi extends BaseApi {
         !passwordConfirmToCheck ||
         passwordConfirmToCheck !== password
       ) {
-        this.fieldsError = FIELD_ERRORS[this.locale as keyof typeof FIELD_ERRORS];
+        this.fieldsError = 'Invalid fields.';
         return this;
       }
 

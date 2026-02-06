@@ -4,12 +4,8 @@ import COOKIE_NAMES from "@/configs/server/auth/cookieNames";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const locale = req.cookies.get('i18next')?.value || 'en';
 
-  const authApiSignup = new AuthApi({
-    locale,
-    requestBody: body
-  });
+  const authApiSignup = new AuthApi({ requestBody: body });
 
   const signupResponse = await authApiSignup
     .setHeaders({ useDefaultHeaders: true })

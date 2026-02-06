@@ -7,10 +7,7 @@ export async function POST (req: NextRequest) {
   const locale = req.cookies.get('i18next')?.value || 'en';
   const accessToken = req.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 
-  const organisationsApi = new OrganisationsApi({
-    locale,
-    requestBody
-  });
+  const organisationsApi = new OrganisationsApi({ requestBody });
 
   const response = await organisationsApi
     .setHeaders({

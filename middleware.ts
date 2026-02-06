@@ -32,10 +32,7 @@ export async function middleware(req: NextRequest) {
   let response = NextResponse.next();
 
   if (!accessToken && refreshToken) {
-    const authApi = new AuthApi({ 
-      locale: lng, 
-      returnRawHeaders: true 
-    });
+    const authApi = new AuthApi({ returnRawHeaders: true });
 
     const refreshResponse = await authApi
       .setHeaders({
