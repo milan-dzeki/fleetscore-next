@@ -7,10 +7,10 @@ import { UserSliceIntialStateType } from '@/types/store/slices/userSlice';
 
 interface Props {
   children: ReactNode;
-  initialUser?: UserSliceIntialStateType['data'];
+  initialUser: UserSliceIntialStateType['data'];
 }
 
-const StoreProvider = ({ children, initialUser = null }: Props) => {
+const StoreProvider = ({ children, initialUser }: Props) => {
   const storeRef = useRef<AppStore | null>(null);
 
   if (!storeRef.current) {

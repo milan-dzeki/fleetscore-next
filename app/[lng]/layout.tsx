@@ -11,9 +11,7 @@ const roboto = Roboto({
   weight: ['400', '500', '700']
 });
 
-export function generateStaticParams(): {
-  lng: string;
-}[] {
+export function generateStaticParams(): { lng: string }[] {
   return languages.map((lng) => ({ lng }))
 }
 
@@ -25,6 +23,7 @@ const RootLayout = async ({
   params: { lng: string };
 }>) => {
   const profileResponse = await getProfile();
+
   return (
     <html lang={lng} dir={dir(lng)} className={roboto.className}>
       <body>
