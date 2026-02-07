@@ -6,7 +6,10 @@ interface Props {
 
 function PageTitle({ title }: Props) {
   return (
-    <h1 className={classes.title}>{title}</h1>
+    <div className={classes.title}>
+      <div className={classes.titleBcg} />
+      <h1 className={classes.titleText}>{title}</h1>
+    </div>
   );
 }
 

@@ -1,6 +1,19 @@
+@use '../../utils/variables' as *;
+
 .title {
   width: 100%;
   text-align: center;
   margin-bottom: 2rem;
-  font-size: 2rem;
+  font-size: $default-font-size;
+  margin-bottom: 4.5rem;
+
+  .titleText {
+    height: 4rem;
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 0.75rem 0;
+  }
 }
