@@ -5,8 +5,7 @@ import {
   type ComponentType,
   type ReactNode,
   type FormEventHandler,
-  useState,
-  useEffect
+  useState
 } from 'react';
 import type { FormType } from '@/types/forms';
 import type { ServerResponseStateType } from '@/types/components/forms/form';
@@ -28,7 +27,6 @@ interface Props<D> {
   extraReqBodyFields?: { [fieldName: string]: string };
   children?: ReactNode;
   HandlerComp?: ComponentType<{ data: D | null; }>;
-  redirectUrl?: string;
 }
 
 const Form = <D extends object>({
@@ -37,8 +35,7 @@ const Form = <D extends object>({
   apiConfig,
   extraReqBodyFields,
   children,
-  HandlerComp,
-  redirectUrl
+  HandlerComp
 }: Props<D>) => {
   const router = useRouter();
 
@@ -58,12 +55,6 @@ const Form = <D extends object>({
     data: null,
     message: null
   });
-
-  useEffect(() => {
-    if (!HandlerComp && redirectUrl && serverResponse.success) {
-      router.replace(redirectUrl);
-    }
-  }, [HandlerComp, redirectUrl, router, serverResponse.success]);
 
   const fetchUser: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -107,11 +98,13 @@ const Form = <D extends object>({
         return;
       }
 
-      if (!!HandlerComp) {
-        setServerResponse((prev) => ({ ...prev, loading: false, data: resData.data, message: resData.message }));
-      } else {
-        setServerResponse((prev) => ({ ...prev, loading: false, success: resData.success, message: resData.message }));
-      }
+      setServerResponse((prev) => ({
+        ...prev,
+        loading: false,
+        success: resData.success,
+        message: resData.message,
+        data: resData.data || null
+      }));
     } catch (e: unknown) {
       setServerResponse((prev) => ({
         ...prev,

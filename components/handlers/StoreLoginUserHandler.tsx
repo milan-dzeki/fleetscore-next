@@ -9,7 +9,6 @@ import ROUTE_PATHS from '@/configs/routePaths';
 
 interface Props {
   data: ProfileApiResponseType | null;
-  redirectUrl?: string;
 }
 
 const StoreLoginUserHandler = ({ data }: Props) => {

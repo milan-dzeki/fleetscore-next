@@ -7,10 +7,11 @@ import type {
 } from '@/types/customApi/baseApi';
 import type { LoginApiResponseType } from '@/types/customApi/authApi';
 import type { ProfileApiResponseType } from '@/types/customApi/profileApi';
-import BaseApi from '../baseApi';
 import SERVER_METHODS from '@/configs/server/methods';
 import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
 import { emailPattern } from '@/utils/inputValidators';
+import ROUTE_PATHS from '@/configs/routePaths';
+import BaseApi from '../baseApi';
 
 class AuthApi extends BaseApi {
   private baseUrl: string;
@@ -121,7 +122,7 @@ class AuthApi extends BaseApi {
     return this;
   }
 
-  async signup (): Promise<BaseApiResponseType<SignupResponseType>> {
+  async signup (locale: string): Promise<BaseApiResponseType<SignupResponseType>> {
     if (this.fieldsError) {
       return {
         success: false,
@@ -139,6 +140,7 @@ class AuthApi extends BaseApi {
       success: response.success,
       statusCode: response.statusCode,
       message: response.message,
+      redirectUrl: `/${locale}${ROUTE_PATHS.ONBOARDING.emailSent}`,
       data: {
         email: this.requestBody!.email
       }

@@ -27,7 +27,6 @@ const SignupPage = async ({ params: { lng } }: LngParamsType) => {
         generatedForm={signupForm}
         submitText={t('create')}
         apiConfig={apiConfig}
-        redirectUrl={`/${lng}${ROUTE_PATHS.ONBOARDING.emailSent}`}
       >
         <AuthFormSwitch
           switchText={t('haveAccount')}
