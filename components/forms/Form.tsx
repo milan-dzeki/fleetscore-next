@@ -61,7 +61,7 @@ const Form = <D extends object>({
     message: null
   });
 
-  const fetchUser: FormEventHandler<HTMLFormElement> = async (event) => {
+  const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
     setServerResponse((prev) => ({ ...prev, loading: true, error: null }));
@@ -134,7 +134,7 @@ const Form = <D extends object>({
       {serverResponse.error && (
         <FormActionMessage isError={true} message={serverResponse.error} />
       )}
-      <form className={classes.formEl} autoComplete="new-password" onSubmit={fetchUser}>
+      <form className={classes.formEl} autoComplete="new-password" onSubmit={onSubmit}>
         <div className={classes.inputs}>
           {Object.keys(form.inputs).map((input) => {
             const inputData = form.inputs[input];

@@ -11,12 +11,13 @@ const AuthRedirectGuard = async ({ locale }: Props) => {
   const cookieStore = cookies();
 
   const accessToken = cookieStore.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+  const refreshToken = cookieStore.get(COOKIE_NAMES.REFRESH_TOKEN)?.value;
   const pendingEmailVerification =
     cookieStore.get(COOKIE_NAMES.VERIFY_EMAIL_PENDING)?.value;
   const createProfilePending =
     cookieStore.get(COOKIE_NAMES.CREATE_PROFILE_PENDING)?.value;
 
-  if (pendingEmailVerification && !accessToken) {
+  if (pendingEmailVerification && !accessToken && !refreshToken) {
     redirect(`/${locale}${ROUTE_PATHS.ONBOARDING.emailSent}`, RedirectType.replace);
   }
 
@@ -24,7 +25,7 @@ const AuthRedirectGuard = async ({ locale }: Props) => {
     redirect(`/${locale}${ROUTE_PATHS.ONBOARDING.createProfile}`, RedirectType.replace);
   }
 
-  if (accessToken) {
+  if (accessToken || refreshToken) {
     redirect(`/${locale}${ROUTE_PATHS.HOME.root}`, RedirectType.replace);
   }
 
