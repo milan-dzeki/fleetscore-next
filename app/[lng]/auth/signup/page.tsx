@@ -27,6 +27,7 @@ const SignupPage = async ({ params: { lng } }: LngParamsType) => {
         generatedForm={signupForm}
         submitText={t('create')}
         apiConfig={apiConfig}
+        createNotificationOnSuccess
       >
         <AuthFormSwitch
           switchText={t('haveAccount')}

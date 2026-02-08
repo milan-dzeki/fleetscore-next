@@ -7,10 +7,12 @@ import {
   type FormEventHandler,
   useState
 } from 'react';
+import { useAppDispatch } from '@/hooks/store';
 import type { FormType } from '@/types/forms';
 import type { ServerResponseStateType } from '@/types/components/forms/form';
 import SERVER_METHODS from '@/configs/server/methods';
 import { useForm } from '@/hooks/useForm/useForm';
+import { setNotifications } from '@/store/slices/notificationsSlice';
 import TextInput from '../inputs/TextInput';
 import Button from '@/components/buttons/Button';
 import FormActionMessage from './FormActionMessage';
@@ -27,6 +29,7 @@ interface Props<D> {
   extraReqBodyFields?: { [fieldName: string]: string };
   children?: ReactNode;
   HandlerComp?: ComponentType<{ data: D | null; }>;
+  createNotificationOnSuccess?: boolean;
 }
 
 const Form = <D extends object>({
@@ -35,9 +38,11 @@ const Form = <D extends object>({
   apiConfig,
   extraReqBodyFields,
   children,
-  HandlerComp
+  HandlerComp,
+  createNotificationOnSuccess
 }: Props<D>) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const {
     form,
@@ -90,6 +95,14 @@ const Form = <D extends object>({
           success: false,
           loading: false,
           error: resData.message
+        }));
+      }
+
+      if (createNotificationOnSuccess) {
+        dispatch(setNotifications({
+          notifications: [
+            { id: `${resData.data.message}`, type: 'success', text: resData.message, isDisappearing: true }
+          ]
         }));
       }
 
