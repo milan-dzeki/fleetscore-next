@@ -107,6 +107,7 @@ const Form = <D extends object>({
       }
 
       if (resData.redirectUrl) {
+        router.refresh();
         router.replace(resData.redirectUrl);
         return;
       }
@@ -127,13 +128,11 @@ const Form = <D extends object>({
       }));
     }
   };
-
-  const message = serverResponse.error || serverResponse.message;
   
   return (
     <div className={classes.form}>
-      {message && (
-        <FormActionMessage isError={serverResponse.error !== null || serverResponse.success === false} message={message} />
+      {serverResponse.error && (
+        <FormActionMessage isError={true} message={serverResponse.error} />
       )}
       <form className={classes.formEl} autoComplete="new-password" onSubmit={fetchUser}>
         <div className={classes.inputs}>
