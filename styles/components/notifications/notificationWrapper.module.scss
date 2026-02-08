@@ -1,0 +1,26 @@
+.wrapper {
+  position: fixed;
+  z-index: 5;
+  max-width: 90vh;
+
+  &.wrapper__center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.wrapper__left {
+    left: 1rem;
+  }
+
+  &.wrapper__right {
+    right: 1rem;
+  }
+
+  &.wrapper__top {
+    top: 3.5rem;
+  }
+
+  &.wrapper__bottom {
+    bottom: 1rem;
+  }
+}

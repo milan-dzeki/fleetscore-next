@@ -182,7 +182,6 @@ class AuthApi extends BaseApi {
       method: SERVER_METHODS.POST
     });
 
-    console.log('refresh token message', response.message)
     if (!response.success) {
       return response;
     }

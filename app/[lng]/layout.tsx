@@ -3,6 +3,7 @@ import { dir } from 'i18next';
 import { languages } from '@/i18n/settings';
 import { getProfile } from '@/customApi/auth/authUtils';
 import StoreProvider from '@/store/StoreProvider';
+import NotificationWrapper from '@/components/notifications/NotificationWrapper';
 import Header from '@/components/layout/header/Header';
 import '@/styles/global.scss';
 
@@ -28,6 +29,7 @@ const RootLayout = async ({
     <html lang={lng} dir={dir(lng)} className={roboto.className}>
       <body>
         <StoreProvider initialUser={profileResponse.success ? profileResponse.data : null}>
+          <NotificationWrapper />
           <Header lng={lng} />
           <main>
             {children}

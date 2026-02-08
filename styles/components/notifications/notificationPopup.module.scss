@@ -1,0 +1,47 @@
+@use '../../utils/variables' as *;
+
+.notification {
+  position: relative;
+  border-radius: 3px;
+
+  &:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
+
+  .notificationContent {
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .notificationContentInfo {
+    display: flex;
+    align-items: center;
+  }
+
+  .notificationText {
+    color: white;
+    font-weight: 500;
+    margin: 0 2rem 0 0.5rem;
+    font-weight: 500;
+  }
+
+  &.notification__danger {
+    background-color: $error-red;
+  }
+
+  &.notification__success {
+    background-color: $success-green;
+  }
+
+  .notificationProgress {
+    height: 0.25rem;
+    width: 100%;
+    background-color: $main-dark;
+    transition: all 0.2s ease-out;
+    transform-origin: left;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+}
