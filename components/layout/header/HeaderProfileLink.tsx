@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+// import Link from 'next/link';
 import ArrowDownMinimalIcon from '@/components/icons/ArrowDownMinimalIcon';
 import classes from '@/styles/components/layout/header/headerProfileLink.module.scss';
 
@@ -9,7 +9,10 @@ interface Props {
   lng: string;
 }
 
-const HeaderProfileLink = ({ firstName, lng }: Props) => {
+const HeaderProfileLink = ({
+  firstName,
+  // lng
+}: Props) => {
   return (
     <div className={classes.link}>
       <button className={classes.linkName}>
@@ -18,13 +21,13 @@ const HeaderProfileLink = ({ firstName, lng }: Props) => {
           <ArrowDownMinimalIcon size="ultraSmall" />
         </span>
       </button>
-      <ul className={classes.linkList}>
+      {/* <ul className={classes.linkList}>
         <li>
           <Link href={`/${lng}/me`}>
             View Profile
           </Link>
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 };
