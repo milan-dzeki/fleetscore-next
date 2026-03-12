@@ -12,3 +12,5 @@ export const ORGANISATION_PAGE_NS = 'pages/organisation';
 export const CREATE_ORGANISATION_PAGE_NS = 'pages/createOrganisation';
 
 export const SAILING_CLASSES_PAGE_NS = 'pages/sailingClasses';
+
+export const CREATE_REGATTA_PAGE_NS = 'pages/createRegatta';
