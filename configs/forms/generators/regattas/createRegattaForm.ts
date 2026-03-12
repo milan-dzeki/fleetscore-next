@@ -191,6 +191,23 @@ export const generateCreateRegattaForm = (
         valid: true,
         value: '',
         errorMsg: t('throwoutAfterErrorMsg')
+      },
+      throwoutLimit: {
+        attributes: {
+          type: 'number',
+          id: 'throwoutLimit',
+          name: 'throwoutLimit',
+          placeholder: t('throwoutLimitPlaceholder')
+        },
+        label: t('throwoutLimitLabel'),
+        validation: {
+          required: false
+        },
+        focused: false,
+        touched: false,
+        valid: true,
+        value: '',
+        errorMsg: t('throwoutLimitErrorMsg')
       }
     },
     isValid: false
