@@ -10,7 +10,7 @@ export interface PageWithIdParamsType {
 }
 
 export interface IconPropsType {
-  size?: 'small' | 'medium' | 'big';
+  size?: 'ultraSmall' | 'small' | 'medium' | 'big';
   color?: 'default' | 'errorRed' | 'mainBlue' | 'successGreen' | 'white';
   className?: string;
 }
