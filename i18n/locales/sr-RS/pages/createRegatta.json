@@ -34,5 +34,6 @@
   "throwoutAfterErrorMsg": "Polje 'Odbacivanje nakon' je obavezno",
   "throwoutLimitPlaceholder": "Unesite maksimalan broj odbacivanja",
   "throwoutLimitLabel": "Maksimalan broj odbacivanja",
-  "throwoutLimitErrorMsg": "Polje 'Maksimalan broj odbacivanja' je obavezno"
+  "throwoutLimitErrorMsg": "Polje 'Maksimalan broj odbacivanja' je obavezno",
+  "create": "Kreiraj"
 }

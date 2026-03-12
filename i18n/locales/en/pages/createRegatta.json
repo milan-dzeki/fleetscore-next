@@ -34,5 +34,6 @@
   "throwoutAfterErrorMsg": "Throwout After is required",
   "throwoutLimitPlaceholder": "Enter Throwout limit",
   "throwoutLimitLabel": "Throwout limit",
-  "throwoutLimitErrorMsg": "Throwout limit is required"
+  "throwoutLimitErrorMsg": "Throwout limit is required",
+  "create": "Create"
 }

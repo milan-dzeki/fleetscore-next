@@ -12,5 +12,8 @@ export const API_ENDPOINTS = {
   ORGANISATIONS: {
     get: '/api/organisations',
     create: '/api/organisations/'
+  },
+  REGATTAS: {
+    create: '/api/regattas'
   }
 };
