@@ -67,7 +67,12 @@ const TextInput = ({
 
   return (
     <div className={classes.input}>
-      <label className={`${classes.inputLabel} ${value.trim() && classes.inputLabelVisible}`} htmlFor={attributes.id}>
+      <label
+        className={`
+          ${classes.inputLabel} ${(value.trim() || attributes.type === 'date') && classes.inputLabelVisible}
+        `}
+        htmlFor={attributes.id}
+      >
         {label}
       </label>
       <input
