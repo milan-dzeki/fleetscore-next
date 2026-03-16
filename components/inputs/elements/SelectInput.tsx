@@ -2,12 +2,14 @@ import {
   type FC,
   type FocusEventHandler,
   type ChangeEventHandler,
+  type MouseEventHandler,
   useRef,
   useCallback
 } from 'react';
 import type { SelectInputType } from '@/types/inputs';
 import InputLabel from '../accessories/InputLabel';
 import InputElement from '../accessories/InputElement';
+import XFatIcon from '@/components/icons/XFatIcon';
 import classes from '@/styles/components/inputs/elements/selectInput.module.scss';
 
 interface Props {
@@ -16,6 +18,7 @@ interface Props {
   onUnfocus: FocusEventHandler<HTMLInputElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
   onSelect: (inputName: string, inputValue: string) => void;
+  onClear: (inputName: string) => void;
 }
 
 const SelectInput: FC<Props> = ({
@@ -31,7 +34,8 @@ const SelectInput: FC<Props> = ({
   onFocus,
   onUnfocus,
   onChange,
-  onSelect
+  onSelect,
+  onClear
 }) => {
   const ref = useRef<HTMLInputElement | null>(null);
   const droppdownRef = useRef<HTMLDivElement | null>(null);
@@ -43,7 +47,14 @@ const SelectInput: FC<Props> = ({
     }
 
     onUnfocus(e);
-  }, [onUnfocus])
+  }, [onUnfocus]);
+
+  const handleClear: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onClear(attributes.name);
+    ref.current?.focus();
+  };
 
   return (
     <div className={classes.input}>
@@ -63,6 +74,9 @@ const SelectInput: FC<Props> = ({
         onUnfocus={onUnfocusCustom}
         onChange={onChange}
       />
+      {value.trim() && (
+        <XFatIcon className={classes.clearBtn} onClick={handleClear} />
+      )}
       {focused && (
         <div className={classes.inputDropdown} ref={droppdownRef} tabIndex={0}>
           <div className={classes.inputDropdownContent}>

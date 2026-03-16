@@ -151,6 +151,7 @@ const Form = <D extends object>({
                   onUnfocus={onInputUnfocus}
                   onChange={onInputChange}
                   onSelect={onSelect}
+                  onClear={onClearInput}
                 />
               );
             }

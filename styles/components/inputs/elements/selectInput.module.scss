@@ -5,6 +5,14 @@
   margin-bottom: 2.5rem;
   position: relative;
 
+  .clearBtn {
+    position: absolute;
+    top: 0;
+    right: 0.4rem;
+    height: 100%;
+    display: block;
+  }
+
   .inputDropdown {
     margin-top: -2px;
     background-color: white;
