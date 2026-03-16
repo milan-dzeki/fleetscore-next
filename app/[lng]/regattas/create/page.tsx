@@ -8,6 +8,7 @@ import { API_ENDPOINTS } from '@/configs/server/apiEndpoints';
 import SERVER_METHODS from '@/configs/server/methods';
 import { CREATE_REGATTA_PAGE_NS } from '@/i18n/namespaces/pages';
 import { generateCreateRegattaForm } from '@/configs/forms/generators/regattas/createRegattaForm';
+import { getOrganisations } from '@/customApi/organisations/organisationsApiClient';
 import PageTitle from '@/components/layout/PageTitle';
 import Form from '@/components/forms/Form';
 
@@ -25,11 +26,31 @@ const CreateRegataPage = async ({ params: { lng } }: LngParamsType) => {
   const { t } = await getTranslations(lng, CREATE_REGATTA_PAGE_NS);
   const createRegattaForm = generateCreateRegattaForm(t);
 
+  const organisations = await getOrganisations();
+  if (!organisations.success) {
+    return null;
+  }
+  const organisationsForList = organisations.data.map((org) => ({
+    id: org.id,
+    value: org.name
+  }));
+  const formWithOrganisation = {
+    ...createRegattaForm,
+    inputs: {
+      ...createRegattaForm.inputs,
+      organisation: {
+        ...createRegattaForm.inputs.organisation,
+        options: organisationsForList,
+        searchedOptions: organisationsForList
+      }
+    }
+  };
+
   return (
     <>
       <PageTitle title={t('title')} />
       <Form
-        generatedForm={createRegattaForm}
+        generatedForm={formWithOrganisation}
         apiConfig={apiConfig}
         submitText={t('create')}
       />

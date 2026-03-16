@@ -1,5 +1,6 @@
 import type { FormType } from '@/types/forms';
 import { SIGNUP_RULES } from '../../validations/signup';
+import { INPUT_TYPES } from '@/types/inputs';
 
 export const generateSignupForm = (
   t: (key: string) => string
@@ -7,6 +8,7 @@ export const generateSignupForm = (
   return {
     inputs: {
       email: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'email',
           id: 'email',
@@ -25,6 +27,7 @@ export const generateSignupForm = (
         errorMsg: t('emailErrorMsg')
       },
       password: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'password',
           id: 'password',
@@ -44,6 +47,7 @@ export const generateSignupForm = (
         errorMsg: t('passwordErrorMsg')
       },
       passwordConfirm: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'password',
           id: 'passwordConfirm',

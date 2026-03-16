@@ -56,12 +56,21 @@ export const useForm = (providedForm: FormType) => {
     });
   }, []);
 
+  const onSelect = useCallback((inputName: string, inputValue: string): void => {
+    dispatch({
+      type: UseFormActionTypes.ON_SELECT,
+      inputName,
+      inputValue
+    });
+  }, []);
+
   return {
     form: state,
     onInputFocus,
     onInputUnfocus,
     onInputChange,
     onClearInput,
-    onPasswordVisibilityToggle
+    onPasswordVisibilityToggle,
+    onSelect
   };
 };

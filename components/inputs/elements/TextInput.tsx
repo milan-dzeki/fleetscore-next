@@ -4,16 +4,17 @@ import {
   type FocusEventHandler,
   type ChangeEventHandler,
   type MouseEventHandler,
-  useCallback,
   memo,
   useRef
 } from 'react';
 import type { TextInputType } from '@/types/inputs';
-import XFatIcon from '../icons/XFatIcon';
-import InputErrorMsg from './InputErrorMsg';
-import CrossedEyeIcon from '../icons/CrossedEyeIcon';
-import EyeIcon from '../icons/EyeIcon';
-import classes from '@/styles/components/inputs/textInput.module.scss';
+import XFatIcon from '../../icons/XFatIcon';
+import InputErrorMsg from '../InputErrorMsg';
+import CrossedEyeIcon from '../../icons/CrossedEyeIcon';
+import EyeIcon from '../../icons/EyeIcon';
+import InputLabel from '../accessories/InputLabel';
+import InputElement from '../accessories/InputElement';
+import classes from '@/styles/components/inputs/elements/textInput.module.scss';
 
 interface Props {
   data: TextInputType;
@@ -42,22 +43,6 @@ const TextInput = ({
 }: Props) => {
   const ref = useRef<HTMLInputElement | null>(null);
 
-  const setupInputClassname = useCallback((): string => {
-    if (focused) {
-      return classes.inputFocused;
-    }
-
-    if (!focused && touched && !valid) {
-      return classes.inputInvalid;
-    }
-
-    if (!focused && touched && value && valid) {
-      return classes.inputValid;
-    }
-
-    return '';
-  }, [focused, touched, valid, value]);
-
   const handleClear: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -67,24 +52,20 @@ const TextInput = ({
 
   return (
     <div className={classes.input}>
-      <label
-        className={`
-          ${classes.inputLabel} ${(value.trim() || attributes.type === 'date') && classes.inputLabelVisible}
-        `}
+      <InputLabel
+        visible={!!value.trim() || attributes.type === 'date'}
         htmlFor={attributes.id}
-      >
-        {label}
-      </label>
-      <input
+        text={label}
+      />
+      <InputElement
         ref={ref}
-        className={setupInputClassname()}
-        type={attributes.type}
-        id={attributes.id}
-        name={attributes.name}
-        placeholder={attributes.placeholder}
+        attributes={attributes}
         value={value}
+        focused={focused}
+        touched={touched}
+        valid={valid}
         onFocus={onFocus}
-        onBlur={onUnfocus}
+        onUnfocus={onUnfocus}
         onChange={onChange}
       />
       <div className={classes.inputActions}>

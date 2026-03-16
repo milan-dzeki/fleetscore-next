@@ -1,5 +1,6 @@
 import type { FormType } from '@/types/forms';
 import { type UserFormAction, UseFormActionTypes } from '@/types/hooks/useForm';
+import { INPUT_TYPES } from '@/types/inputs';
 import { validateInput } from '@/utils/inputValidators';
 
 const reducer = (state: FormType, action: UserFormAction): FormType => {
@@ -105,6 +106,10 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
       const { inputName } = action;
       const targetInput = state.inputs[inputName];
 
+      if (targetInput.inputType !== INPUT_TYPES.TEXT) {
+        return state;
+      }
+
       return {
         ...state,
         inputs: {
@@ -115,6 +120,27 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
               ...targetInput.attributes,
               type: targetInput.attributes.type === 'password' ? 'text' : 'password'
             }
+          }
+        }
+      };
+    }
+    case UseFormActionTypes.ON_SELECT: {
+      const { inputName, inputValue } = action;
+      const targetInput = state.inputs[inputName];
+
+      if (targetInput.inputType !== INPUT_TYPES.SELECT) {
+        return state;
+      }
+
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [inputName]: {
+            ...targetInput,
+            focused: false,
+            value: inputValue,
+            valid: true
           }
         }
       };

@@ -1,5 +1,6 @@
 import type { FormType } from '@/types/forms';
 import { SIGNUP_RULES } from '@/configs/forms/validations/signup';
+import { INPUT_TYPES } from '@/types/inputs';
 
 export const generateResetPasswordForm = (
   t: (key: string) => string
@@ -7,6 +8,7 @@ export const generateResetPasswordForm = (
   return {
     inputs: {
       password: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'password',
           id: 'password',
@@ -26,6 +28,7 @@ export const generateResetPasswordForm = (
         errorMsg: t('newPasswordErrorMsg')
       },
       passwordConfirm: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'password',
           id: 'passwordConfirm',

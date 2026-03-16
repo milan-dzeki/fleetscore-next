@@ -35,5 +35,8 @@
   "throwoutLimitPlaceholder": "Unesite maksimalan broj odbacivanja",
   "throwoutLimitLabel": "Maksimalan broj odbacivanja",
   "throwoutLimitErrorMsg": "Polje 'Maksimalan broj odbacivanja' je obavezno",
+  "organisationPlaceholder": "Unesite organizaciju",
+  "organisationLabel": "Organizacija",
+  "organisationErrorMsg": "Organizacija je obavezna",
   "create": "Kreiraj"
 }

@@ -35,5 +35,8 @@
   "throwoutLimitPlaceholder": "Enter Throwout limit",
   "throwoutLimitLabel": "Throwout limit",
   "throwoutLimitErrorMsg": "Throwout limit is required",
+  "organisationPlaceholder": "Enter Organisation",
+  "organisationLabel": "Organisation",
+  "organisationErrorMsg": "Organisation is required",
   "create": "Create"
 }

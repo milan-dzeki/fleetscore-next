@@ -11,11 +11,13 @@ import { useAppDispatch } from '@/hooks/store';
 import type { FormType } from '@/types/forms';
 import type { ServerResponseStateType } from '@/types/components/forms/form';
 import SERVER_METHODS from '@/configs/server/methods';
+import { INPUT_TYPES } from '@/types/inputs';
 import { useForm } from '@/hooks/useForm/useForm';
 import { setNotifications } from '@/store/slices/notificationsSlice';
-import TextInput from '../inputs/TextInput';
+import TextInput from '../inputs/elements/TextInput';
 import Button from '@/components/buttons/Button';
 import FormActionMessage from './FormActionMessage';
+import SelectInput from '../inputs/elements/SelectInput';
 import classes from '@/styles/components/forms/form.module.scss';
 
 interface Props<D> {
@@ -50,7 +52,8 @@ const Form = <D extends object>({
     onInputUnfocus,
     onInputChange,
     onClearInput,
-    onPasswordVisibilityToggle
+    onPasswordVisibilityToggle,
+    onSelect
   } = useForm(generatedForm);
 
   const [serverResponse, setServerResponse] = useState<ServerResponseStateType<D>>({
@@ -138,6 +141,19 @@ const Form = <D extends object>({
         <div className={classes.inputs}>
           {Object.keys(form.inputs).map((input) => {
             const inputData = form.inputs[input];
+
+            if (inputData.inputType === INPUT_TYPES.SELECT) {
+              return (
+                <SelectInput
+                  key={input}
+                  data={inputData}
+                  onFocus={onInputFocus}
+                  onUnfocus={onInputUnfocus}
+                  onChange={onInputChange}
+                  onSelect={onSelect}
+                />
+              );
+            }
             return (
               <TextInput
                 key={input}

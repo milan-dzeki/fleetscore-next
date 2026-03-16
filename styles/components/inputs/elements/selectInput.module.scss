@@ -1,0 +1,32 @@
+@use '../../../utils/variables' as *;
+
+.input {
+  width: 100%;
+  margin-bottom: 2.5rem;
+  position: relative;
+
+  .inputDropdown {
+    margin-top: -2px;
+    background-color: white;
+    border: 1px solid $medium-grey;
+    border-radius: 2px;
+    max-height: 10rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .inputDropdownItem {
+      padding: 0.25rem 0.5rem;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      text-align: left;
+
+      &:hover {
+        background-color: $light-grey;
+        cursor: pointer;
+      }
+    }
+  }
+}

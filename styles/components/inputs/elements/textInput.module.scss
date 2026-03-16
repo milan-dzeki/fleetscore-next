@@ -1,0 +1,35 @@
+@use '../../../utils/variables' as *;
+
+.input {
+  width: 100%;
+  margin-bottom: 2.5rem;
+  position: relative;
+
+  .inputActions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-right: 0.4rem;
+  }
+
+  .inputPasswordToggler {
+    cursor: pointer;
+
+    &:hover {
+      svg {
+        fill: $dark-grey;
+      }
+    }
+  }
+
+  .clearBtn {
+    &:hover {
+      svg {
+        fill: $dark-grey;
+      }
+    }
+  }
+}

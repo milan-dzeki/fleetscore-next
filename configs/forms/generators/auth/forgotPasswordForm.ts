@@ -1,4 +1,5 @@
 import type { FormType } from '@/types/forms';
+import { INPUT_TYPES } from '@/types/inputs';
 
 export const generateForgotPasswordForm = (
   t: (key: string) => string
@@ -6,6 +7,7 @@ export const generateForgotPasswordForm = (
   return {
     inputs: {
       email: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'email',
           id: 'email',

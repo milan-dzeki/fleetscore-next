@@ -1,10 +1,10 @@
-import type { TextInputType } from '@/types/inputs';
+import type { InputValidationType } from '@/types/inputs';
 
 export const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
 export const validateInput = (
   value: string,
-  validation: TextInputType['validation']
+  validation: InputValidationType
 ) => {
   let isValid = true;
 

@@ -1,4 +1,5 @@
 import type { FormType } from '@/types/forms';
+import { INPUT_TYPES } from '@/types/inputs';
 
 export const generateCreateRegattaForm = (
   t: (key: string) => string
@@ -6,6 +7,7 @@ export const generateCreateRegattaForm = (
   return {
     inputs: {
       name: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'name',
@@ -23,6 +25,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('nameErrorMsg')
       },
       startDate: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'date',
           id: 'startDate',
@@ -40,6 +43,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('startDateErrorMsg')
       },
       endDate: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'date',
           id: 'endDate',
@@ -57,6 +61,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('endDateErrorMsg')
       },
       country: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'country',
@@ -74,6 +79,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('countryErrorMsg')
       },
       place: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'place',
@@ -91,6 +97,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('placeErrorMsg')
       },
       address: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'address',
@@ -108,6 +115,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('addressErrorMsg')
       },
       venue: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'venue',
@@ -125,6 +133,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('venueErrorMsg')
       },
       postCode: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'postCode',
@@ -142,6 +151,7 @@ export const generateCreateRegattaForm = (
         errorMsg: ''
       },
       email: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'email',
           id: 'email',
@@ -159,6 +169,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('emailErrorMsg')
       },
       phone: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'tel',
           id: 'phone',
@@ -176,6 +187,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('phoneErrorMsg')
       },
       throwoutAfter: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'number',
           id: 'throwoutAfter',
@@ -193,6 +205,7 @@ export const generateCreateRegattaForm = (
         errorMsg: t('throwoutAfterErrorMsg')
       },
       throwoutLimit: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'number',
           id: 'throwoutLimit',
@@ -208,6 +221,26 @@ export const generateCreateRegattaForm = (
         valid: true,
         value: '',
         errorMsg: t('throwoutLimitErrorMsg')
+      },
+      organisation: {
+        inputType: INPUT_TYPES.SELECT,
+        attributes: {
+          type: 'text',
+          id: 'organisation',
+          name: 'organisation',
+          placeholder: t('organisationPlaceholder')
+        },
+        validation: {
+          required: true
+        },
+        label: t('organisationLabel'),
+        focused: false,
+        touched: false,
+        valid: false,
+        value: '',
+        options: [],
+        searchedOptions: [],
+        errorMsg: t('organisationErrorMsg')
       }
     },
     isValid: false

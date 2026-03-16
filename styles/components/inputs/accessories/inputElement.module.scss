@@ -1,0 +1,22 @@
+@use '../../../utils/variables' as *;
+
+.inputElement {
+  display: block;
+  border: 1px solid $medium-grey;
+  border-radius: 2px;
+  width: 100%;
+  height: 2.25rem;
+  padding: 0.2rem 4rem 0.2rem 0.5rem;
+}
+
+.inputFocused {
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.inputInvalid {
+  box-shadow: 0 0 2px 2px rgba(255, 0, 0, 0.2);
+}
+
+.inputValid {
+  box-shadow: 0 0 2px 2px rgba(0, 140, 255, 0.2);
+}

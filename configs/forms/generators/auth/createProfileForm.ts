@@ -1,9 +1,11 @@
 import type { FormType } from '@/types/forms';
+import { INPUT_TYPES } from '@/types/inputs';
 
 export const generateCreateProfileForm = (t: (key: string) => string): FormType => {
   return {
     inputs: {
       firstName: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'firstName',
@@ -22,6 +24,7 @@ export const generateCreateProfileForm = (t: (key: string) => string): FormType 
         errorMsg: t('firstNameErrorMsg')
       },
       lastName: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'lastName',

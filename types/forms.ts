@@ -1,8 +1,8 @@
-import type { TextInputType } from './inputs';
+import type { InputType } from './inputs';
 
 export interface FormType {
   inputs: {
-    [name: string]: TextInputType;
+    [name: string]: InputType;
   };
   isValid: boolean;
 }

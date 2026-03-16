@@ -1,5 +1,6 @@
 import type { FormType } from '@/types/forms';
 import { ORGANISATION_RULES } from '@/configs/forms/validations/organisations';
+import { INPUT_TYPES } from '@/types/inputs';
 
 export const generateCreateOrganisationForm = (
   t: (key: string) => string
@@ -7,6 +8,7 @@ export const generateCreateOrganisationForm = (
   return {
     inputs: {
       name: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'name',
@@ -26,6 +28,7 @@ export const generateCreateOrganisationForm = (
         errorMsg: t('nameErrorMsg')
       },
       country: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'country',
@@ -45,6 +48,7 @@ export const generateCreateOrganisationForm = (
         errorMsg: t('countryErrorMsg')
       },
       place: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'place',
@@ -64,6 +68,7 @@ export const generateCreateOrganisationForm = (
         errorMsg: t('placeErrorMsg')
       },
       postCode: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'postCode',
@@ -83,6 +88,7 @@ export const generateCreateOrganisationForm = (
         errorMsg: t('postCodeErrorMsg')
       },
       address: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'text',
           id: 'address',
@@ -102,6 +108,7 @@ export const generateCreateOrganisationForm = (
         errorMsg: t('addressErrorMsg')
       },
       email: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'email',
           id: 'email',
@@ -120,6 +127,7 @@ export const generateCreateOrganisationForm = (
         errorMsg: t('emailErrorMsg')
       },
       phone: {
+        inputType: INPUT_TYPES.TEXT,
         attributes: {
           type: 'tel',
           id: 'phone',
