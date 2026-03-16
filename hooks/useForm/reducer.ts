@@ -7,15 +7,19 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
   switch (action.type) {
     case UseFormActionTypes.ON_INPUT_FOCUS: {
       const { inputName } = action;
+      const targetInput = state.inputs[inputName];
 
       return {
         ...state,
         inputs: {
           ...state.inputs,
           [inputName]: {
-            ...state.inputs[inputName],
+            ...targetInput,
             focused: true,
-            touched: true
+            touched: true,
+            ...(targetInput.inputType === INPUT_TYPES.SELECT ? {
+              searchedOptions: [...targetInput.options]
+            } : {})
           }
         }
       };
@@ -81,7 +85,14 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
           [inputName]: {
             ...targetInput,
             value: inputValue,
-            valid: validateInput(inputValue, targetInput.validation)
+            valid: validateInput(inputValue, targetInput.validation) && (
+              targetInput.inputType === INPUT_TYPES.SELECT
+                ? targetInput.options.map((opt) => opt.value).includes(inputValue)
+                : true
+            ),
+            ...(targetInput.inputType === INPUT_TYPES.SELECT ? {
+              searchedOptions: targetInput.options.filter((opt) => opt.value.toLowerCase().startsWith(inputValue.toLowerCase()))
+            } : {})
           }
         }
       };
