@@ -20,19 +20,26 @@
     max-height: 10rem;
     overflow-y: auto;
     overflow-x: hidden;
-    position: relative;
 
     .inputDropdownItem {
       padding: 0.25rem 0.5rem;
       width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: block;
-      text-align: left;
+      display: flex;
+      align-items: center;
 
       &:hover {
         background-color: $light-grey;
+        cursor: pointer;
+      }
+
+      input {
+        display: block;
+        margin-right: 0.5rem;
+        cursor: pointer;
+      }
+
+      label {
+        flex: 1;
         cursor: pointer;
       }
     }

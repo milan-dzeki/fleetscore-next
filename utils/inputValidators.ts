@@ -1,14 +1,19 @@
-import type { InputValidationType } from '@/types/inputs';
+import type { InputValidationType, SelectInputCheckboxOptionType, SelectInputOptionType } from '@/types/inputs';
 
 export const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
 export const validateInput = (
   value: string,
-  validation: InputValidationType
+  validation: InputValidationType,
+  options?: SelectInputOptionType[] | SelectInputCheckboxOptionType[]
 ) => {
   let isValid = true;
 
   const hasValue = value && value.trim().length > 0;
+
+  if (options) {
+    isValid = isValid && options.map((opt) => opt.value).includes(value);
+  }
 
   if (validation.required) {
     if (!hasValue) {

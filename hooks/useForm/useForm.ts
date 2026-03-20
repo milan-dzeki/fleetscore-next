@@ -1,6 +1,7 @@
 import {
   type ChangeEventHandler,
   type FocusEventHandler,
+  type ChangeEvent,
   useReducer,
   useCallback,
   useEffect
@@ -64,6 +65,39 @@ export const useForm = (providedForm: FormType) => {
     });
   }, []);
 
+  const onSelectDropdownCheck = useCallback((event: ChangeEvent<HTMLInputElement>, inputName: string) => {
+    const { id } = event.target;
+
+    if (!id) {
+      return;
+    }
+
+    dispatch({
+      type: UseFormActionTypes.ON_SELECT_DROPDOWN_CHECK,
+      inputName,
+      checkedItemId: id
+    });
+  }, []);
+
+  const onSearchDropdown = useCallback((
+    event: ChangeEvent<HTMLInputElement>,
+    inputName: string
+  ) => {
+    const { value } = event.target;
+    dispatch({
+      type: UseFormActionTypes.ON_SEARCH_DROPDOWN,
+      inputName,
+      searchTerm: value
+    });
+  }, []);
+
+  const onClearSearchDropdown = useCallback((inputName: string) => {
+    dispatch({
+      type: UseFormActionTypes.ON_CLEAR_SEARCH_DROPDOWN,
+      inputName
+    });
+  }, []);
+
   return {
     form: state,
     onInputFocus,
@@ -71,6 +105,9 @@ export const useForm = (providedForm: FormType) => {
     onInputChange,
     onClearInput,
     onPasswordVisibilityToggle,
-    onSelect
+    onSelect,
+    onSearchDropdown,
+    onClearSearchDropdown,
+    onSelectDropdownCheck
   };
 };

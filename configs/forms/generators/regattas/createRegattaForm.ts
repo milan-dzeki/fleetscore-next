@@ -236,11 +236,33 @@ export const generateCreateRegattaForm = (
         label: t('organisationLabel'),
         focused: false,
         touched: false,
+        searchTerm: '',
         valid: false,
         value: '',
         options: [],
         searchedOptions: [],
         errorMsg: t('organisationErrorMsg')
+      },
+      sailingClasses: {
+        inputType: INPUT_TYPES.SELECT_CHECKBOXES,
+        attributes: {
+          type: 'text',
+          id: 'sailingClasses',
+          name: 'sailingClasses',
+          placeholder: t('sailingClassesPlaceholder')
+        },
+        validation: {
+          required: true
+        },
+        label: t('sailingClassesLabel'),
+        focused: false,
+        touched: false,
+        searchTerm: '',
+        valid: false,
+        value: '',
+        options: [],
+        searchedOptions: [],
+        errorMsg: t('sailingClassesErrorMsg')
       }
     },
     isValid: false

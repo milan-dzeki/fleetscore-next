@@ -19,6 +19,7 @@ import Button from '@/components/buttons/Button';
 import FormActionMessage from './FormActionMessage';
 import SelectInput from '../inputs/elements/SelectInput';
 import classes from '@/styles/components/forms/form.module.scss';
+import SelectCheckboxesInput from '../inputs/elements/SelectCheckboxesInput';
 
 interface Props<D> {
   generatedForm: FormType;
@@ -53,7 +54,10 @@ const Form = <D extends object>({
     onInputChange,
     onClearInput,
     onPasswordVisibilityToggle,
-    onSelect
+    onSelect,
+    onSearchDropdown,
+    onClearSearchDropdown,
+    onSelectDropdownCheck
   } = useForm(generatedForm);
 
   const [serverResponse, setServerResponse] = useState<ServerResponseStateType<D>>({
@@ -152,6 +156,24 @@ const Form = <D extends object>({
                   onChange={onInputChange}
                   onSelect={onSelect}
                   onClear={onClearInput}
+                  onSearchDropdown={onSearchDropdown}
+                  onClearSearchDropdown={onClearSearchDropdown}
+                />
+              );
+            }
+
+            if (inputData.inputType === INPUT_TYPES.SELECT_CHECKBOXES) {
+              return (
+                <SelectCheckboxesInput
+                  key={input}
+                  data={inputData}
+                  onFocus={onInputFocus}
+                  onChange={onInputChange}
+                  onUnfocus={onInputUnfocus}
+                  onClear={onClearInput}
+                  onSearchDropdown={onSearchDropdown}
+                  onClearSearchDropdown={onClearSearchDropdown}
+                  onCheck={onSelectDropdownCheck}
                 />
               );
             }

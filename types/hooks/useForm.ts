@@ -5,7 +5,10 @@ export const UseFormActionTypes = {
   ON_CLEAR_INPUT: 'ON_CLEAR_INPUT',
   ON_PASSWORD_VISIBILITY_TOGGLE: 'ON_PASSWORD_VISIBILITY_TOGGLE',
   ON_CHECK_FORM_VALIDITY: 'ON_CHECK_FORM_VALIDITY',
-  ON_SELECT: 'ON_SELECT'
+  ON_SELECT: 'ON_SELECT',
+  ON_SELECT_DROPDOWN_CHECK: 'ON_SELECT_DROPDOWN_CHECK',
+  ON_SEARCH_DROPDOWN: 'ON_SEARCH_DROPDOWN',
+  ON_CLEAR_SEARCH_DROPDOWN: 'ON_CLEAR_SEARCH_DROPDOWN'
 } as const;
 
 interface OnInputFocusAction {
@@ -45,6 +48,23 @@ interface OnSelectAction {
   inputValue: string;
 }
 
+interface OnSelectDropdownCheckAction {
+  type: typeof UseFormActionTypes.ON_SELECT_DROPDOWN_CHECK;
+  inputName: string;
+  checkedItemId: string | number;
+}
+
+interface OnSearchDropdownAction {
+  type: typeof UseFormActionTypes.ON_SEARCH_DROPDOWN;
+  inputName: string;
+  searchTerm: string;
+}
+
+interface OnClearSearchDropdownAction {
+  type: typeof UseFormActionTypes.ON_CLEAR_SEARCH_DROPDOWN;
+  inputName: string;
+}
+
 export type UserFormAction = (
   OnInputFocusAction |
   OnInputUnfocusAction |
@@ -52,5 +72,8 @@ export type UserFormAction = (
   OnClearInputAction |
   OnPasswordVisibilityToggleAction |
   OnCheckFormValidityAction |
-  OnSelectAction
+  OnSelectAction |
+  OnSelectDropdownCheckAction |
+  OnSearchDropdownAction |
+  OnClearSearchDropdownAction
 );

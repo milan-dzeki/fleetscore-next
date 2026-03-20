@@ -11,6 +11,9 @@ import { generateCreateRegattaForm } from '@/configs/forms/generators/regattas/c
 import { getOrganisations } from '@/customApi/organisations/organisationsApiClient';
 import PageTitle from '@/components/layout/PageTitle';
 import Form from '@/components/forms/Form';
+import { FormType } from '@/types/forms';
+import { SelectCheckboxesInputType, SelectInputType } from '@/types/inputs';
+import { getSailingClasses } from '@/customApi/sailingClasses/sailingClassesApiClient';
 
 const apiConfig = {
   endpoint: API_ENDPOINTS.ORGANISATIONS.create,
@@ -26,22 +29,37 @@ const CreateRegataPage = async ({ params: { lng } }: LngParamsType) => {
   const { t } = await getTranslations(lng, CREATE_REGATTA_PAGE_NS);
   const createRegattaForm = generateCreateRegattaForm(t);
 
-  const organisations = await getOrganisations();
-  if (!organisations.success) {
+  const [organisations, sailingClasses] = await Promise.all([
+    getOrganisations(),
+    getSailingClasses()
+  ]);
+
+  if (!organisations.success || !sailingClasses.success) {
     return null;
   }
   const organisationsForList = organisations.data.map((org) => ({
     id: org.id,
     value: org.name
   }));
-  const formWithOrganisation = {
+  const sailingClassesList = sailingClasses.data.map((sc) => ({
+    id: sc.id,
+    value: sc.name,
+    checked: false
+  }));
+
+  const formWithOrganisation: FormType = {
     ...createRegattaForm,
     inputs: {
       ...createRegattaForm.inputs,
       organisation: {
-        ...createRegattaForm.inputs.organisation,
+        ...(createRegattaForm.inputs.organisation as SelectInputType),
         options: organisationsForList,
         searchedOptions: organisationsForList
+      },
+      sailingClasses: {
+        ...(createRegattaForm.inputs.sailingClasses as SelectCheckboxesInputType),
+        options: sailingClassesList,
+        searchedOptions: sailingClassesList
       }
     }
   };

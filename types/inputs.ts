@@ -1,6 +1,7 @@
 export const INPUT_TYPES = {
   TEXT: 'TEXT',
-  SELECT: 'SELECT'
+  SELECT: 'SELECT',
+  SELECT_CHECKBOXES: 'SELECT_CHECKBOXES'
 } as const;
 
 export interface InputAttributesType {
@@ -17,9 +18,15 @@ export interface InputValidationType {
   maxLength?: number;
 }
 
-export interface SearchInputOptionType {
+export interface SelectInputOptionType {
   id: string | number;
   value: string;
+}
+
+export interface SelectInputCheckboxOptionType {
+  id: string | number;
+  value: string;
+  checked: boolean;
 }
 
 export interface TextInputType {
@@ -39,8 +46,9 @@ export interface SelectInputType {
   attributes: InputAttributesType;
   label: string;
   validation: InputValidationType;
-  options: SearchInputOptionType[];
-  searchedOptions: SearchInputOptionType[];
+  searchTerm: string;
+  options: SelectInputOptionType[];
+  searchedOptions: SelectInputOptionType[];
   focused: boolean;
   touched: boolean;
   valid: boolean;
@@ -48,4 +56,19 @@ export interface SelectInputType {
   errorMsg: string;
 }
 
-export type InputType = TextInputType | SelectInputType;
+export interface SelectCheckboxesInputType {
+  inputType: typeof INPUT_TYPES.SELECT_CHECKBOXES;
+  attributes: InputAttributesType;
+  label: string;
+  validation: InputValidationType;
+  searchTerm: string;
+  options: SelectInputCheckboxOptionType[];
+  searchedOptions: SelectInputCheckboxOptionType[];
+  focused: boolean;
+  touched: boolean;
+  valid: boolean;
+  value: string;
+  errorMsg: string;
+}
+
+export type InputType = TextInputType | SelectInputType | SelectCheckboxesInputType;

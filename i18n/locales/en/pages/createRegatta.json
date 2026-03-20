@@ -38,5 +38,8 @@
   "organisationPlaceholder": "Enter Organisation",
   "organisationLabel": "Organisation",
   "organisationErrorMsg": "Organisation is required",
+  "sailingClassesPlaceholder": "Choose Sailing Classes",
+  "sailingClassesLabel": "Sailing Classes",
+  "sailingClassesErrorMsg": "At least 1 Sailing Class is required",
   "create": "Create"
 }

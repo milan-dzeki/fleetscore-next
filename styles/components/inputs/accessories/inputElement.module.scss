@@ -7,6 +7,10 @@
   width: 100%;
   height: 2.25rem;
   padding: 0.2rem 4rem 0.2rem 0.5rem;
+
+  &:read-only {
+    caret-color: transparent;
+  }
 }
 
 .inputFocused {

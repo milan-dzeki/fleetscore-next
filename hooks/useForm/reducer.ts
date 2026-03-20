@@ -16,10 +16,7 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
           [inputName]: {
             ...targetInput,
             focused: true,
-            touched: true,
-            ...(targetInput.inputType === INPUT_TYPES.SELECT ? {
-              searchedOptions: [...targetInput.options]
-            } : {})
+            touched: true
           }
         }
       };
@@ -78,6 +75,40 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
         };
       }
 
+      if (targetInput.inputType === INPUT_TYPES.SELECT) {
+        return {
+        ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              value: inputValue,
+              valid: validateInput(inputValue, targetInput.validation, targetInput.options),
+              searchedOptions: targetInput.options.filter((opt) =>
+                opt.value.toLowerCase().startsWith(inputValue.toLowerCase())
+              )
+            }
+          }
+        };
+      }
+
+      if (targetInput.inputType === INPUT_TYPES.SELECT_CHECKBOXES) {
+        return {
+        ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              value: inputValue,
+              valid: validateInput(inputValue, targetInput.validation, targetInput.options),
+              searchedOptions: targetInput.options.filter((opt) =>
+                opt.value.toLowerCase().startsWith(inputValue.toLowerCase())
+              )
+            }
+          }
+        };
+      }
+
       return {
         ...state,
         inputs: {
@@ -85,14 +116,7 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
           [inputName]: {
             ...targetInput,
             value: inputValue,
-            valid: validateInput(inputValue, targetInput.validation) && (
-              targetInput.inputType === INPUT_TYPES.SELECT
-                ? targetInput.options.map((opt) => opt.value).includes(inputValue)
-                : true
-            ),
-            ...(targetInput.inputType === INPUT_TYPES.SELECT ? {
-              searchedOptions: targetInput.options.filter((opt) => opt.value.toLowerCase().startsWith(inputValue.toLowerCase()))
-            } : {})
+            valid: validateInput(inputValue, targetInput.validation)
           }
         }
       };
@@ -100,6 +124,22 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
     case UseFormActionTypes.ON_CLEAR_INPUT: {
       const { inputName } = action;
       const targetInput = state.inputs[inputName];
+
+      if (targetInput.inputType === INPUT_TYPES.SELECT_CHECKBOXES) {
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              valid: !targetInput.validation.required,
+              value: '',
+              options: targetInput.options.map((opt) => ({ ...opt, checked: false })),
+              searchedOptions: targetInput.searchedOptions.map((opt) => ({ ...opt, checked: false }))
+            }
+          }
+        };
+      }
 
       return {
         ...state,
@@ -151,10 +191,140 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
             ...targetInput,
             focused: false,
             value: inputValue,
-            valid: true
+            valid: true,
+            searchTerm: '',
+            searchedOptions: [...targetInput.options]
           }
         }
       };
+    }
+    case UseFormActionTypes.ON_SELECT_DROPDOWN_CHECK: {
+      const { inputName, checkedItemId } = action;
+      const targetInput = state.inputs[inputName];
+
+      if (targetInput.inputType !== INPUT_TYPES.SELECT_CHECKBOXES) {
+        return state;
+      }
+
+      const checkedItem = targetInput.options.find((opt) => opt.id.toString() === checkedItemId.toString());
+
+      if (!checkedItem) {
+        return state;
+      }
+
+      const checkedUpdated = targetInput.options.map((opt) => {
+        if (opt.id.toString() !== checkedItemId.toString()) {
+          return opt;
+        }
+
+        return {
+          ...opt,
+          checked: !opt.checked
+        };
+      });
+
+      const searchedCheckedUpdated = targetInput.searchedOptions.map((opt) => {
+        if (opt.id.toString() !== checkedItemId.toString()) {
+          return opt;
+        }
+
+        return {
+          ...opt,
+          checked: !opt.checked
+        };
+      });
+
+      const checkedItems = checkedUpdated.filter((opt) => opt.checked);
+      let updatedValue = '';
+
+      if (checkedItems.length > 1) {
+        updatedValue = `${checkedItems[0].value} + ${checkedItems.length - 1}`
+      } else if (checkedItems.length === 0) {
+        updatedValue = '';
+      } else if (checkedItems.length === 1) {
+        updatedValue = checkedItems[0].value;
+      }
+
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [inputName]: {
+            ...targetInput,
+            value: updatedValue,
+            options: checkedUpdated,
+            searchedOptions: searchedCheckedUpdated
+          }
+        }
+      };
+    }
+    case UseFormActionTypes.ON_SEARCH_DROPDOWN: {
+      const { inputName, searchTerm } = action;
+      const targetInput = state.inputs[inputName];
+
+      if (targetInput.inputType === INPUT_TYPES.SELECT) {
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              searchTerm,
+              searchedOptions: targetInput.options.filter((opt) => opt.value.toLowerCase().startsWith(searchTerm.toLowerCase()))
+            }
+          }
+        };
+      }
+
+      if (targetInput.inputType === INPUT_TYPES.SELECT_CHECKBOXES) {
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              searchTerm,
+              searchedOptions: targetInput.options.filter((opt) => opt.value.toLowerCase().startsWith(searchTerm.toLowerCase()))
+            }
+          }
+        };
+      }
+
+      return state;
+    }
+    case UseFormActionTypes.ON_CLEAR_SEARCH_DROPDOWN: {
+      const { inputName } = action;
+      const targetInput = state.inputs[inputName];
+
+      if (targetInput.inputType === INPUT_TYPES.SELECT) {
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              searchTerm: '',
+              searchedOptions: [...targetInput.options]
+            }
+          }
+        };
+      }
+
+      if (targetInput.inputType === INPUT_TYPES.SELECT_CHECKBOXES) {
+        return {
+          ...state,
+          inputs: {
+            ...state.inputs,
+            [inputName]: {
+              ...targetInput,
+              searchTerm: '',
+              searchedOptions: [...targetInput.options]
+            }
+          }
+        };
+      }
+
+      return state;
     }
     case UseFormActionTypes.ON_CHECK_FORM_VALIDITY: {
       return {

@@ -1,54 +1,55 @@
+import { SelectCheckboxesInputType } from '@/types/inputs';
 import {
   type FC,
   type FocusEventHandler,
-  type ChangeEventHandler,
   type MouseEventHandler,
+  type ChangeEventHandler,
   type ChangeEvent,
-  useRef,
-  useCallback
+  useCallback,
+  useRef
 } from 'react';
-import type { SelectInputType } from '@/types/inputs';
 import InputLabel from '../accessories/InputLabel';
 import InputElement from '../accessories/InputElement';
 import XFatIcon from '@/components/icons/XFatIcon';
-import classes from '@/styles/components/inputs/elements/selectInput.module.scss';
 import SearchDropdownInput from '../accessories/SearchDropdownInput';
+import classes from '@/styles/components/inputs/elements/selectCheckboxesInput.module.scss';
 
 interface Props {
-  data: SelectInputType;
+  data: SelectCheckboxesInputType;
   onFocus: FocusEventHandler<HTMLInputElement>;
   onUnfocus: FocusEventHandler<HTMLInputElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  onSelect: (inputName: string, inputValue: string) => void;
   onClear: (inputName: string) => void;
   onSearchDropdown: (event: ChangeEvent<HTMLInputElement>, inputName: string) => void;
   onClearSearchDropdown: (inputName: string) => void;
+  onCheck: (event: ChangeEvent<HTMLInputElement>, inputName: string) => void;
 }
 
-const SelectInput: FC<Props> = ({
+const SelectCheckboxesInput: FC<Props> = ({
   data: {
     attributes,
     label,
     focused,
     touched,
+    searchTerm,
     valid,
     searchedOptions,
-    searchTerm,
     value
   },
   onFocus,
   onUnfocus,
-  onSelect,
   onClear,
   onSearchDropdown,
-  onClearSearchDropdown
+  onClearSearchDropdown,
+  onCheck
 }) => {
   const ref = useRef<HTMLInputElement | null>(null);
   const droppdownRef = useRef<HTMLDivElement | null>(null);
-
+  
   const onUnfocusCustom: FocusEventHandler<HTMLInputElement> = useCallback((e) => {
     const relatedTarget = e.relatedTarget;
-    if (droppdownRef.current && relatedTarget && droppdownRef.current.contains(relatedTarget)) {
+    if (droppdownRef.current && droppdownRef.current.contains(relatedTarget)) {
+      console.log('contains', relatedTarget);
       return null;
     }
 
@@ -61,7 +62,7 @@ const SelectInput: FC<Props> = ({
     onClear(attributes.name);
     ref.current?.focus();
   };
-
+  
   return (
     <div className={classes.input}>
       <InputLabel
@@ -85,22 +86,26 @@ const SelectInput: FC<Props> = ({
       )}
       {focused && (
         <div className={classes.inputDropdown} ref={droppdownRef} tabIndex={0}>
+          <SearchDropdownInput
+            value={searchTerm}
+            parentInputName={attributes.name}
+            onChange={onSearchDropdown}
+            onClear={onClearSearchDropdown}
+          />
           <div className={classes.inputDropdownContent}>
-            <SearchDropdownInput
-              value={searchTerm}
-              parentInputName={attributes.name}
-              onChange={onSearchDropdown}
-              onClear={onClearSearchDropdown}
-            />
             {searchedOptions.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                className={classes.inputDropdownItem}
-                onClick={() => onSelect(attributes.name, option.value)}
-              >
-                {option.value}
-              </button>
+              <div key={option.id} className={classes.inputDropdownItem}>
+                <input
+                  type="checkbox"
+                  name={option.value}
+                  id={option.id.toString()}
+                  checked={option.checked}
+                  onChange={(event) => onCheck(event, attributes.name)}
+                />
+                <label htmlFor={option.value}>
+                  {option.value}
+                </label>
+              </div>
             ))}
           </div>
         </div>
@@ -109,4 +114,4 @@ const SelectInput: FC<Props> = ({
   );
 };
 
-export default SelectInput;
+export default SelectCheckboxesInput;
