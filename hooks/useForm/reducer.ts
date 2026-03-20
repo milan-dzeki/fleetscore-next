@@ -252,6 +252,7 @@ const reducer = (state: FormType, action: UserFormAction): FormType => {
           [inputName]: {
             ...targetInput,
             value: updatedValue,
+            valid: true,
             options: checkedUpdated,
             searchedOptions: searchedCheckedUpdated
           }

@@ -49,7 +49,6 @@ const SelectCheckboxesInput: FC<Props> = ({
   const onUnfocusCustom: FocusEventHandler<HTMLInputElement> = useCallback((e) => {
     const relatedTarget = e.relatedTarget;
     if (droppdownRef.current && droppdownRef.current.contains(relatedTarget)) {
-      console.log('contains', relatedTarget);
       return null;
     }
 

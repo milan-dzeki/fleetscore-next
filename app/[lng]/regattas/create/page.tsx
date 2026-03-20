@@ -16,7 +16,7 @@ import { SelectCheckboxesInputType, SelectInputType } from '@/types/inputs';
 import { getSailingClasses } from '@/customApi/sailingClasses/sailingClassesApiClient';
 
 const apiConfig = {
-  endpoint: API_ENDPOINTS.ORGANISATIONS.create,
+  endpoint: API_ENDPOINTS.REGATTAS.create,
   method: SERVER_METHODS.POST
 };
 
@@ -51,13 +51,13 @@ const CreateRegataPage = async ({ params: { lng } }: LngParamsType) => {
     ...createRegattaForm,
     inputs: {
       ...createRegattaForm.inputs,
-      organisation: {
-        ...(createRegattaForm.inputs.organisation as SelectInputType),
+      organisationId: {
+        ...(createRegattaForm.inputs.organisationId as SelectInputType),
         options: organisationsForList,
         searchedOptions: organisationsForList
       },
-      sailingClasses: {
-        ...(createRegattaForm.inputs.sailingClasses as SelectCheckboxesInputType),
+      sailingClassIds: {
+        ...(createRegattaForm.inputs.sailingClassIds as SelectCheckboxesInputType),
         options: sailingClassesList,
         searchedOptions: sailingClassesList
       }

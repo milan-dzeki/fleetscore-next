@@ -222,12 +222,12 @@ export const generateCreateRegattaForm = (
         value: '',
         errorMsg: t('throwoutLimitErrorMsg')
       },
-      organisation: {
+      organisationId: {
         inputType: INPUT_TYPES.SELECT,
         attributes: {
           type: 'text',
-          id: 'organisation',
-          name: 'organisation',
+          id: 'organisationId',
+          name: 'organisationId',
           placeholder: t('organisationPlaceholder')
         },
         validation: {
@@ -243,12 +243,12 @@ export const generateCreateRegattaForm = (
         searchedOptions: [],
         errorMsg: t('organisationErrorMsg')
       },
-      sailingClasses: {
+      sailingClassIds: {
         inputType: INPUT_TYPES.SELECT_CHECKBOXES,
         attributes: {
           type: 'text',
-          id: 'sailingClasses',
-          name: 'sailingClasses',
+          id: 'sailingClassIds',
+          name: 'sailingClassIds',
           placeholder: t('sailingClassesPlaceholder')
         },
         validation: {

@@ -15,6 +15,10 @@ const ROUTE_PATHS = {
   ORGANISATIONS: {
     root: '/organisations',
     create: '/organisations/create'
+  },
+  REGATTAS: {
+    root: '/regattas',
+    create: '/regattas/create'
   }
 };
 

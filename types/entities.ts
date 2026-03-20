@@ -29,3 +29,26 @@ export interface SailingClassType {
   classDesigner: string | null;
   yearDesigned: string | null;
 }
+
+export interface RegattaType {
+  id: number;
+  name: string;
+  startDate: string;
+  endDate: string;
+  venue: string;
+  country: string;
+  place: string;
+  postCode: string;
+  address: string;
+  email: string;
+  phone: string;
+  throwoutAfter: number;
+  throwoutLimit: number;
+  sailingClasses: number[];
+  organisers: number[];
+  organisation: {
+    id: number;
+    name: string;
+  }[];
+  ownerId: string;
+}
