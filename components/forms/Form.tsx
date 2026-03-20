@@ -74,9 +74,22 @@ const Form = <D extends object>({
     setServerResponse((prev) => ({ ...prev, loading: true, error: null }));
     
     try {
-      let requestBody: {[inputName: string]: string} = {};
+      let requestBody: {[inputName: string]: string | string[]} = {};
       for (const input in form.inputs) {
-        requestBody[input] = form.inputs[input].value;
+        if (form.inputs[input].inputType === INPUT_TYPES.SELECT_CHECKBOXES) {
+          requestBody[input] = form.inputs[input].options
+            .filter((opt) => opt.checked)
+            .map((opt) => opt.id.toString())
+        } else if (form.inputs[input].inputType === INPUT_TYPES.SELECT) {
+          const targetOption = form.inputs[input].options
+            .find((opt) => opt.value.toLowerCase() === form.inputs[input].value.toLowerCase());
+          
+          if (targetOption) {
+            requestBody[input] = targetOption.id.toString();
+          }
+        } else {
+          requestBody[input] = form.inputs[input].value;
+        }
       }
 
       if (extraReqBodyFields) {
