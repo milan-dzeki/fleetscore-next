@@ -1,6 +1,5 @@
 import { Roboto } from 'next/font/google';
 import { dir } from 'i18next';
-import { languages } from '@/i18n/settings';
 import { getProfile } from '@/customApi/auth/authUtils';
 import StoreProvider from '@/store/StoreProvider';
 import NotificationWrapper from '@/components/notifications/NotificationWrapper';
@@ -11,10 +10,6 @@ const roboto = Roboto({
   subsets: ['latin'],
   weight: ['400', '500', '700']
 });
-
-export function generateStaticParams(): { lng: string }[] {
-  return languages.map((lng) => ({ lng }))
-}
 
 const RootLayout = async ({
   children,
