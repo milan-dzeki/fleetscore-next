@@ -3,7 +3,8 @@ import { getRegattas } from '@/customApi/regattas/regattasApiClient';
 import { getTranslations } from '@/i18n';
 import { REGATTAS_PAGE_NS } from '@/i18n/namespaces/pages';
 import PageTitle from '@/components/layout/PageTitle';
-import Link from 'next/link';
+import NoResults from '@/components/NoResults';
+import ROUTE_PATHS from '@/configs/routePaths';
 
 const RegattasPage = async ({ params: { lng } }: LngParamsType) => {
   const { t } = await getTranslations(lng, REGATTAS_PAGE_NS);
@@ -18,16 +19,19 @@ const RegattasPage = async ({ params: { lng } }: LngParamsType) => {
     );
   }
 
+  const createRegattaData = {
+    text: t('createRegatta'),
+    url: `/${lng}${ROUTE_PATHS.REGATTAS.create}`
+  };
+
   return (
     <>
       <PageTitle title={t('title')} />
-      <ul>
-        {response.data.map((regatta) => (
-          <li key={regatta.id.toString()}>
-            <Link href={`/${lng}/regattas/${regatta.id}`}>{regatta.name}</Link>
-          </li>
-        ))}
-      </ul>
+      {response.data.length > 0 ? (
+        <NoResults text={t('noResults')} createItemData={createRegattaData} />
+      ) : (
+        <div>dsadas</div>
+      )}
     </>
   );
 };

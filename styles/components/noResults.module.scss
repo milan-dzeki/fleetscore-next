@@ -1,0 +1,26 @@
+@use '../utils/variables' as *;
+
+.noResults {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .noResultsText {
+    font-size: $medium-font-size;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .noResultsLink {
+    border: 2px solid $main-blue;
+    color: $main-blue;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+
+    &:hover {
+      background-color: $main-blue;
+      color: white;
+    }
+  }
+}
