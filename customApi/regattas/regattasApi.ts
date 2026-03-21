@@ -13,6 +13,13 @@ class RegattasApi extends BaseApi {
     this.baseUrl = `${process.env.API_BASE_URL}/regattas`;
   }
 
+  async get (): Promise<BaseApiResponseType<RegattaType[]>> {
+    return await this.execute<RegattaType[]>({
+      endpoint: this.baseUrl,
+      method: SERVER_METHODS.GET
+    });
+  }
+
   async getById (): Promise<BaseApiResponseType<RegattaType>> {
     return await this.execute<RegattaType>({
       endpoint: this.baseUrl,
