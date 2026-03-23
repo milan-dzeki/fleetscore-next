@@ -45,7 +45,7 @@ const Regatta = ({ locale, regatta, translations }: Props) => {
         </div>
         <br />
         <RegularLink
-          href={`/${locale}${ROUTE_PATHS.REGATTAS}/${regatta.id}`}
+          href={`/${locale}${ROUTE_PATHS.REGATTAS.root}/${regatta.id}`}
           text={translations.seeDetails}
           IconRight={<ArrowLinkRightIcon color="mainBlue" />}
         />
