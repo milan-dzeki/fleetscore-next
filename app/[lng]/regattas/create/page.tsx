@@ -7,13 +7,10 @@ import ROUTE_PATHS from '@/configs/routePaths';
 import { API_ENDPOINTS } from '@/configs/server/apiEndpoints';
 import SERVER_METHODS from '@/configs/server/methods';
 import { CREATE_REGATTA_PAGE_NS } from '@/i18n/namespaces/pages';
-import { generateCreateRegattaForm } from '@/configs/forms/generators/regattas/createRegattaForm';
-import { getOrganisations } from '@/customApi/organisations/organisationsApiClient';
+import { getCreateRegattaForm } from '@/customApi/regattas/regattasApiClient';
 import PageTitle from '@/components/layout/PageTitle';
 import Form from '@/components/forms/Form';
-import { FormType } from '@/types/forms';
-import { SelectCheckboxesInputType, SelectInputType } from '@/types/inputs';
-import { getSailingClasses } from '@/customApi/sailingClasses/sailingClassesApiClient';
+import FormActionMessage from '@/components/forms/FormActionMessage';
 
 const apiConfig = {
   endpoint: API_ENDPOINTS.REGATTAS.create,
@@ -27,48 +24,22 @@ const CreateRegataPage = async ({ params: { lng } }: LngParamsType) => {
   }
 
   const { t } = await getTranslations(lng, CREATE_REGATTA_PAGE_NS);
-  const createRegattaForm = generateCreateRegattaForm(t);
+  const createRegattaForm = await getCreateRegattaForm(t);
 
-  const [organisations, sailingClasses] = await Promise.all([
-    getOrganisations(),
-    getSailingClasses()
-  ]);
-
-  if (!organisations.success || !sailingClasses.success) {
-    return null;
+  if ('error' in createRegattaForm) {
+    return (
+      <>
+        <PageTitle title={t('title')} />
+        <FormActionMessage isError message={createRegattaForm.error} />
+      </>
+    );
   }
-  const organisationsForList = organisations.data.map((org) => ({
-    id: org.id,
-    value: org.name
-  }));
-  const sailingClassesList = sailingClasses.data.map((sc) => ({
-    id: sc.id,
-    value: sc.name,
-    checked: false
-  }));
-
-  const formWithOrganisation: FormType = {
-    ...createRegattaForm,
-    inputs: {
-      ...createRegattaForm.inputs,
-      organisationId: {
-        ...(createRegattaForm.inputs.organisationId as SelectInputType),
-        options: organisationsForList,
-        searchedOptions: organisationsForList
-      },
-      sailingClassIds: {
-        ...(createRegattaForm.inputs.sailingClassIds as SelectCheckboxesInputType),
-        options: sailingClassesList,
-        searchedOptions: sailingClassesList
-      }
-    }
-  };
 
   return (
     <>
       <PageTitle title={t('title')} />
       <Form
-        generatedForm={formWithOrganisation}
+        generatedForm={createRegattaForm}
         apiConfig={apiConfig}
         submitText={t('create')}
       />

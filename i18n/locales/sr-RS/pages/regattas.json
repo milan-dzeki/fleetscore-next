@@ -7,5 +7,6 @@
   "editRegatta": "izmeni regatu",
   "place": "mesto",
   "date":"datum",
-  "seeDetails": "vidi detalje regate"
+  "seeDetails": "vidi detalje regate",
+  "errorFetchingCreateData": "Došlo je do greške. Refrešujte stranicu."
 }

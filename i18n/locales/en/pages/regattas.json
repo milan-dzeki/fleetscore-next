@@ -7,5 +7,6 @@
   "editRegatta": "edit regatta",
   "place": "place",
   "date":"date",
-  "seeDetails": "See Regatta Details"
+  "seeDetails": "See Regatta Details",
+  "errorFetchingCreateData": "Failed to get required data for creation. Try refreshing the page."
 }
