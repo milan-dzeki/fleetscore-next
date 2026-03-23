@@ -1,0 +1,11 @@
+.button {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  .buttonText {
+    display: block;
+    margin-left: 0.25rem;
+  }
+}

@@ -1,0 +1,32 @@
+@use '../../utils/variables' as *;
+
+.regatta {
+  margin-bottom: 2rem;
+
+  h4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-bottom: 1px solid $light-grey;
+
+    .regattaHeading {
+      display: flex;
+      align-items: center;
+    }
+
+    .regattaName {
+      font-weight: 800;
+      font-size: $half-medium-font-size;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .regattaContent {
+    padding: 0.25rem 0.5rem;
+  }
+}

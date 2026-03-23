@@ -1,4 +1,11 @@
 {
   "title": "Regattas",
-  "noResults": "No regattas found"
+  "noResults": "No regattas found",
+  "upcoming": "upcoming",
+  "inProgress": "in progress",
+  "ended": "ended",
+  "editRegatta": "edit regatta",
+  "place": "place",
+  "date":"date",
+  "seeDetails": "See Regatta Details"
 }

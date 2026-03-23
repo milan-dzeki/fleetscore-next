@@ -11,6 +11,7 @@ export const config = {
 };
 
 export async function middleware(req: NextRequest) {
+  console.log('-- MIDDLEWARE RUN ---');
   const { pathname } = req.nextUrl;
 
   let lng: string | null = null;

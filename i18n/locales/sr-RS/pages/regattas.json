@@ -1,4 +1,11 @@
 {
   "title": "Regate",
-  "noResults": "Nema najavljenih regata"
+  "noResults": "Nema najavljenih regata",
+  "upcoming": "predstojeća",
+  "inProgress": "u toku",
+  "ended": "završena",
+  "editRegatta": "izmeni regatu",
+  "place": "mesto",
+  "date":"datum",
+  "seeDetails": "vidi detalje regate"
 }
