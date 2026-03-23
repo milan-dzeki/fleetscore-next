@@ -26,23 +26,20 @@ const CreateRegataPage = async ({ params: { lng } }: LngParamsType) => {
   const { t } = await getTranslations(lng, CREATE_REGATTA_PAGE_NS);
   const createRegattaForm = await getCreateRegattaForm(t);
 
-  if ('error' in createRegattaForm) {
-    return (
-      <>
-        <PageTitle title={t('title')} />
-        <FormActionMessage isError message={createRegattaForm.error} />
-      </>
-    );
-  }
-
   return (
     <>
       <PageTitle title={t('title')} />
-      <Form
-        generatedForm={createRegattaForm}
-        apiConfig={apiConfig}
-        submitText={t('create')}
-      />
+      {
+        'error' in createRegattaForm
+          ? <FormActionMessage isError message={createRegattaForm.error} />
+          : (
+            <Form
+              generatedForm={createRegattaForm}
+              apiConfig={apiConfig}
+              submitText={t('create')}
+            />
+          )  
+      }
     </>
   );
 };
