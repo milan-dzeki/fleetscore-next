@@ -82,7 +82,7 @@ abstract class BaseApi {
           body: JSON.stringify(this.requestBody)
         } : {})
       });
-      
+
       let data;
 
       try {

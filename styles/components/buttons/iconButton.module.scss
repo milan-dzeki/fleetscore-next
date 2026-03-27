@@ -1,0 +1,17 @@
+@use '../../utils/variables' as *;
+
+.button {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &.buttonDanger {
+    color: $error-red;
+  }
+
+  .buttonText {
+    display: block;
+    margin-left: 0.25rem;
+  }
+}

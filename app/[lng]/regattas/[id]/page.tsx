@@ -4,8 +4,10 @@ import { getTranslations } from '@/i18n';
 import { REGATTA_PAGE_NS } from '@/i18n/namespaces/pages';
 import PageTitle from '@/components/layout/PageTitle';
 import FormActionMessage from '@/components/forms/FormActionMessage';
-import EditButton from '@/components/buttons/EditButton';
 import RegattaFull from '@/components/regattas/RegattaFull';
+import ActionsContainer from '@/components/buttons/ActionsContainer';
+import EditIcon from '@/components/icons/EditIcon';
+import DeleteIcon from '@/components/icons/DeleteIcon';
 
 const SingleRegattaPage = async ({
   params: {
@@ -39,10 +41,15 @@ const SingleRegattaPage = async ({
 
   const regatta = response.data;
 
+  const buttons = [
+    { text: t('editRegatta'), Icon: <EditIcon /> },
+    { text: t('deleteRegatta'), Icon: <DeleteIcon color="errorRed" />, danger: true }
+  ];
+
   return (
     <>
       <PageTitle title={regatta.name} />
-      <EditButton itemOwnerId={regatta.ownerId} text={t('editRegatta')} isContainer />
+      <ActionsContainer itemOwnerId={regatta.ownerId} buttons={buttons} />
       <RegattaFull regatta={regatta} translations={translations} />
     </>
   );
