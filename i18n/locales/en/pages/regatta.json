@@ -1,4 +1,14 @@
 {
   "title": "Regatta",
-  "editRegatta": "edit regatta"
+  "editRegatta": "edit regatta",
+  "deleteRegatta": "delete regatta",
+  "dates": "Date",
+  "place": "Place",
+  "address": "Address",
+  "organisation": "Organisation",
+  "sailingClasses": "Sailing Classes",
+  "email": "Email",
+  "phone": "Phone",
+  "throwoutAfter": "Throwout After",
+  "throwoutLimit": "Throwout Limit"
 }

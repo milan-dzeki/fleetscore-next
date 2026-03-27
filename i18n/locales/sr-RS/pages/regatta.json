@@ -1,4 +1,14 @@
 {
   "title": "Regata",
-  "editRegatta": "izmeni regatu"
+  "editRegatta": "izmeni regatu",
+  "deleteRegatta": "obriši regatu",
+  "dates": "Datum",
+  "place": "Mesto",
+  "address": "Adresa",
+  "organisation": "Organizacija",
+  "sailingClasses": "Jedriličarske Klase",
+  "email": "Email",
+  "phone": "Telefon",
+  "throwoutAfter": "Odbacivanje nakon",
+  "throwoutLimit": "Maksimalan broj odbacivanja"
 }
