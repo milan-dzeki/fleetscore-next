@@ -44,11 +44,14 @@ export interface RegattaType {
   phone: string;
   throwoutAfter: number;
   throwoutLimit: number;
-  sailingClasses: number[];
+  sailingClasses: {
+    id: number;
+    name: string;
+  }[];
   organisers: number[];
   organisation: {
     id: number;
     name: string;
-  }[];
+  };
   ownerId: string;
 }
