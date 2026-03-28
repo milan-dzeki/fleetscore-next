@@ -10,5 +10,8 @@
   "email": "Email",
   "phone": "Phone",
   "throwoutAfter": "Throwout After",
-  "throwoutLimit": "Throwout Limit"
+  "throwoutLimit": "Throwout Limit",
+  "deletingRegatta": "Preparing Regatta deletion",
+  "deleteText": "Are you sure you want to delete this regatta?",
+  "deleteButton": "Delete Regatta"
 }

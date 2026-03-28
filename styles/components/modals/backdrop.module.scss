@@ -1,0 +1,16 @@
+@use '../../utils/variables' as *;
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  background-color: rgba(black, 0.4);
+  display: none;
+
+  &.backdropShow {
+    display: block;
+  }
+}

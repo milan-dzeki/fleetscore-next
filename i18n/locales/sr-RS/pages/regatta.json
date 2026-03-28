@@ -10,5 +10,8 @@
   "email": "Email",
   "phone": "Telefon",
   "throwoutAfter": "Odbacivanje nakon",
-  "throwoutLimit": "Maksimalan broj odbacivanja"
+  "throwoutLimit": "Maksimalan broj odbacivanja",
+  "deletingRegatta": "Brisanje regata",
+  "deleteText": "Da li ste sigurni da želite obrisati ovu regatu?",
+  "deleteButton": "Obriši Regati"
 }

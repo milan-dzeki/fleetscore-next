@@ -9,6 +9,7 @@ interface Props {
   buttons: {
     text: string;
     Icon: JSX.Element;
+    action: () => void;
     danger?: boolean;
   }[];
 }
@@ -27,6 +28,7 @@ const ActionsContainer = ({ itemOwnerId, buttons }: Props) => {
           key={btn.text}
           text={btn.text}
           Icon={btn.Icon}
+          onClick={btn.action}
           danger={btn.danger || false}
         />
       ))}

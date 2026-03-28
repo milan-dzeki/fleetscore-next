@@ -1,5 +1,7 @@
 {
   "creator": "kreator",
   "unknown": "nepoznat",
-  "unspecified": "nespecificiran"
+  "unspecified": "nespecificiran",
+  "cancel": "otkaži",
+  "confirm": "potvrdi"
 }

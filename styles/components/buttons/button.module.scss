@@ -8,9 +8,28 @@
   transition: all 0.2s ease-out;
   cursor: pointer;
 
+  &--inlineBlock {
+    display: inline-block;
+    width: auto;
+  }
+
+  &--borderless {
+    border: none;
+  }
+
   &:hover {
     background-color: $main-dark;
     color: white;
+  }
+
+  &--danger {
+    color: $error-red;
+    font-weight: 600;
+
+    &:hover {
+      background-color: $error-red;
+      color: white;
+    }
   }
 
   &:disabled {

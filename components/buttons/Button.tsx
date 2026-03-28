@@ -7,13 +7,35 @@ import Spinner from '../loaders/Spinner';
 interface Props {
   type: 'button' | 'submit';
   text: string;
+  display?: 'block' | 'inlineBlock';
+  hasBorder?: boolean;
+  danger?: boolean;
+  onClick?: () => void;
   disabled?: boolean;
 }
 
-const Button = ({ type, text, disabled = false }: Props) => {
+const Button = ({
+  type,
+  text,
+  disabled = false,
+  display = 'block',
+  danger = false,
+  hasBorder = true,
+  onClick = () => { return; }
+}: Props) => {
   const { pending } = useFormStatus();
   return (
-    <button type={type} disabled={disabled || pending} className={classes.button}>
+    <button
+      type={type}
+      disabled={disabled || pending}
+      className={`
+        ${classes.button}
+        ${classes[`button--${display}`]}
+        ${!hasBorder ? classes['button--borderless'] : ''}
+        ${danger ? classes[`button--danger`] : ''}
+      `}
+      onClick={onClick}
+    >
       {pending ? <Spinner /> : text}
     </button>
   );

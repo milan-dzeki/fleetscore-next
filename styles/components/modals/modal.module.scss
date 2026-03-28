@@ -1,0 +1,44 @@
+@use '../../utils/variables' as *;
+
+.modal {
+  position: fixed;
+  z-index: 6;
+  top: 10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 10rem;
+  max-height: 90vh;
+  max-width: 90vw;
+  min-width: 30rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid $light-grey;
+  }
+
+  .modalContent {
+    padding: 0.5rem 1rem;
+    flex: 1;
+    border-bottom: 1px solid $light-grey;
+  }
+
+  .modalActions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0.5rem 1rem;
+
+    & > * {
+      &:not(:last-child) {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

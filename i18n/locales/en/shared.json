@@ -1,5 +1,7 @@
 {
   "creator": "creator",
   "unknown": "unknown",
-  "unspecified": "unspecified"
+  "unspecified": "unspecified",
+  "cancel": "cancel",
+  "confirm": "confirm"
 }
