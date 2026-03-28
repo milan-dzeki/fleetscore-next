@@ -23,6 +23,12 @@ export const getRegattaById = unstable_cache(async (id: string) => {
   tags: ['regattas']
 });
 
+export const deleteRegatta = async (id: number) => {
+  const regattasApi = new RegattasApi({});
+  const response = await regattasApi.delete(id);
+  return response;
+};
+
 export const getCreateRegattaForm = async (
   t: (key: string) => string
 ): Promise<FormType | { error: string }> => {

@@ -41,6 +41,16 @@ class RegattasApi extends BaseApi {
       } : {})
     };;
   }
+
+  async delete (id: number) {
+    const response = await this.execute({
+      endpoint: `${this.baseUrl}/${id}`,
+      method: SERVER_METHODS.DELETE,
+      revalidateTagOnSuccess: 'regattas'
+    });
+
+    return response;
+  }
 }
 
 export default RegattasApi;
