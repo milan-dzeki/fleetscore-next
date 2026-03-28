@@ -1,7 +1,7 @@
 'use client';
 
+import { useState, useEffect, useRef } from 'react';
 import { useModal } from '@/contexts/modalContext';
-import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from '@/i18n/client';
 import { MODAL_TYPES } from '@/types/contexts/modalContext';
@@ -10,16 +10,20 @@ import Backdrop from './Backdrop';
 import XFatIcon from '../icons/XFatIcon';
 import Button from '../buttons/Button';
 import classes from '@/styles/components/modals/modal.module.scss';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 interface Props {
   locale: string;
 }
 
 const Modal = ({ locale }: Props) => {
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const { t } = useTranslation(locale, SHARED_NS);
   const [mounted, setMounted] = useState(false);
   const [element, setElement] = useState<HTMLElement | null>(null);
   const { modalState, closeModal } = useModal();
+  
+  useOutsideClick(modalRef, closeModal);
 
   useEffect(() => {
     setElement(document.getElementById('modal'));
@@ -31,7 +35,7 @@ const Modal = ({ locale }: Props) => {
   return createPortal(
     <>
       <Backdrop show={!!modalState} />
-      <div className={`${classes.modal}`}>
+      <div className={`${classes.modal}`} ref={modalRef}>
         <div className={classes.modalHeader}>
           <h4>{modalState.title}</h4>
           <XFatIcon onClick={closeModal} />
