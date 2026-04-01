@@ -18,4 +18,5 @@ export const REGATTA_PAGE_NS = 'pages/regatta';
 export const CREATE_REGATTA_PAGE_NS = 'pages/createRegatta';
 
 export const CLUBS_PAGE_NS = 'pages/clubs';
+export const CLUB_PAGE_NS = 'pages/club';
 export const CREATE_CLUB_PAGE_NS = 'pages/createClub';

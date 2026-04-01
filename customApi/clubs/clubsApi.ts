@@ -21,6 +21,14 @@ class ClubsApi extends BaseApi {
     });
   }
 
+  async getById (id: string | number): Promise<BaseApiResponseType<ClubType>> {
+    return await this.execute<ClubType>({
+      endpoint: `${this.baseUrl}/${id}`,
+      method: SERVER_METHODS.GET,
+      entityFetchTag: `clubs-${id}`
+    });
+  }
+
   async create (locale: string): Promise<BaseApiResponseType<ClubType>> {
     const response = await this.execute<ClubType>({
       endpoint: this.baseUrl,
@@ -33,6 +41,29 @@ class ClubsApi extends BaseApi {
       ...('data' in response && response.data.id ? {
         redirectUrl: `/${locale}${ROUTE_PATHS.CLUBS.root}/${response.data.id}`
       } : {})
+    };
+  }
+
+  async update (locale: string, id: string): Promise<BaseApiResponseType<ClubType>> {
+    const response = await this.execute<ClubType>({
+      endpoint: `${this.baseUrl}/${id}`,
+      method: SERVER_METHODS.PUT,
+      revalidateTagOnSuccess: `clubs-${id}`
+    });
+
+    return response;
+  }
+
+  async delete (id: string, locale: string) {
+    const response = await this.execute({
+      endpoint: `${this.baseUrl}/${id}`,
+      method: SERVER_METHODS.DELETE,
+      revalidateTagOnSuccess: 'clubs'
+    });
+
+    return {
+      ...response,
+      redirectUrl: `/${locale}${ROUTE_PATHS.CLUBS.root}`
     };
   }
 }

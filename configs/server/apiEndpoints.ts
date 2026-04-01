@@ -22,6 +22,8 @@ export const API_ENDPOINTS = {
     get: '/api/sailing-classes/'
   },
   CLUBS: {
-    create: '/api/clubs'
+    create: '/api/clubs',
+    delete: '/api/clubs',
+    edit: '/api/clubs'
   }
 };

@@ -7,8 +7,12 @@ import ClubsApi from './clubsApi';
 
 export const getClubs = async () => {
   const clubsApi = new ClubsApi({});
-  return await clubsApi
-    .get();
+  return await clubsApi.get();
+};
+
+export const getClubById = async (id: string | number) => {
+  const clubsApi = new ClubsApi({});
+  return await clubsApi.getById(id);
 };
 
 export const getCreateClubForm = async (
