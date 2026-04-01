@@ -239,6 +239,7 @@ export const generateCreateRegattaForm = (
         searchTerm: '',
         valid: false,
         value: '',
+        dropdownOpen: false,
         options: [],
         searchedOptions: [],
         errorMsg: t('organisationErrorMsg')
@@ -260,6 +261,7 @@ export const generateCreateRegattaForm = (
         searchTerm: '',
         valid: false,
         value: '',
+        dropdownOpen: false,
         options: [],
         searchedOptions: [],
         errorMsg: t('sailingClassesErrorMsg')

@@ -22,7 +22,6 @@ class RegattasApi extends BaseApi {
   }
 
   async getById (id: string): Promise<BaseApiResponseType<RegattaType>> {
-    console.log('GET BY ID');
     return await this.execute<RegattaType>({
       endpoint: `${this.baseUrl}/${id}`,
       method: SERVER_METHODS.GET,
@@ -46,7 +45,6 @@ class RegattasApi extends BaseApi {
   }
 
   async update (locale: string, id: string): Promise<BaseApiResponseType<RegattaType>> {
-    console.log('update', id);
     const response = await this.execute<RegattaType>({
       endpoint: `${this.baseUrl}/${id}`,
       method: SERVER_METHODS.PUT,

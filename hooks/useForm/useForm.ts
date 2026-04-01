@@ -128,6 +128,13 @@ export const useForm = (providedForm: FormType, prepopulateForm?: () => Promise<
     });
   }, []);
 
+  const onCloseDropdown = useCallback((inputName: string): void => {
+    dispatch({
+      type: UseFormActionTypes.ON_CLOSE_DROPDOWN,
+      inputName
+    });
+  }, []);
+
   return {
     form: state.form,
     onInputFocus,
@@ -138,6 +145,7 @@ export const useForm = (providedForm: FormType, prepopulateForm?: () => Promise<
     onSelect,
     onSearchDropdown,
     onClearSearchDropdown,
-    onSelectDropdownCheck
+    onSelectDropdownCheck,
+    onCloseDropdown
   };
 };

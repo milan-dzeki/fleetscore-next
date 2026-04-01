@@ -76,7 +76,7 @@ export const getEditRegattaForm = async (
   regatta: RegattaType
 ) => {
   const formWithAllData = await getCreateRegattaForm(t);
-  console.log('FORM', formWithAllData);
+
   if ('error' in formWithAllData) {
     return { error: t('errorFetchingCreateData') };
   }

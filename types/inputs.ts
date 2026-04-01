@@ -47,6 +47,7 @@ export interface SelectInputType {
   label: string;
   validation: InputValidationType;
   searchTerm: string;
+  dropdownOpen: boolean;
   options: SelectInputOptionType[];
   searchedOptions: SelectInputOptionType[];
   focused: boolean;
@@ -62,6 +63,7 @@ export interface SelectCheckboxesInputType {
   label: string;
   validation: InputValidationType;
   searchTerm: string;
+  dropdownOpen: boolean;
   options: SelectInputCheckboxOptionType[];
   searchedOptions: SelectInputCheckboxOptionType[];
   focused: boolean;

@@ -4,8 +4,7 @@ import {
   type ChangeEventHandler,
   type MouseEventHandler,
   type ChangeEvent,
-  useRef,
-  useCallback
+  useRef
 } from 'react';
 import type { SelectInputType } from '@/types/inputs';
 import InputLabel from '../accessories/InputLabel';
@@ -13,6 +12,7 @@ import InputElement from '../accessories/InputElement';
 import XFatIcon from '@/components/icons/XFatIcon';
 import classes from '@/styles/components/inputs/elements/selectInput.module.scss';
 import SearchDropdownInput from '../accessories/SearchDropdownInput';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 interface Props {
   data: SelectInputType;
@@ -23,6 +23,7 @@ interface Props {
   onClear: (inputName: string) => void;
   onSearchDropdown: (event: ChangeEvent<HTMLInputElement>, inputName: string) => void;
   onClearSearchDropdown: (inputName: string) => void;
+  onCloseDropdown: (inputName: string) => void;
 }
 
 const SelectInput: FC<Props> = ({
@@ -34,26 +35,19 @@ const SelectInput: FC<Props> = ({
     valid,
     searchedOptions,
     searchTerm,
-    value
+    value,
+    dropdownOpen
   },
   onFocus,
   onUnfocus,
   onSelect,
   onClear,
   onSearchDropdown,
-  onClearSearchDropdown
+  onClearSearchDropdown,
+  onCloseDropdown
 }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLInputElement | null>(null);
-  const droppdownRef = useRef<HTMLDivElement | null>(null);
-
-  const onUnfocusCustom: FocusEventHandler<HTMLInputElement> = useCallback((e) => {
-    const relatedTarget = e.relatedTarget;
-    if (droppdownRef.current && relatedTarget && droppdownRef.current.contains(relatedTarget)) {
-      return null;
-    }
-
-    onUnfocus(e);
-  }, [onUnfocus]);
 
   const handleClear: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
@@ -62,8 +56,14 @@ const SelectInput: FC<Props> = ({
     ref.current?.focus();
   };
 
+  const closeDropdown = () => {
+    onCloseDropdown(attributes.name);
+  };
+
+  useOutsideClick(containerRef, closeDropdown, dropdownOpen);
+
   return (
-    <div className={classes.input}>
+    <div className={classes.input} ref={containerRef}>
       <InputLabel
         visible={!!value.trim()}
         htmlFor={attributes.id}
@@ -74,17 +74,17 @@ const SelectInput: FC<Props> = ({
         attributes={attributes}
         readOnly
         value={value}
-        focused={focused}
+        focused={focused || dropdownOpen}
         touched={touched}
         valid={valid}
         onFocus={onFocus}
-        onUnfocus={onUnfocusCustom}
+        onUnfocus={onUnfocus}
       />
       {value.trim() && (
         <XFatIcon className={classes.clearBtn} onClick={handleClear} />
       )}
-      {focused && (
-        <div className={classes.inputDropdown} ref={droppdownRef} tabIndex={0}>
+      {dropdownOpen && (
+        <div className={classes.inputDropdown}>
           <div className={classes.inputDropdownContent}>
             <SearchDropdownInput
               value={searchTerm}

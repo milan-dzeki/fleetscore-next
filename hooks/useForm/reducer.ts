@@ -39,6 +39,24 @@ const reducer = (state: FormStateType, action: UserFormAction): FormStateType =>
       const { inputName } = action;
       const targetInput = state.form.inputs[inputName];
 
+      if (targetInput.inputType === INPUT_TYPES.SELECT || targetInput.inputType === INPUT_TYPES.SELECT_CHECKBOXES) {
+        return {
+          ...state,
+          form: {
+            ...state.form,
+            inputs: {
+              ...state.form.inputs,
+              [inputName]: {
+                ...targetInput,
+                focused: true,
+                touched: true,
+                dropdownOpen: true
+              }
+            }
+          }
+        };
+      }
+
       return {
         ...state,
         form: {
@@ -255,7 +273,8 @@ const reducer = (state: FormStateType, action: UserFormAction): FormStateType =>
               value: inputValue,
               valid: true,
               searchTerm: '',
-              searchedOptions: [...targetInput.options]
+              searchedOptions: [...targetInput.options],
+              dropdownOpen: false
             }
           }
         }
@@ -404,6 +423,29 @@ const reducer = (state: FormStateType, action: UserFormAction): FormStateType =>
       }
 
       return state;
+    }
+    case UseFormActionTypes.ON_CLOSE_DROPDOWN: {
+      const { inputName } = action;
+      const targetInput = state.form.inputs[inputName];
+
+      if (targetInput.inputType !== INPUT_TYPES.SELECT && targetInput.inputType !== INPUT_TYPES.SELECT_CHECKBOXES) {
+        return state;
+      }
+
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          inputs: {
+            ...state.form.inputs,
+            [inputName]: {
+              ...targetInput,
+              dropdownOpen: false,
+              focused: false
+            }
+          }
+        }
+      };
     }
     case UseFormActionTypes.ON_CHECK_FORM_VALIDITY: {
       return {

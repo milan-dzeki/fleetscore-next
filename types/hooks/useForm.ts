@@ -22,7 +22,8 @@ export const UseFormActionTypes = {
   ON_SELECT: 'ON_SELECT',
   ON_SELECT_DROPDOWN_CHECK: 'ON_SELECT_DROPDOWN_CHECK',
   ON_SEARCH_DROPDOWN: 'ON_SEARCH_DROPDOWN',
-  ON_CLEAR_SEARCH_DROPDOWN: 'ON_CLEAR_SEARCH_DROPDOWN'
+  ON_CLEAR_SEARCH_DROPDOWN: 'ON_CLEAR_SEARCH_DROPDOWN',
+  ON_CLOSE_DROPDOWN: 'ON_CLOSE_DROPDOWN'
 } as const;
 
 interface OnSetFormStartAction {
@@ -93,6 +94,11 @@ interface OnClearSearchDropdownAction {
   inputName: string;
 }
 
+interface OnCloseDropdownAction {
+  type: typeof UseFormActionTypes.ON_CLOSE_DROPDOWN;
+  inputName: string;
+}
+
 export type UserFormAction = (
   OnSetFormStartAction |
   OnSetFormFailedAction |
@@ -106,5 +112,6 @@ export type UserFormAction = (
   OnSelectAction |
   OnSelectDropdownCheckAction |
   OnSearchDropdownAction |
-  OnClearSearchDropdownAction
+  OnClearSearchDropdownAction |
+  OnCloseDropdownAction
 );

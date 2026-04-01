@@ -28,9 +28,9 @@ const RegattaPageActions = ({ locale, regattaOwnerId, regatta }: Props) => {
   const onOpenDeleteModal = () => {
     openModal({
       type: MODAL_TYPES.CONFIRM,
-      title: t('deletingRegatta'),
-      text: t('deleteText'),
-      confirmActionText: t('deleteRegatta'),
+      title: t(`${REGATTA_PAGE_NS}:deletingRegatta`),
+      text: t(`${REGATTA_PAGE_NS}:deleteText`),
+      confirmActionText: t(`${REGATTA_PAGE_NS}:deleteRegatta`),
       onConfirm: () => {}
     });
   };
@@ -114,12 +114,12 @@ const RegattaPageActions = ({ locale, regattaOwnerId, regatta }: Props) => {
 
   const buttons = [
     {
-      text: t('editRegatta'),
+      text: t(`${REGATTA_PAGE_NS}:editRegatta`),
       Icon: <EditIcon />,
       action: onOpenEditModal
     },
     {
-      text: t('deleteRegatta'),
+      text: t(`${REGATTA_PAGE_NS}:deleteRegatta`),
       Icon: <DeleteIcon color="errorRed" />,
       action: onOpenDeleteModal,
       danger: true

@@ -5,7 +5,6 @@ import {
   type MouseEventHandler,
   type ChangeEventHandler,
   type ChangeEvent,
-  useCallback,
   useRef
 } from 'react';
 import InputLabel from '../accessories/InputLabel';
@@ -13,6 +12,7 @@ import InputElement from '../accessories/InputElement';
 import XFatIcon from '@/components/icons/XFatIcon';
 import SearchDropdownInput from '../accessories/SearchDropdownInput';
 import classes from '@/styles/components/inputs/elements/selectCheckboxesInput.module.scss';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 interface Props {
   data: SelectCheckboxesInputType;
@@ -23,6 +23,7 @@ interface Props {
   onSearchDropdown: (event: ChangeEvent<HTMLInputElement>, inputName: string) => void;
   onClearSearchDropdown: (inputName: string) => void;
   onCheck: (event: ChangeEvent<HTMLInputElement>, inputName: string) => void;
+  onCloseDropdown: (inputName: string) => void;
 }
 
 const SelectCheckboxesInput: FC<Props> = ({
@@ -34,26 +35,19 @@ const SelectCheckboxesInput: FC<Props> = ({
     searchTerm,
     valid,
     searchedOptions,
-    value
+    value,
+    dropdownOpen
   },
   onFocus,
   onUnfocus,
   onClear,
   onSearchDropdown,
   onClearSearchDropdown,
-  onCheck
+  onCheck,
+  onCloseDropdown
 }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLInputElement | null>(null);
-  const droppdownRef = useRef<HTMLDivElement | null>(null);
-  
-  const onUnfocusCustom: FocusEventHandler<HTMLInputElement> = useCallback((e) => {
-    const relatedTarget = e.relatedTarget;
-    if (droppdownRef.current && droppdownRef.current.contains(relatedTarget)) {
-      return null;
-    }
-
-    onUnfocus(e);
-  }, [onUnfocus]);
 
   const handleClear: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
@@ -61,9 +55,15 @@ const SelectCheckboxesInput: FC<Props> = ({
     onClear(attributes.name);
     ref.current?.focus();
   };
+
+  const closeDropdown = () => {
+    onCloseDropdown(attributes.name);
+  };
+  
+  useOutsideClick(containerRef, closeDropdown, dropdownOpen);
   
   return (
-    <div className={classes.input}>
+    <div className={classes.input} ref={containerRef}>
       <InputLabel
         visible={!!value.trim()}
         htmlFor={attributes.id}
@@ -74,17 +74,17 @@ const SelectCheckboxesInput: FC<Props> = ({
         attributes={attributes}
         readOnly
         value={value}
-        focused={focused}
+        focused={focused || dropdownOpen}
         touched={touched}
         valid={valid}
         onFocus={onFocus}
-        onUnfocus={onUnfocusCustom}
+        onUnfocus={onUnfocus}
       />
       {value.trim() && (
         <XFatIcon className={classes.clearBtn} onClick={handleClear} />
       )}
-      {focused && (
-        <div className={classes.inputDropdown} ref={droppdownRef} tabIndex={0}>
+      {dropdownOpen && (
+        <div className={classes.inputDropdown}>
           <SearchDropdownInput
             value={searchTerm}
             parentInputName={attributes.name}
@@ -101,7 +101,7 @@ const SelectCheckboxesInput: FC<Props> = ({
                   checked={option.checked}
                   onChange={(event) => onCheck(event, attributes.name)}
                 />
-                <label htmlFor={option.value}>
+                <label htmlFor={option.id.toString()}>
                   {option.value}
                 </label>
               </div>

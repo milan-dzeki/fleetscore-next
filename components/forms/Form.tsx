@@ -63,6 +63,7 @@ const Form = <D extends object>({
     onSearchDropdown,
     onClearSearchDropdown,
     onSelectDropdownCheck,
+    onCloseDropdown
   } = useForm(generatedForm, onPrepopulateForm);
 
   const [serverResponse, setServerResponse] = useState<ServerResponseStateType<D>>({
@@ -184,6 +185,7 @@ const Form = <D extends object>({
                   onClear={onClearInput}
                   onSearchDropdown={onSearchDropdown}
                   onClearSearchDropdown={onClearSearchDropdown}
+                  onCloseDropdown={onCloseDropdown}
                 />
               );
             }
@@ -200,6 +202,7 @@ const Form = <D extends object>({
                   onSearchDropdown={onSearchDropdown}
                   onClearSearchDropdown={onClearSearchDropdown}
                   onCheck={onSelectDropdownCheck}
+                  onCloseDropdown={onCloseDropdown}
                 />
               );
             }
