@@ -42,7 +42,7 @@ const SingleRegattaPage = async ({
   return (
     <>
       <PageTitle title={regatta.name} />
-      <RegattaPageActions locale={lng} regattaOwnerId={regatta.ownerId} />
+      <RegattaPageActions locale={lng} regattaOwnerId={regatta.ownerId} regatta={regatta} />
       <RegattaFull regatta={regatta} translations={translations} />
     </>
   );

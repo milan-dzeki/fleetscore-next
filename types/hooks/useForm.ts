@@ -1,4 +1,18 @@
+import type { FormType } from '../forms';
+
+export interface FormStateType {
+  form: FormType;
+  prepopulateInfo: {
+    loading: boolean;
+    isPrepopulated: boolean;
+    error: string | null;
+  };
+}
+
 export const UseFormActionTypes = {
+  ON_SET_FORM_START: 'ON_SET_FORM_START',
+  ON_SET_FORM_FAILED: 'ON_SET_FORM_FAILED',
+  ON_SET_FORM_SUCCESS: 'ON_SET_FORM_SUCCESS',
   ON_INPUT_FOCUS: 'ON_INPUT_FOCUS',
   ON_INPUT_UNFOCUS: 'ON_INPUT_UNFOCUS',
   ON_INPUT_CHANGE: 'ON_INPUT_CHANGE',
@@ -10,6 +24,20 @@ export const UseFormActionTypes = {
   ON_SEARCH_DROPDOWN: 'ON_SEARCH_DROPDOWN',
   ON_CLEAR_SEARCH_DROPDOWN: 'ON_CLEAR_SEARCH_DROPDOWN'
 } as const;
+
+interface OnSetFormStartAction {
+  type: typeof UseFormActionTypes.ON_SET_FORM_START;
+}
+
+interface OnSetFormFailedAction {
+  type: typeof UseFormActionTypes.ON_SET_FORM_FAILED;
+  error: string;
+}
+
+interface OnSetFormSuccessAction {
+  type: typeof UseFormActionTypes.ON_SET_FORM_SUCCESS;
+  form: FormType;
+}
 
 interface OnInputFocusAction {
   type: typeof UseFormActionTypes.ON_INPUT_FOCUS;
@@ -66,6 +94,9 @@ interface OnClearSearchDropdownAction {
 }
 
 export type UserFormAction = (
+  OnSetFormStartAction |
+  OnSetFormFailedAction |
+  OnSetFormSuccessAction |
   OnInputFocusAction |
   OnInputUnfocusAction |
   OnInputChangeAction |

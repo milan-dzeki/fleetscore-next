@@ -1,3 +1,4 @@
+import type { FormApiConfigType } from '../commons';
 import type { FormType } from '../forms';
 
 export const MODAL_TYPES = {
@@ -8,17 +9,19 @@ export const MODAL_TYPES = {
 interface ModalType {
   title: string;
   confirmActionText?: string;
-  onConfirm: () => void;
 }
 
 interface ModalConfirmType extends ModalType {
   type: typeof MODAL_TYPES.CONFIRM;
   text: string;
+  onConfirm: () => void;
 }
 
 interface ModalFormType extends ModalType {
   type: typeof MODAL_TYPES.FORM;
-  form: FormType
+  form: FormType;
+  formApiConfig: FormApiConfigType;
+  onPrepopulateForm?: () => Promise<FormType | { error: string; }> | FormType;
 }
 
 export type ModalStateType = ModalConfirmType | ModalFormType; 

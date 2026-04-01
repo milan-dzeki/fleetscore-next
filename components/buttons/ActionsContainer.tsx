@@ -9,7 +9,7 @@ interface Props {
   buttons: {
     text: string;
     Icon: JSX.Element;
-    action: () => void;
+    action: () => void | Promise<void>;
     danger?: boolean;
   }[];
 }

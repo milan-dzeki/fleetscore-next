@@ -8,12 +8,14 @@ interface Props {
 const MainLoader = ({ text }: Props) => {
   return (
     <div className={classes.mainLoader}>
-      <div className={classes.mainLoaderIcons}>
-        <ShipIcon size="big" color="white" />
-        <ShipIcon size="big" color="white" />
-        <ShipIcon size="big" color="white" />
+      <div className={classes.mainLoaderContent}>
+        <div className={classes.mainLoaderIcons}>
+          <ShipIcon size="big" color="white" />
+          <ShipIcon size="big" color="white" />
+          <ShipIcon size="big" color="white" />
+        </div>
+        {text && <p className={classes.mainLoaderText}>{text}</p>}
       </div>
-      {text && <p className={classes.mainLoaderText}>{text}</p>}
     </div>
   );
 };

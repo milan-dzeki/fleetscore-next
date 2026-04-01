@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
 import OrganisationsApi from '@/customApi/organisations/organisationsApi';
 
+export async function GET () {
+  const regattasApi = new OrganisationsApi({});
+  const response = await regattasApi
+    .get();
+
+  return NextResponse.json(response, { status: response.statusCode });
+}
+
 export async function POST (req: NextRequest) {
   const requestBody = await req.json();
   const locale = req.cookies.get('i18next')?.value || 'en';

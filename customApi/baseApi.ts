@@ -68,9 +68,10 @@ abstract class BaseApi {
   protected async execute <D>(params: {
     endpoint: string;
     method: typeof SERVER_METHODS[keyof typeof SERVER_METHODS];
+    entityFetchTag?: string;
     revalidateTagOnSuccess?: string;
   }): Promise<BaseApiResponseType<D>> {
-    const { endpoint, method, revalidateTagOnSuccess } = params;
+    const { endpoint, method, entityFetchTag, revalidateTagOnSuccess } = params;
 
     try {
       const response = await fetch(`${endpoint}${this.searchParams || ''}`, {
@@ -80,6 +81,9 @@ abstract class BaseApi {
         } : {}),
         ...(method !== SERVER_METHODS.GET && this.requestBody ? {
           body: JSON.stringify(this.requestBody)
+        } : {}),
+        ...(entityFetchTag ? {
+          next: { tags: [entityFetchTag] }
         } : {})
       });
 

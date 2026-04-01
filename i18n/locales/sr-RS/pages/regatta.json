@@ -13,5 +13,6 @@
   "throwoutLimit": "Maksimalan broj odbacivanja",
   "deletingRegatta": "Brisanje regata",
   "deleteText": "Da li ste sigurni da želite obrisati ovu regatu?",
-  "deleteButton": "Obriši Regati"
+  "deleteButton": "Obriši Regati",
+  "getFormDataError": "Došlo je do greške prilikom prikupljanja podataka"
 }

@@ -1,6 +1,8 @@
 import { unstable_cache } from 'next/cache';
 import type { FormType } from '@/types/forms';
-import type { SelectCheckboxesInputType, SelectInputType } from '@/types/inputs';
+import { INPUT_TYPES, type SelectCheckboxesInputType, type SelectInputType } from '@/types/inputs';
+import type { TranslationFunctionType } from '@/types/commons';
+import type { RegattaType } from '@/types/entities';
 import RegattasApi from './regattasApi';
 import { getOrganisations } from '../organisations/organisationsApiClient';
 import { getSailingClasses } from '../sailingClasses/sailingClassesApiClient';
@@ -14,14 +16,12 @@ export const getRegattas = unstable_cache(async () => {
   tags: ['regattas']
 });
 
-export const getRegattaById = unstable_cache(async (id: string) => {
-  const regattasApi = new RegattasApi({ searchParams: `/${id}` });
-  const response = await regattasApi.getById();
+export const getRegattaById = async (id: string) => {
+  const regattasApi = new RegattasApi({});
+  const response = await regattasApi.getById(id);
 
   return response;
-}, ['regattas'], {
-  tags: ['regattas']
-});
+};
 
 export const deleteRegatta = async (id: number) => {
   const regattasApi = new RegattasApi({});
@@ -29,9 +29,7 @@ export const deleteRegatta = async (id: number) => {
   return response;
 };
 
-export const getCreateRegattaForm = async (
-  t: (key: string) => string
-): Promise<FormType | { error: string }> => {
+export const getCreateRegattaForm = async (t: TranslationFunctionType): Promise<FormType | { error: string }> => {
   const [organisations, sailingClasses] = await Promise.all([
     getOrganisations(),
     getSailingClasses()
@@ -71,4 +69,36 @@ export const getCreateRegattaForm = async (
   };
 
   return formWithAllData;
+};
+
+export const getEditRegattaForm = async (
+  t: TranslationFunctionType,
+  regatta: RegattaType
+) => {
+  const formWithAllData = await getCreateRegattaForm(t);
+  console.log('FORM', formWithAllData);
+  if ('error' in formWithAllData) {
+    return { error: t('errorFetchingCreateData') };
+  }
+
+  const populatedInputs = {
+    ...formWithAllData.inputs
+  };
+
+  for (const input in populatedInputs) {
+    if (input in regatta) {
+      const regataProp = regatta[input as keyof typeof regatta];
+      if (
+        populatedInputs[input].inputType === INPUT_TYPES.TEXT &&
+        (typeof regataProp === 'string' || typeof regataProp === 'number')
+      ) {
+        populatedInputs[input].value = regataProp.toString();
+      }
+    }
+  }
+
+  return {
+    formWithAllData,
+    inputs: populatedInputs
+  };
 };

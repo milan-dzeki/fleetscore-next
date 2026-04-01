@@ -9,8 +9,7 @@ import {
 } from 'react';
 import { useAppDispatch } from '@/hooks/store';
 import type { FormType } from '@/types/forms';
-import type { ServerResponseStateType } from '@/types/components/forms/form';
-import SERVER_METHODS from '@/configs/server/methods';
+import type { PrepopulateFormFnType, ServerResponseStateType } from '@/types/components/forms/form';
 import { INPUT_TYPES } from '@/types/inputs';
 import { useForm } from '@/hooks/useForm/useForm';
 import { setNotifications } from '@/store/slices/notificationsSlice';
@@ -20,19 +19,20 @@ import FormActionMessage from './FormActionMessage';
 import SelectInput from '../inputs/elements/SelectInput';
 import classes from '@/styles/components/forms/form.module.scss';
 import SelectCheckboxesInput from '../inputs/elements/SelectCheckboxesInput';
+import type { FormApiConfigType } from '@/types/commons';
+import { useModal } from '@/contexts/modalContext';
 
 interface Props<D> {
   generatedForm: FormType;
   submitText: string;
-  apiConfig: {
-    endpoint: string;
-    method: typeof SERVER_METHODS[keyof typeof SERVER_METHODS];
-    credentials?: RequestCredentials;
-  };
+  apiConfig: FormApiConfigType;
   extraReqBodyFields?: { [fieldName: string]: string };
   children?: ReactNode;
   HandlerComp?: ComponentType<{ data: D | null; }>;
   createNotificationOnSuccess?: boolean;
+  onPrepopulateForm?: PrepopulateFormFnType;
+  shouldRefreshOnSuccess?: boolean;
+  closeModalOnSettled?: boolean;
 }
 
 const Form = <D extends object>({
@@ -42,10 +42,15 @@ const Form = <D extends object>({
   extraReqBodyFields,
   children,
   HandlerComp,
-  createNotificationOnSuccess
+  createNotificationOnSuccess,
+  onPrepopulateForm,
+  shouldRefreshOnSuccess,
+  closeModalOnSettled
 }: Props<D>) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const { closeModal } = useModal();
 
   const {
     form,
@@ -57,8 +62,8 @@ const Form = <D extends object>({
     onSelect,
     onSearchDropdown,
     onClearSearchDropdown,
-    onSelectDropdownCheck
-  } = useForm(generatedForm);
+    onSelectDropdownCheck,
+  } = useForm(generatedForm, onPrepopulateForm);
 
   const [serverResponse, setServerResponse] = useState<ServerResponseStateType<D>>({
     loading: false,
@@ -126,7 +131,15 @@ const Form = <D extends object>({
         }));
       }
 
-      if (resData.redirectUrl) {
+      if (closeModalOnSettled) {
+        closeModal();
+      }
+
+      if (!resData.redirectUrl && shouldRefreshOnSuccess) {
+        router.refresh();
+      }
+
+      if (resData.redirectUrl && !shouldRefreshOnSuccess) {
         router.refresh();
         router.replace(resData.redirectUrl);
         return;

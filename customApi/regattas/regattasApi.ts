@@ -16,14 +16,17 @@ class RegattasApi extends BaseApi {
   async get (): Promise<BaseApiResponseType<RegattaType[]>> {
     return await this.execute<RegattaType[]>({
       endpoint: this.baseUrl,
-      method: SERVER_METHODS.GET
+      method: SERVER_METHODS.GET,
+      entityFetchTag: 'regattas'
     });
   }
 
-  async getById (): Promise<BaseApiResponseType<RegattaType>> {
+  async getById (id: string): Promise<BaseApiResponseType<RegattaType>> {
+    console.log('GET BY ID');
     return await this.execute<RegattaType>({
-      endpoint: this.baseUrl,
-      method: SERVER_METHODS.GET
+      endpoint: `${this.baseUrl}/${id}`,
+      method: SERVER_METHODS.GET,
+      entityFetchTag: `regattas-${id}`
     });
   }
 
@@ -39,7 +42,18 @@ class RegattasApi extends BaseApi {
       ...('data' in response && response.data.id ? {
         redirectUrl: `/${locale}${ROUTE_PATHS.REGATTAS.root}/${response.data.id}`
       } : {})
-    };;
+    };
+  }
+
+  async update (locale: string, id: string): Promise<BaseApiResponseType<RegattaType>> {
+    console.log('update', id);
+    const response = await this.execute<RegattaType>({
+      endpoint: `${this.baseUrl}/${id}`,
+      method: SERVER_METHODS.PUT,
+      revalidateTagOnSuccess: `regattas-${id}`
+    });
+
+    return response;
   }
 
   async delete (id: number) {

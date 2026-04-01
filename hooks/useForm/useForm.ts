@@ -4,21 +4,51 @@ import {
   type ChangeEvent,
   useReducer,
   useCallback,
-  useEffect
+  useEffect,
 } from 'react'
 import type { FormType } from '@/types/forms';
 import reducer from './reducer';
 import { UseFormActionTypes } from '@/types/hooks/useForm';
 
-export const useForm = (providedForm: FormType) => {
-  const [state, dispatch] = useReducer(reducer, providedForm);
+export const useForm = (providedForm: FormType, prepopulateForm?: () => Promise<FormType | { error: string; }> | FormType) => {
+  const [state, dispatch] = useReducer(reducer, {
+    form: providedForm,
+    prepopulateInfo: {
+      loading: false,
+      isPrepopulated: false,
+      error: null
+    }
+  });
 
   useEffect(() => {
     dispatch({
       type: UseFormActionTypes.ON_CHECK_FORM_VALIDITY,
-      isValid: Object.keys(state.inputs).every((input) => state.inputs[input].valid)
+      isValid: Object.keys(state.form.inputs).every((input) => state.form.inputs[input].valid)
     });
-  }, [state.inputs]);
+  }, [state.form.inputs]);
+
+  const onPrepopulateForm = useCallback(async () => {
+    if (prepopulateForm && !state.prepopulateInfo.isPrepopulated) {
+      dispatch({ type: UseFormActionTypes.ON_SET_FORM_START });
+      
+      const formData = await prepopulateForm();
+      if ('error' in formData) {
+        return dispatch({
+          type: UseFormActionTypes.ON_SET_FORM_FAILED,
+          error: formData.error
+        });
+      }
+
+      dispatch({
+        type: UseFormActionTypes.ON_SET_FORM_SUCCESS,
+        form: formData
+      });
+    }
+  }, [prepopulateForm, state.prepopulateInfo.isPrepopulated]);
+
+  useEffect(() => {
+    onPrepopulateForm();
+  }, [onPrepopulateForm]);
 
   const onInputFocus: FocusEventHandler<HTMLInputElement> = useCallback((event) => {
     dispatch({
@@ -99,7 +129,7 @@ export const useForm = (providedForm: FormType) => {
   }, []);
 
   return {
-    form: state,
+    form: state.form,
     onInputFocus,
     onInputUnfocus,
     onInputChange,

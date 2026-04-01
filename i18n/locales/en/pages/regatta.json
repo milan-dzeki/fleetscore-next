@@ -13,5 +13,6 @@
   "throwoutLimit": "Throwout Limit",
   "deletingRegatta": "Preparing Regatta deletion",
   "deleteText": "Are you sure you want to delete this regatta?",
-  "deleteButton": "Delete Regatta"
+  "deleteButton": "Delete Regatta",
+  "getFormDataError": "failed to get edit data"
 }
