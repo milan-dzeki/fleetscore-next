@@ -137,6 +137,7 @@ export const useForm = (providedForm: FormType, prepopulateForm?: () => Promise<
 
   return {
     form: state.form,
+    prepopulateInfo: state.prepopulateInfo,
     onInputFocus,
     onInputUnfocus,
     onInputChange,

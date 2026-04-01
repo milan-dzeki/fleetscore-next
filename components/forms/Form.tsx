@@ -21,6 +21,7 @@ import classes from '@/styles/components/forms/form.module.scss';
 import SelectCheckboxesInput from '../inputs/elements/SelectCheckboxesInput';
 import type { FormApiConfigType } from '@/types/commons';
 import { useModal } from '@/contexts/modalContext';
+import Spinner from '../loaders/Spinner';
 
 interface Props<D> {
   generatedForm: FormType;
@@ -54,6 +55,7 @@ const Form = <D extends object>({
 
   const {
     form,
+    prepopulateInfo,
     onInputFocus,
     onInputUnfocus,
     onInputChange,
@@ -162,6 +164,10 @@ const Form = <D extends object>({
       }));
     }
   };
+
+  if (serverResponse.loading || prepopulateInfo.loading) {
+    return <Spinner withContainer />;
+  }
   
   return (
     <div className={classes.form}>
