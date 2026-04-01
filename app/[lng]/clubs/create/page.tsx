@@ -9,7 +9,8 @@ import SERVER_METHODS from '@/configs/server/methods';
 import { CREATE_CLUB_PAGE_NS } from '@/i18n/namespaces/pages';
 import PageTitle from '@/components/layout/PageTitle';
 import Form from '@/components/forms/Form';
-import { generateCreateClubForm } from '@/configs/forms/generators/clubs/createClubForm';
+import { getCreateClubForm } from '@/customApi/clubs/clubsApiClient';
+import FormActionMessage from '@/components/forms/FormActionMessage';
 
 const apiConfig = {
   endpoint: API_ENDPOINTS.CLUBS.create,
@@ -23,16 +24,22 @@ const CreateClubPage = async ({ params: { lng } }: LngParamsType) => {
   }
 
   const { t } = await getTranslations(lng, CREATE_CLUB_PAGE_NS);
-  const createRegattaForm = generateCreateClubForm(t);
+  const createClubForm = await getCreateClubForm(t);
 
   return (
     <>
       <PageTitle title={t('title')} />
-      <Form
-        generatedForm={createRegattaForm}
-        apiConfig={apiConfig}
-        submitText={t('create')}
-      />
+      {
+        'error' in createClubForm
+          ? <FormActionMessage isError message={createClubForm.error} />
+          : (
+            <Form
+              generatedForm={createClubForm}
+              apiConfig={apiConfig}
+              submitText={t('create')}
+            />
+          )  
+      }
     </>
   );
 };
