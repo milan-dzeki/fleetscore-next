@@ -55,3 +55,17 @@ export interface RegattaType {
   };
   ownerId: string;
 }
+
+export interface ClubType {
+  id: number;
+  name: string;
+  country: string;
+  place: string;
+  postCode: string;
+  address: string;
+  email: string;
+  phone: string;
+  organisationId: number;
+  organisationName: string;
+  ownerid: number;
+}
