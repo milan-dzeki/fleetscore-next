@@ -15,7 +15,8 @@ export const API_ENDPOINTS = {
   },
   REGATTAS: {
     create: '/api/regattas',
-    edit: '/api/regattas'
+    edit: '/api/regattas',
+    delete: '/api/regattas'
   },
   SAILING_CLASSES: {
     get: '/api/sailing-classes/'

@@ -14,7 +14,7 @@ interface ModalType {
 interface ModalConfirmType extends ModalType {
   type: typeof MODAL_TYPES.CONFIRM;
   text: string;
-  onConfirm: () => void;
+  onConfirm: () => Promise<Response>;
 }
 
 interface ModalFormType extends ModalType {

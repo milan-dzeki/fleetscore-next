@@ -54,14 +54,17 @@ class RegattasApi extends BaseApi {
     return response;
   }
 
-  async delete (id: number) {
+  async delete (id: string, locale: string) {
     const response = await this.execute({
       endpoint: `${this.baseUrl}/${id}`,
       method: SERVER_METHODS.DELETE,
       revalidateTagOnSuccess: 'regattas'
     });
 
-    return response;
+    return {
+      ...response,
+      redirectUrl: `/${locale}${ROUTE_PATHS.REGATTAS.root}`
+    };
   }
 }
 

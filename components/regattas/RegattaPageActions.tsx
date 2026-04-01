@@ -25,13 +25,19 @@ const RegattaPageActions = ({ locale, regattaOwnerId, regatta }: Props) => {
 
   const { openModal } = useModal();
 
+  const onDeleteRegatta = async () => {
+    return await fetch(`${API_ENDPOINTS.REGATTAS.delete}/${regatta.id}`, {
+      method: SERVER_METHODS.DELETE
+    });
+  };
+
   const onOpenDeleteModal = () => {
     openModal({
       type: MODAL_TYPES.CONFIRM,
       title: t(`${REGATTA_PAGE_NS}:deletingRegatta`),
       text: t(`${REGATTA_PAGE_NS}:deleteText`),
       confirmActionText: t(`${REGATTA_PAGE_NS}:deleteRegatta`),
-      onConfirm: () => {}
+      onConfirm: onDeleteRegatta
     });
   };
 

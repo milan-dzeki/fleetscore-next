@@ -99,7 +99,7 @@ abstract class BaseApi {
         return {
           success: false,
           statusCode: response.status,
-          message: data.message || data.data?.message || ''
+          message: data.data?.message || data.message || ''
         };
       }
 
