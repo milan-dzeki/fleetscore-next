@@ -17,7 +17,7 @@ const apiConfig = {
   method: SERVER_METHODS.POST
 };
 
-const CreateRegataPage = async ({ params: { lng } }: LngParamsType) => {
+const CreateRegattaPage = async ({ params: { lng } }: LngParamsType) => {
   const profileResponse = await getProfile();
   if (!profileResponse.success) {
     redirect(`/${lng}${ROUTE_PATHS.AUTH.login}`, RedirectType.replace);
@@ -44,4 +44,4 @@ const CreateRegataPage = async ({ params: { lng } }: LngParamsType) => {
   );
 };
 
-export default CreateRegataPage
+export default CreateRegattaPage

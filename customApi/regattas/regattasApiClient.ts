@@ -1,8 +1,7 @@
 import { unstable_cache } from 'next/cache';
 import type { FormType } from '@/types/forms';
-import { INPUT_TYPES, type SelectCheckboxesInputType, type SelectInputType } from '@/types/inputs';
+import { type SelectCheckboxesInputType, type SelectInputType } from '@/types/inputs';
 import type { TranslationFunctionType } from '@/types/commons';
-import type { RegattaType } from '@/types/entities';
 import RegattasApi from './regattasApi';
 import { getOrganisations } from '../organisations/organisationsApiClient';
 import { getSailingClasses } from '../sailingClasses/sailingClassesApiClient';
@@ -63,36 +62,4 @@ export const getCreateRegattaForm = async (t: TranslationFunctionType): Promise<
   };
 
   return formWithAllData;
-};
-
-export const getEditRegattaForm = async (
-  t: TranslationFunctionType,
-  regatta: RegattaType
-) => {
-  const formWithAllData = await getCreateRegattaForm(t);
-
-  if ('error' in formWithAllData) {
-    return { error: t('errorFetchingCreateData') };
-  }
-
-  const populatedInputs = {
-    ...formWithAllData.inputs
-  };
-
-  for (const input in populatedInputs) {
-    if (input in regatta) {
-      const regataProp = regatta[input as keyof typeof regatta];
-      if (
-        populatedInputs[input].inputType === INPUT_TYPES.TEXT &&
-        (typeof regataProp === 'string' || typeof regataProp === 'number')
-      ) {
-        populatedInputs[input].value = regataProp.toString();
-      }
-    }
-  }
-
-  return {
-    formWithAllData,
-    inputs: populatedInputs
-  };
 };
