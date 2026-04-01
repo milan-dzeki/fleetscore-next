@@ -3,6 +3,13 @@ import type { FormType } from '@/types/forms';
 import type { SelectInputType } from '@/types/inputs';
 import { getOrganisations } from '../organisations/organisationsApiClient';
 import { generateCreateClubForm } from '@/configs/forms/generators/clubs/createClubForm';
+import ClubsApi from './clubsApi';
+
+export const getClubs = async () => {
+  const clubsApi = new ClubsApi({});
+  return await clubsApi
+    .get();
+};
 
 export const getCreateClubForm = async (
   t: TranslationFunctionType

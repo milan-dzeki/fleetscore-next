@@ -67,5 +67,5 @@ export interface ClubType {
   phone: string;
   organisationId: number;
   organisationName: string;
-  ownerid: number;
+  ownerId: number;
 }

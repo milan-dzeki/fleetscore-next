@@ -1,0 +1,8 @@
+{
+  "title": "Klubovi",
+  "place": "mesto",
+  "organisation": "organizacija",
+  "seeDetails": "vidi detalje kluba",
+  "edit": "izmeni",
+  "errorFetchingCreateData": "Došlo je do greške. Refrešujte stranicu."
+}

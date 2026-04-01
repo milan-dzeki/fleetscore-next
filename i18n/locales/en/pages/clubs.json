@@ -1,0 +1,8 @@
+{
+  "title": "Clubs",
+  "place": "place",
+  "organisation": "organisation",
+  "seeDetails": "See Details",
+  "edit": "edit",
+  "errorFetchingCreateData": "Failed to get required data for creation. Try refreshing the page."
+}
