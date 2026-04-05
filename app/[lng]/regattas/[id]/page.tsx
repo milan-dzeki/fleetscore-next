@@ -6,6 +6,7 @@ import PageTitle from '@/components/layout/PageTitle';
 import FormActionMessage from '@/components/forms/FormActionMessage';
 import RegattaFull from '@/components/regattas/RegattaFull';
 import RegattaPageActions from '@/components/regattas/RegattaPageActions';
+import RegattaRegistrations from '@/components/regattas/RegattaRegistrations';
 
 const SingleRegattaPage = async ({
   params: {
@@ -37,6 +38,11 @@ const SingleRegattaPage = async ({
     throwoutLimit: t('throwoutLimit'),
   };
 
+  const registrationsTranslations = {
+    seeRegistrations: t('seeRegistrations'),
+    register: t('register')
+  };
+
   const regatta = response.data;
 
   return (
@@ -44,6 +50,7 @@ const SingleRegattaPage = async ({
       <PageTitle title={regatta.name} />
       <RegattaPageActions locale={lng} regattaOwnerId={regatta.ownerId} regatta={regatta} />
       <RegattaFull regatta={regatta} translations={translations} />
+      <RegattaRegistrations translations={registrationsTranslations} />
     </>
   );
 };
