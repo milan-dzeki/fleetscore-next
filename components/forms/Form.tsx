@@ -22,6 +22,7 @@ import SelectCheckboxesInput from '../inputs/elements/SelectCheckboxesInput';
 import type { FormApiConfigType } from '@/types/commons';
 import { useModal } from '@/contexts/modalContext';
 import Spinner from '../loaders/Spinner';
+import RadioInput from '../inputs/elements/RadioInput';
 
 interface Props<D> {
   generatedForm: FormType;
@@ -212,6 +213,17 @@ const Form = <D extends object>({
                 />
               );
             }
+
+            if (inputData.inputType === INPUT_TYPES.RADIO) {
+              return (
+                <RadioInput
+                  key={input}
+                  data={inputData}
+                  onChange={onInputChange}
+                />
+              );
+            }
+
             return (
               <TextInput
                 key={input}

@@ -14,5 +14,20 @@
   "deletingRegatta": "Brisanje regata",
   "deleteText": "Da li ste sigurni da želite obrisati ovu regatu?",
   "deleteButton": "Obriši Regati",
-  "getFormDataError": "Došlo je do greške prilikom prikupljanja podataka"
+  "getFormDataError": "Došlo je do greške prilikom prikupljanja podataka",
+  "seeRegistrations": "Vidi prijave",
+  "register": "Prijavi se",
+  "sailorNamePlaceholder": "Unesite ime jedriličara",
+  "sailorNameLabel": "Ime jedriličara",
+  "sailorNameErrorMsg": "Molimo unesite ime jedriličara",
+  "emailPlaceholder": "Unesite email adresu",
+  "emailLabel": "Email",
+  "emailErrorMsg": "Molimo unesite validnu email adresu",
+  "genderLabel": "Pol",
+  "sailingClubNamePlaceholder": "Unesite naziv jedriličarskog kluba",
+  "sailingClubNameLabel": "Naziv jedriličarskog kluba",
+  "sailingClubNameErrorMsg": "Molimo unesite naziv jedriličarskog kluba",
+  "sailingClassIdPlaceholder": "Izaberite klasu",
+  "sailingClassIdLabel": "Jedriličarska klasa",
+  "sailingClassIdErrorMsg": "Molimo izaberite jedriličarsku klasu"
 }

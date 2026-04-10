@@ -14,5 +14,20 @@
   "deletingRegatta": "Preparing Regatta deletion",
   "deleteText": "Are you sure you want to delete this regatta?",
   "deleteButton": "Delete Regatta",
-  "getFormDataError": "failed to get edit data"
+  "getFormDataError": "failed to get edit data",
+  "seeRegistrations": "See registrations",
+  "register": "Register",
+  "sailorNamePlaceholder": "Enter sailor name",
+  "sailorNameLabel": "Sailor Name",
+  "sailorNameErrorMsg": "Please enter the sailor's name",
+  "emailPlaceholder": "Enter email address",
+  "emailLabel": "Email",
+  "emailErrorMsg": "Please enter a valid email address",
+  "genderLabel": "Gender",
+  "sailingClubNamePlaceholder": "Enter sailing club name",
+  "sailingClubNameLabel": "Sailing Club Name",
+  "sailingClubNameErrorMsg": "Please enter the sailing club name",
+  "sailingClassIdPlaceholder": "Select sailing class",
+  "sailingClassIdLabel": "Sailing Class",
+  "sailingClassIdErrorMsg": "Please select a sailing class"
 }
