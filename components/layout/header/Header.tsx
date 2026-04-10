@@ -1,10 +1,11 @@
 import { Titan_One } from 'next/font/google';
 import Link from 'next/link';
 import ROUTE_PATHS from '@/configs/routePaths';
-import classes from '@/styles/components/layout/header/header.module.scss';
 import ShipIcon from '../../icons/ShipIcon';
 import HeaderLinks from './HeaderLinks';
 import HeaderLngSwitcher from './HeaderLngSwitcher';
+import HeaderNavigation from './HeaderNavigation';
+import classes from '@/styles/components/layout/header/header.module.scss';
 
 const titanOne = Titan_One({
   subsets: ['latin'],
@@ -26,10 +27,11 @@ const Header = ({ lng }: Props) => {
             <span>Fleet</span><span>Score</span>
           </p>
         </Link>
-        <nav className={classes.headerNav}>
+        <div className={classes.headerNav}>
           <HeaderLinks lng={lng} />
           <HeaderLngSwitcher lng={lng} />
-        </nav>
+          <HeaderNavigation lng={lng} />
+        </div>
       </div>
     </header>
   );

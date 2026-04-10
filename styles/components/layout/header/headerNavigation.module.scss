@@ -1,0 +1,65 @@
+@use '../../../utils/variables' as *;
+
+.nav {
+  .navBtn {
+    height: 1.75rem;
+    width: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+
+    &:hover {
+      .navLine {
+        background-color: $medium-grey;
+      }
+    }
+
+    .navLine {
+      height: 3px;
+      width: 100%;
+      background-color: white;
+      transition: transform 0.2s ease-out;
+    }
+
+    .navLineOpen1 {
+      transform: rotateZ(45deg) translateY(-0.2rem);
+      transform-origin: top left;
+    }
+
+    .navLineOpen3 {
+      transform: rotateZ(-45deg) translateX(0.1rem);
+      transform-origin: bottom left;
+    }
+  }
+
+  .navList {
+    position: fixed;
+    top: 3rem;
+    right: 0;
+    background-color: $main-dark;
+    width: 12rem;
+    border-top: 1px solid white;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: all 0.2s ease-out;
+
+    &.navListOpen {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    .navLink {
+      display: block;
+      color: white;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+
+      &:hover {
+        font-weight: 500;
+      }
+    }
+  }
+}
