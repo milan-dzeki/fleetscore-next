@@ -15,6 +15,7 @@
   "deleteText": "Da li ste sigurni da želite obrisati ovu regatu?",
   "deleteButton": "Obriši Regati",
   "getFormDataError": "Došlo je do greške prilikom prikupljanja podataka",
+  "registerToRegatta": "Prijavi se za regatu",
   "seeRegistrations": "Vidi prijave",
   "register": "Prijavi se",
   "sailorNamePlaceholder": "Unesite ime jedriličara",
