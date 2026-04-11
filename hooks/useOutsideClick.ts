@@ -1,9 +1,13 @@
 import { type MutableRefObject, useEffect } from 'react';
 
-export const useOutsideClick = <E extends HTMLElement>(elementRef: MutableRefObject<E | null>, onCloseFn: () => void, dropdownOpen?: boolean) => {
+export const useOutsideClick = <E extends HTMLElement>(
+  elementRef: MutableRefObject<E | null>,
+  onCloseFn: () => void, 
+  containerOpen: boolean
+) => {
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
-      if (dropdownOpen !== undefined && !dropdownOpen) {
+      if (!containerOpen) {
         return;
       }
       const refEl = elementRef?.current;
@@ -17,5 +21,5 @@ export const useOutsideClick = <E extends HTMLElement>(elementRef: MutableRefObj
     document.addEventListener('mousedown', handleOutsideClick);
 
     return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, [elementRef, onCloseFn, dropdownOpen]);
+  }, [elementRef, onCloseFn, containerOpen]);
 };

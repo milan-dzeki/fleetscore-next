@@ -40,7 +40,7 @@ const SearchByCheckedInput = ({
     setDropdownOpen(false);
   };
 
-  useOutsideClick(dropdownRef, onCloseDropdown);
+  useOutsideClick(dropdownRef, onCloseDropdown, dropdownOpen);
 
   const searchInputDisabled = Object.keys(inputsState.checkboxes)
     .every((checkbox) => !inputsState.checkboxes[checkbox].checked);

@@ -38,7 +38,7 @@ const Modal = ({ locale }: Props) => {
     closeModal();
   };
   
-  useOutsideClick(modalRef, fullModalClose);
+  useOutsideClick(modalRef, fullModalClose, modalState !== null);
 
   useEffect(() => {
     setElement(document.getElementById('modal'));

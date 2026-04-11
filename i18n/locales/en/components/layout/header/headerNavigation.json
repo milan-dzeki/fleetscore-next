@@ -1,3 +1,9 @@
 {
-  
+  "regattas": "Regattas",
+  "createRegatta": "Create Regatta",
+  "organisations": "Organisations",
+  "createOrganisation": "Create organisation",
+  "clubs": "Clubs",
+  "createClub": "Create Club",
+  "sailingClasses": "Sailing Classes"
 }

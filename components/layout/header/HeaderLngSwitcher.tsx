@@ -28,7 +28,7 @@ const HeaderLngSwitcher = ({ lng }: Props) => {
     setLngListOpen(false);
   };
 
-  useOutsideClick<HTMLDivElement>(containerRef, onCloseLngList);
+  useOutsideClick<HTMLDivElement>(containerRef, onCloseLngList, lngListOpen);
 
   return (
     <div className={classes.switcher} ref={containerRef}>
