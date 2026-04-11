@@ -94,6 +94,13 @@ const HeaderNavigation = ({ lng }: Props) => {
             {t('createClub')}
           </Link>
         )}
+        <Link
+          className={classes.navLink}
+          href={`${pathPrefix}${ROUTE_PATHS.SAILING_CLASSES.root}`}
+          onClick={onCloseNav}
+        >
+          {t('sailingClasses')}
+        </Link>
       </nav>
     </div>
   );

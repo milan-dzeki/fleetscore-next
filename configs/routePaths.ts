@@ -23,6 +23,9 @@ const ROUTE_PATHS = {
   CLUBS: {
     root: '/clubs',
     create: '/clubs/create'
+  },
+  SAILING_CLASSES: {
+    root: '/sailing-classes'
   }
 };
 
