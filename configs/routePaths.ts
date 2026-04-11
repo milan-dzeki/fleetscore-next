@@ -26,6 +26,9 @@ const ROUTE_PATHS = {
   },
   SAILING_CLASSES: {
     root: '/sailing-classes'
+  },
+  SAILING_NATIONS: {
+    root: '/sailing-nations'
   }
 };
 
