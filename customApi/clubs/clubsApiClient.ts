@@ -4,6 +4,7 @@ import type { SelectInputType } from '@/types/inputs';
 import { getOrganisations } from '../organisations/organisationsApiClient';
 import { generateCreateClubForm } from '@/configs/forms/generators/clubs/createClubForm';
 import ClubsApi from './clubsApi';
+import { getSailingNations } from '../sailingNations/sailingNationsApiClient';
 
 export const getClubs = async () => {
   const clubsApi = new ClubsApi({});
@@ -18,9 +19,12 @@ export const getClubById = async (id: string | number) => {
 export const getCreateClubForm = async (
   t: TranslationFunctionType
 ): Promise<FormType | { error: string }> => {
-  const organisations = await getOrganisations();
+  const [organisations, sailingNations] = await Promise.all([
+    getOrganisations(),
+    getSailingNations()
+  ]);
 
-  if (!organisations.success) {
+  if (!organisations.success || !sailingNations.success) {
     return { error: t('errorFetchingCreateData') };
   }
 
@@ -31,17 +35,27 @@ export const getCreateClubForm = async (
     value: org.name
   }));
 
+  const sailingNationsForList = sailingNations.data.map((sNation) => ({
+    id: sNation.id,
+    value: sNation.country
+  }));
+
   const formWithAllData: FormType = {
-      ...createClubForm,
-      inputs: {
-        ...createClubForm.inputs,
-        organisationId: {
-          ...(createClubForm.inputs.organisationId as SelectInputType),
-          options: organisationsForList,
-          searchedOptions: organisationsForList
-        },
+    ...createClubForm,
+    inputs: {
+      ...createClubForm.inputs,
+      organisationId: {
+        ...(createClubForm.inputs.organisationId as SelectInputType),
+        options: organisationsForList,
+        searchedOptions: organisationsForList
+      },
+      sailingNationId: {
+        ...(createClubForm.inputs.sailingNationId as SelectInputType),
+        options: sailingNationsForList,
+        searchedOptions: sailingNationsForList
       }
-    };
-  
-    return formWithAllData;
+    }
+  };
+
+  return formWithAllData;
 };

@@ -65,7 +65,9 @@ export interface RegattaType {
 export interface ClubType {
   id: number;
   name: string;
-  country: string;
+  sailingNationId: number;
+  sailingNationCode: string;
+  sailingNationCountry: string;
   place: string;
   postCode: string;
   address: string;

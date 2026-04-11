@@ -17,7 +17,7 @@ const ClubFull = ({ club, translations }: Props) => {
     <div className={classes.club}>
       <div className={classes.clubInfo}>
         <span className="text-bold">{translations.place}: </span>
-        <span>{club.country}{club.place ? ` / ${club.place}` : ''}</span>
+        <span>{club.sailingNationCountry}{club.place ? ` / ${club.place}` : ''}</span>
       </div>
       <div className={classes.clubInfo}>
         <span className="text-bold">{translations.address}: </span>

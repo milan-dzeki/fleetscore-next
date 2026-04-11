@@ -23,18 +23,22 @@ export const generateCreateClubForm = (t: TranslationFunctionType): FormType => 
         valid: false,
         errorMsg: t('nameErrorMsg')
       },
-      country: {
-        inputType: INPUT_TYPES.TEXT,
+      sailingNationId: {
+        inputType: INPUT_TYPES.SELECT,
         attributes: {
           type: 'text',
-          id: 'country',
-          name: 'country',
+          id: 'sailingNationId',
+          name: 'sailingNationId',
           placeholder: t('countryPlaceholder')
         },
         label: t('countryLabel'),
         validation: {
           required: true
         },
+        dropdownOpen: false,
+        options: [],
+        searchedOptions: [],
+        searchTerm: '',
         focused: false,
         touched: false,
         value: '',
