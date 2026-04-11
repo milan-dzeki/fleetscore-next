@@ -30,6 +30,12 @@ export interface SailingClassType {
   yearDesigned: string | null;
 }
 
+export interface SailingNationType {
+  id: number;
+  code: string;
+  country: string;
+}
+
 export interface RegattaType {
   id: number;
   name: string;

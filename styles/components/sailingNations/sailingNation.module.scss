@@ -1,0 +1,13 @@
+@use '../../utils/variables' as *;
+
+.sNation {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  
+  .sNationCode {
+    padding-right: 0.25rem;
+    margin-right: 0.25rem;
+    border-right: 2px solid $main-dark;
+  }
+}

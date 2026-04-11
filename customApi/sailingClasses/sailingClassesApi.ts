@@ -15,7 +15,8 @@ class SailingClassesApi extends BaseApi {
   async get (): Promise<BaseApiResponseType<SailingClassType[]>> {
     return await this.execute<SailingClassType[]>({
       endpoint: this.baseUrl,
-      method: SERVER_METHODS.GET
+      method: SERVER_METHODS.GET,
+      entityFetchTag: 'sailing-nations'
     });
   }
 }
