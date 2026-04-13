@@ -1,6 +1,8 @@
-import type { ApiParamsType } from '@/types/customApi/baseApi';
+import type { ApiParamsType, BaseApiResponseType } from '@/types/customApi/baseApi';
+import type { SailorType } from '@/types/entities';
 import { PROFILE_RULES } from '@/configs/forms/validations/profile';
 import SERVER_METHODS from '@/configs/server/methods';
+import { API_CACHE_KEYS } from '../cacheKeys';
 import BaseApi from '../baseApi';
 
 class ProfileApi extends BaseApi {
@@ -52,6 +54,14 @@ class ProfileApi extends BaseApi {
     });
 
     return response;
+  }
+
+  async getMySailors (userId: string): Promise<BaseApiResponseType<SailorType[]>> {
+    return await this.execute<SailorType[]>({
+      endpoint: `${this.baseUrl}/me/sailors`,
+      method: SERVER_METHODS.GET,
+      entityFetchTag: `${API_CACHE_KEYS.MY_SAILORS}-${userId}`
+    });
   }
 }
 

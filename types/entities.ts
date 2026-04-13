@@ -77,3 +77,11 @@ export interface ClubType {
   organisationName: string;
   ownerId: number;
 }
+
+export interface SailorType {
+  id: number;
+  name: string;
+  email: string;
+  dateOfBirth: string;
+  gender: 'M' | 'F';
+}

@@ -101,7 +101,29 @@ export const generateRegisterToRegattaForm = (t: TranslationFunctionType): FormT
         searchedOptions: [],
         searchTerm: '',
         errorMsg: t(`sailingClassIdErrorMsg`)
-      }
+      },
+      sailingNationId: {
+        inputType: INPUT_TYPES.SELECT,
+        attributes: {
+          type: 'text',
+          id: 'sailingNationId',
+          name: 'sailingNationId',
+          placeholder: t('countryPlaceholder')
+        },
+        label: t('countryLabel'),
+        validation: {
+          required: true
+        },
+        dropdownOpen: false,
+        options: [],
+        searchedOptions: [],
+        searchTerm: '',
+        focused: false,
+        touched: false,
+        value: '',
+        valid: false,
+        errorMsg: t('countryErrorMsg')
+      },
     },
     isValid: false
   };

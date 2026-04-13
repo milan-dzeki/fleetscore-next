@@ -2,11 +2,18 @@ import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
 import ProfileApi from '@/customApi/profile/profileApi';
 import { type NextRequest, NextResponse } from 'next/server';
 
-export async function PUT (req: NextRequest) {
-  const body = await req.json();
+export async function GET (req: NextRequest) {
   const accessToken = req.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
+  const searchParams = req.nextUrl.searchParams;
+  const userId = searchParams.get('userId');
 
-  const profileApi = new ProfileApi({ requestBody: body });
+  if (!userId) {
+    return NextResponse.json({
+      message: 'User id not provided'
+    }, { status: 400 });
+  }
+
+  const profileApi = new ProfileApi({});
   const response = await profileApi
     .setHeaders({
       useDefaultHeaders: true,
@@ -14,8 +21,7 @@ export async function PUT (req: NextRequest) {
         'Authorization': `Bearer ${accessToken}`
       }
     })
-    .validateFields('create')
-    .create();
+    .getMySailors(userId);
 
   const successResponse = NextResponse.json(response);
 

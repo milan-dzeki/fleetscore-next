@@ -7,7 +7,10 @@ export const API_ENDPOINTS = {
     resetPassword: '/api/auth/reset-password'
   },
   PROFILE: {
-    create: '/api/profile/me'
+    create: '/api/profile/me',
+    mySaliors: {
+      get: '/api/profile/me/sailors'
+    }
   },
   ORGANISATIONS: {
     get: '/api/organisations',
