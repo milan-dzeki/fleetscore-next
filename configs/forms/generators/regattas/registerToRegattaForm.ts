@@ -23,6 +23,24 @@ export const generateRegisterToRegattaForm = (t: TranslationFunctionType): FormT
         valid: false,
         errorMsg: t('sailorNameErrorMsg')
       },
+      dateOfBirth: {
+        inputType: INPUT_TYPES.TEXT,
+        attributes: {
+          type: 'date',
+          id: 'dateOfBirth',
+          name: 'dateOfBirth',
+          placeholder: t('dateOfBirthPlaceholder')
+        },
+        label: t('dateOfBirtheLabel'),
+        validation: {
+          required: true
+        },
+        focused: false,
+        touched: false,
+        value: '',
+        valid: false,
+        errorMsg: t('dateOfBirthErrorMsg')
+      },
       email: {
         inputType: INPUT_TYPES.TEXT,
         attributes: {
@@ -62,12 +80,12 @@ export const generateRegisterToRegattaForm = (t: TranslationFunctionType): FormT
           { id: 'F', value: 'F', checked: true }
         ]
       },
-      sailingClubName: {
-        inputType: INPUT_TYPES.TEXT,
+      sailingClubId: {
+        inputType: INPUT_TYPES.SELECT,
         attributes: {
           type: 'text',
-          id: 'sailingClubName',
-          name: 'sailingClubName',
+          id: 'sailingClubId',
+          name: 'sailingClubId',
           placeholder: t('sailingClubNamePlaceholder')
         },
         label: t('sailingClubNameLabel'),
@@ -76,7 +94,11 @@ export const generateRegisterToRegattaForm = (t: TranslationFunctionType): FormT
         },
         focused: false,
         touched: false,
+        options: [],
+        searchedOptions: [],
+        dropdownOpen: false,
         value: '',
+        valueName: 'sailingClubName',
         valid: false,
         errorMsg: t('sailingClubNameErrorMsg')
       },
@@ -123,6 +145,24 @@ export const generateRegisterToRegattaForm = (t: TranslationFunctionType): FormT
         value: '',
         valid: false,
         errorMsg: t('countryErrorMsg')
+      },
+      sailNumber: {
+        inputType: INPUT_TYPES.TEXT,
+        attributes: {
+          type: 'text',
+          id: 'sailNumber',
+          name: 'sailNumber',
+          placeholder: t('sailNumberPlaceholder')
+        },
+        label: t('sailNumberLabel'),
+        validation: {
+          required: true
+        },
+        focused: false,
+        touched: false,
+        value: '',
+        valid: false,
+        errorMsg: t('sailNumberErrorMsg')
       },
     },
     isValid: false

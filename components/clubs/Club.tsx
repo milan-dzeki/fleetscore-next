@@ -31,7 +31,7 @@ const Club = ({
       <div className={classes.clubContent}>
         <div>
           <span className="text-light-bold">{translations.place}: </span>
-          <span>{club.country} / {club.place}</span>
+          <span>{club.sailingNationCountry} / {club.place}</span>
         </div>
         <div>
           <span className="text-light-bold">{translations.organisation}: </span>

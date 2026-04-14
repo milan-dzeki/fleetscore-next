@@ -47,10 +47,11 @@ export interface TextInputType extends InputBaseType {
 
 export interface SelectInputType extends InputBaseType {
   inputType: typeof INPUT_TYPES.SELECT;
-  searchTerm: string;
   dropdownOpen: boolean;
   options: SelectInputOptionType[];
   searchedOptions: SelectInputOptionType[];
+  searchTerm?: string;
+  valueName?: string;
 }
 
 export interface SelectCheckboxesInputType extends InputBaseType {

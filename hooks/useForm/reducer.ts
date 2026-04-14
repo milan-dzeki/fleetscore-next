@@ -1,8 +1,8 @@
-import { type UserFormAction, FormStateType, UseFormActionTypes } from '@/types/hooks/useForm';
+import { type UseFormAction, FormStateType, UseFormActionTypes } from '@/types/hooks/useForm';
 import { INPUT_TYPES } from '@/types/inputs';
 import { validateInput } from '@/utils/inputValidators';
 
-const reducer = (state: FormStateType, action: UserFormAction): FormStateType => {
+const reducer = (state: FormStateType, action: UseFormAction): FormStateType => {
   switch (action.type) {
     case UseFormActionTypes.ON_SET_FORM_START: {
       return {
@@ -76,6 +76,22 @@ const reducer = (state: FormStateType, action: UserFormAction): FormStateType =>
       const { inputName } = action;
       const targetInput = state.form.inputs[inputName];
 
+      if (targetInput.inputType === INPUT_TYPES.SELECT) {
+        return {
+          ...state,
+          form: {
+            ...state.form,
+            inputs: {
+              ...state.form.inputs,
+              [inputName]: {
+                ...targetInput,
+                searchedOptions: targetInput.options
+              }
+            }
+          }
+        };
+      }
+
       return {
         ...state,
         form: {
@@ -145,7 +161,7 @@ const reducer = (state: FormStateType, action: UserFormAction): FormStateType =>
               [inputName]: {
                 ...targetInput,
                 value: inputValue,
-                valid: validateInput(inputValue, targetInput.validation, targetInput.options),
+                valid: validateInput(inputValue, targetInput.validation),
                 searchedOptions: targetInput.options.filter((opt) =>
                   opt.value.toLowerCase().startsWith(inputValue.toLowerCase())
                 )
@@ -193,6 +209,24 @@ const reducer = (state: FormStateType, action: UserFormAction): FormStateType =>
     case UseFormActionTypes.ON_CLEAR_INPUT: {
       const { inputName } = action;
       const targetInput = state.form.inputs[inputName];
+
+      if (targetInput.inputType === INPUT_TYPES.SELECT) {
+        return {
+          ...state,
+          form: {
+            ...state.form,
+            inputs: {
+            ...state.form.inputs,
+              [inputName]: {
+                ...targetInput,
+                valid: !targetInput.validation.required,
+                value: '',
+                searchedOptions: targetInput.options
+              }
+            }
+          }
+        };
+      }
 
       if (targetInput.inputType === INPUT_TYPES.SELECT_CHECKBOXES) {
         return {
@@ -272,7 +306,7 @@ const reducer = (state: FormStateType, action: UserFormAction): FormStateType =>
               focused: false,
               value: inputValue,
               valid: true,
-              searchTerm: '',
+              ...('searchValue' in targetInput ? { searchTerm: '' } : {}),
               searchedOptions: [...targetInput.options],
               dropdownOpen: false
             }
@@ -453,6 +487,29 @@ const reducer = (state: FormStateType, action: UserFormAction): FormStateType =>
         form: {
           ...state.form,
           isValid: action.isValid
+        }
+      };
+    }
+    case UseFormActionTypes.ON_POPULATE_SELECT_DATA: {
+      const { inputName, selectOptions } = action;
+      const targetInput = state.form.inputs[inputName];
+
+      if (!targetInput || targetInput.inputType !== INPUT_TYPES.SELECT) {
+        return state;
+      } 
+      
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          inputs: {
+            ...state.form.inputs,
+            [inputName]: {
+              ...targetInput,
+              searchedOptions: selectOptions,
+              options: selectOptions
+            }
+          }
         }
       };
     }

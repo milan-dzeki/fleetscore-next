@@ -104,6 +104,7 @@ const Modal = ({ locale }: Props) => {
                   shouldRefreshOnSuccess
                   createNotificationOnSuccess
                   closeModalOnSettled
+                  customSelectHandlers={modalState.customSelectHandlers || null}
                 />
               </div>
             )

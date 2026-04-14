@@ -5,12 +5,13 @@ import {
   type ComponentType,
   type ReactNode,
   type FormEventHandler,
-  useState
+  useState,
+  Dispatch
 } from 'react';
 import { useAppDispatch } from '@/hooks/store';
 import type { FormType } from '@/types/forms';
 import type { PrepopulateFormFnType, ServerResponseStateType } from '@/types/components/forms/form';
-import { INPUT_TYPES } from '@/types/inputs';
+import { INPUT_TYPES, SelectInputType } from '@/types/inputs';
 import { useForm } from '@/hooks/useForm/useForm';
 import { setNotifications } from '@/store/slices/notificationsSlice';
 import TextInput from '../inputs/elements/TextInput';
@@ -23,6 +24,7 @@ import type { FormApiConfigType } from '@/types/commons';
 import { useModal } from '@/contexts/modalContext';
 import Spinner from '../loaders/Spinner';
 import RadioInput from '../inputs/elements/RadioInput';
+import { UseFormAction } from '@/types/hooks/useForm';
 
 interface Props<D> {
   generatedForm: FormType;
@@ -35,6 +37,13 @@ interface Props<D> {
   onPrepopulateForm?: PrepopulateFormFnType;
   shouldRefreshOnSuccess?: boolean;
   closeModalOnSettled?: boolean;
+  customSelectHandlers?: {
+    [inputName: string]: (params: {
+      dispatch: Dispatch<UseFormAction>;
+      input: SelectInputType;
+      value: string;
+    }) => Promise<void>
+  }
 }
 
 const Form = <D extends object>({
@@ -47,7 +56,8 @@ const Form = <D extends object>({
   createNotificationOnSuccess,
   onPrepopulateForm,
   shouldRefreshOnSuccess,
-  closeModalOnSettled
+  closeModalOnSettled,
+  customSelectHandlers
 }: Props<D>) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -67,7 +77,11 @@ const Form = <D extends object>({
     onClearSearchDropdown,
     onSelectDropdownCheck,
     onCloseDropdown
-  } = useForm(generatedForm, onPrepopulateForm);
+  } = useForm({
+    providedForm: generatedForm,
+    prepopulateForm: onPrepopulateForm,
+    customSelectHandlers: customSelectHandlers || null
+  });
 
   const [serverResponse, setServerResponse] = useState<ServerResponseStateType<D>>({
     loading: false,
@@ -95,6 +109,8 @@ const Form = <D extends object>({
           
           if (targetOption) {
             requestBody[input] = targetOption.id.toString();
+          } else {
+            requestBody[form.inputs[input].valueName || input] = form.inputs[input].value;
           }
         } else {
           requestBody[input] = form.inputs[input].value;

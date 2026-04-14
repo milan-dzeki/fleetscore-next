@@ -6,11 +6,15 @@ import {
   useCallback,
   useEffect,
 } from 'react'
-import type { FormType } from '@/types/forms';
 import reducer from './reducer';
-import { UseFormActionTypes } from '@/types/hooks/useForm';
+import { UseFormActionTypes, type UseFormParamsType } from '@/types/hooks/useForm';
+import { SelectInputType } from '@/types/inputs';
 
-export const useForm = (providedForm: FormType, prepopulateForm?: () => Promise<FormType | { error: string; }> | FormType) => {
+export const useForm = ({
+  providedForm,
+  prepopulateForm,
+  customSelectHandlers = null
+}: UseFormParamsType) => {
   const [state, dispatch] = useReducer(reducer, {
     form: providedForm,
     prepopulateInfo: {
@@ -87,13 +91,21 @@ export const useForm = (providedForm: FormType, prepopulateForm?: () => Promise<
     });
   }, []);
 
-  const onSelect = useCallback((inputName: string, inputValue: string): void => {
+  const onSelect = useCallback(async (inputName: string, inputValue: string): Promise<void> => {
     dispatch({
       type: UseFormActionTypes.ON_SELECT,
       inputName,
       inputValue
     });
-  }, []);
+
+    if (customSelectHandlers && inputName in customSelectHandlers) {
+      await customSelectHandlers[inputName]({
+        dispatch,
+        input: state.form.inputs[inputName] as SelectInputType,
+        value: inputValue
+      });
+    }
+  }, [customSelectHandlers, state.form.inputs]);
 
   const onSelectDropdownCheck = useCallback((event: ChangeEvent<HTMLInputElement>, inputName: string) => {
     const { id } = event.target;

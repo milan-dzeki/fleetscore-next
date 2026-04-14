@@ -1,4 +1,18 @@
+import { Dispatch } from 'react';
 import type { FormType } from '../forms';
+import { SelectInputOptionType, SelectInputType } from '../inputs';
+
+export interface UseFormParamsType {
+  providedForm: FormType;
+  prepopulateForm?: () => Promise<FormType | { error: string; }> | FormType;
+  customSelectHandlers?: {
+    [inputName: string]: (params: {
+      dispatch: Dispatch<UseFormAction>;
+      input: SelectInputType;
+      value: string;
+    }) => Promise<void>
+  } | null;
+}
 
 export interface FormStateType {
   form: FormType;
@@ -23,7 +37,8 @@ export const UseFormActionTypes = {
   ON_SELECT_DROPDOWN_CHECK: 'ON_SELECT_DROPDOWN_CHECK',
   ON_SEARCH_DROPDOWN: 'ON_SEARCH_DROPDOWN',
   ON_CLEAR_SEARCH_DROPDOWN: 'ON_CLEAR_SEARCH_DROPDOWN',
-  ON_CLOSE_DROPDOWN: 'ON_CLOSE_DROPDOWN'
+  ON_CLOSE_DROPDOWN: 'ON_CLOSE_DROPDOWN',
+  ON_POPULATE_SELECT_DATA: 'ON_POPULATE_SELECT_DATA'
 } as const;
 
 interface OnSetFormStartAction {
@@ -99,7 +114,13 @@ interface OnCloseDropdownAction {
   inputName: string;
 }
 
-export type UserFormAction = (
+interface OnPopulateSelectDataAction {
+  type: typeof UseFormActionTypes.ON_POPULATE_SELECT_DATA;
+  inputName: string;
+  selectOptions: SelectInputOptionType[];
+}
+
+export type UseFormAction = (
   OnSetFormStartAction |
   OnSetFormFailedAction |
   OnSetFormSuccessAction |
@@ -113,5 +134,6 @@ export type UserFormAction = (
   OnSelectDropdownCheckAction |
   OnSearchDropdownAction |
   OnClearSearchDropdownAction |
-  OnCloseDropdownAction
+  OnCloseDropdownAction |
+  OnPopulateSelectDataAction
 );

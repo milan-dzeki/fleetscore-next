@@ -44,7 +44,7 @@ class RegattasApi extends BaseApi {
     };
   }
 
-  async update (locale: string, id: string): Promise<BaseApiResponseType<RegattaType>> {
+  async update (id: string): Promise<BaseApiResponseType<RegattaType>> {
     const response = await this.execute<RegattaType>({
       endpoint: `${this.baseUrl}/${id}`,
       method: SERVER_METHODS.PUT,
@@ -64,6 +64,19 @@ class RegattasApi extends BaseApi {
     return {
       ...response,
       redirectUrl: `/${locale}${ROUTE_PATHS.REGATTAS.root}`
+    };
+  }
+
+  async registerToRegatta (regattaId: string) {
+    const response = await this.execute({
+      endpoint: `${this.baseUrl}/${regattaId}/registrations`,
+      method: SERVER_METHODS.POST,
+      revalidateTagOnSuccess: 'regattas'
+    });
+
+    return {
+      ...response,
+      // redirectUrl: `/${locale}${ROUTE_PATHS.REGATTAS.root}`
     };
   }
 }

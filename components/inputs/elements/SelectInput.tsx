@@ -40,6 +40,7 @@ const SelectInput: FC<Props> = ({
   },
   onFocus,
   onUnfocus,
+  onChange,
   onSelect,
   onClear,
   onSearchDropdown,
@@ -72,11 +73,12 @@ const SelectInput: FC<Props> = ({
       <InputElement
         ref={ref}
         attributes={attributes}
-        readOnly
+        readOnly={!!searchTerm}
         value={value}
         focused={focused || dropdownOpen}
         touched={touched}
         valid={valid}
+        onChange={searchTerm === undefined ? onChange : () => {}}
         onFocus={onFocus}
         onUnfocus={onUnfocus}
       />
@@ -86,12 +88,14 @@ const SelectInput: FC<Props> = ({
       {dropdownOpen && (
         <div className={classes.inputDropdown}>
           <div className={classes.inputDropdownContent}>
-            <SearchDropdownInput
-              value={searchTerm}
-              parentInputName={attributes.name}
-              onChange={onSearchDropdown}
-              onClear={onClearSearchDropdown}
-            />
+            {searchTerm !== undefined && (
+              <SearchDropdownInput
+                value={searchTerm}
+                parentInputName={attributes.name}
+                onChange={onSearchDropdown}
+                onClear={onClearSearchDropdown}
+              />
+            )}
             {searchedOptions.map((option) => (
               <button
                 key={option.id}

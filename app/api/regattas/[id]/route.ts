@@ -4,8 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function PUT (req: NextRequest, { params }: { params: { id: string } }) {
   const requestBody = await req.json();
-  
-  const locale = req.cookies.get('i18next')?.value || 'en';
+
   const accessToken = req.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 
   const regattasApi = new RegattasApi({ requestBody });
@@ -16,7 +15,7 @@ export async function PUT (req: NextRequest, { params }: { params: { id: string 
         'Authorization': `Bearer ${accessToken}`
       }
     })
-    .update(locale, params.id);
+    .update(params.id);
 
   return NextResponse.json(response, { status: response.statusCode });
 }
