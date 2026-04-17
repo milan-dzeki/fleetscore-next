@@ -12,6 +12,7 @@ export const MODAL_TYPES = {
 interface ModalType {
   title: string;
   confirmActionText?: string;
+  shouldRefreshOnSuccess?: boolean;
 }
 
 interface ModalConfirmType extends ModalType {

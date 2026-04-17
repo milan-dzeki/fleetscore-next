@@ -101,10 +101,10 @@ const Modal = ({ locale }: Props) => {
                   apiConfig={modalState.formApiConfig}
                   onPrepopulateForm={modalState.onPrepopulateForm}
                   submitText={modalState.confirmActionText || 'ok'}
-                  shouldRefreshOnSuccess
+                  shouldRefreshOnSuccess={modalState.shouldRefreshOnSuccess}
                   createNotificationOnSuccess
                   closeModalOnSettled
-                  customSelectHandlers={modalState.customSelectHandlers || null}
+                  customSelectHandlers={modalState.customSelectHandlers}
                 />
               </div>
             )
