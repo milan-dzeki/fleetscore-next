@@ -1,0 +1,74 @@
+@use '../../utils/variables' as *;
+
+.table {
+  margin-top: 7rem;
+  border: 1px solid $medium-grey;
+  border-bottom: none;
+  max-width: 100%;
+  overflow: auto;
+
+  .tableHeaderActions,
+  .tableItemActions {
+    display: inline-block;
+    height: 100%;
+    flex: 1 0 5rem;
+    border-bottom: 1px solid $medium-grey;
+  }
+
+  .tableHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 2rem;
+
+    .tableHeaderItem {
+      display: inline-block;
+      flex: 1 0 5rem;
+      min-width: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      border-bottom: 1px solid $medium-grey;
+
+      &:not(:last-child) {
+        border-right: 1px solid $medium-grey;
+      }
+
+      .tableHeaderItemText {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .tableBody {
+    .tableBodyRow {
+      display: flex;
+      height: 2rem;
+
+      .tableBodyItem {
+        display: inline-block;
+        flex: 1 0 5rem;
+        min-width: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+        border-bottom: 1px solid $medium-grey;
+
+        &:not(:last-child) {
+          border-right: 1px solid $medium-grey;
+        }
+
+        .tableBodyItemText {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}

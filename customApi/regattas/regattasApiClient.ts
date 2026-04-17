@@ -22,6 +22,13 @@ export const getRegattaById = async (id: string) => {
   return response;
 };
 
+export const getRegattaRegistrations = async (id: string) => {
+  const regattasApi = new RegattasApi({});
+  const response = await regattasApi.getRegistrations(id);
+
+  return response;
+};
+
 export const getCreateRegattaForm = async (t: TranslationFunctionType): Promise<FormType | { error: string }> => {
   const [organisations, sailingClasses] = await Promise.all([
     getOrganisations(),

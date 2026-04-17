@@ -17,6 +17,7 @@ import classes from '@/styles/components/regattas/regattaRegistrations.module.sc
 import { FormType } from '@/types/forms';
 import { Dispatch } from 'react';
 import { UseFormAction, UseFormActionTypes } from '@/types/hooks/useForm';
+import ROUTE_PATHS from '@/configs/routePaths';
 
 interface Props {
   locale: string;
@@ -125,7 +126,7 @@ const RegattaRegistrations = ({
     <section className={classes.registrations}>
       <IconButton text={translations.register} Icon={<PlusCircleIcon />} onClick={onOpenRegisterForm} />
       <RegularLink
-        href='/'
+        href={`/${locale}${ROUTE_PATHS.REGATTAS.root}/${regattaId}/registrations`}
         text={translations.seeRegistrations}
         IconRight={<ArrowLinkRightIcon color="mainBlue" />}
       />

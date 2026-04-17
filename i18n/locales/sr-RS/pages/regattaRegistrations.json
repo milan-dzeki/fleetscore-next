@@ -1,0 +1,11 @@
+{
+  "title": "Prijave za '{{regattaName}}' regatu",
+  "noRegistrations": "Nema prijava za ovu regate",
+  "name": "Ime",
+  "birthday": "Datum rodjenja",
+  "sailNumber": "Broj jedra",
+  "gender": "Pol",
+  "club": "Klub",
+  "sailingClass": "Klasa",
+  "nation": "Nacija"
+}

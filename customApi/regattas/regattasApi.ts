@@ -2,7 +2,7 @@ import SERVER_METHODS from '@/configs/server/methods';
 import BaseApi from '../baseApi';
 import { ApiParamsType, BaseApiResponseType } from '@/types/customApi/baseApi';
 import ROUTE_PATHS from '@/configs/routePaths';
-import { RegattaType } from '@/types/entities';
+import { RegattaRegistrationType, RegattaType } from '@/types/entities';
 
 class RegattasApi extends BaseApi {
   private baseUrl: string;
@@ -67,11 +67,19 @@ class RegattasApi extends BaseApi {
     };
   }
 
+  async getRegistrations (regattaId: string): Promise<BaseApiResponseType<RegattaRegistrationType[]>> {
+    return await this.execute<RegattaRegistrationType[]>({
+      endpoint: `${this.baseUrl}/${regattaId}/registrations`,
+      method: SERVER_METHODS.GET,
+      entityFetchTag: `regatta-${regattaId}-registrations`
+    });
+  }
+
   async registerToRegatta (regattaId: string) {
     const response = await this.execute({
       endpoint: `${this.baseUrl}/${regattaId}/registrations`,
       method: SERVER_METHODS.POST,
-      revalidateTagOnSuccess: 'regattas'
+      revalidateTagOnSuccess: `regatta-${regattaId}-registrations`
     });
 
     return {

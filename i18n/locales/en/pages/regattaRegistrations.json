@@ -1,0 +1,11 @@
+{
+  "title": "Registrations for '{{regattaName}}' regatta",
+  "noRegistrations": "No Registrations found for this regatta",
+  "name": "Name",
+  "birthday": "Birthday",
+  "sailNumber": "Sail Number",
+  "gender": "Gender",
+  "club": "Club",
+  "sailingClass": "Sailing Class",
+  "nation": "Nation"
+}

@@ -62,6 +62,21 @@ export interface RegattaType {
   ownerId: string;
 }
 
+export interface RegattaRegistrationType {
+  id: number;
+  sailorId: number;
+  sailorName: string;
+  email: string;
+  dateOfBirth: string;
+  gender: 'M' | 'F';
+  sailingClubId: number | null;
+  sailingClubName: string;
+  userId: number;
+  sailingClass: { id: number; name: string };
+  sailingNation: SailingNationType;
+  sailNumber: number;
+}
+
 export interface ClubType {
   id: number;
   name: string;

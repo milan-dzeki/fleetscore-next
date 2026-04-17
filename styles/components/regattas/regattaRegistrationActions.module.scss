@@ -1,0 +1,12 @@
+.actions {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 1rem;
+
+  & > * {
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+}

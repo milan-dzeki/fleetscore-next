@@ -18,6 +18,7 @@ export const SAILING_NATIONS_NS = 'pages/sailingNations';
 export const REGATTAS_PAGE_NS = 'pages/regattas';
 export const REGATTA_PAGE_NS = 'pages/regatta';
 export const CREATE_REGATTA_PAGE_NS = 'pages/createRegatta';
+export const REGATTA_REGISTRATIONS_PAGE_NS = 'pages/regattaRegistrations';
 
 export const CLUBS_PAGE_NS = 'pages/clubs';
 export const CLUB_PAGE_NS = 'pages/club';
