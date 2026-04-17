@@ -75,7 +75,7 @@ class RegattasApi extends BaseApi {
     });
   }
 
-  async registerToRegatta (regattaId: string) {
+  async registerToRegatta (regattaId: string, locale: string) {
     const response = await this.execute({
       endpoint: `${this.baseUrl}/${regattaId}/registrations`,
       method: SERVER_METHODS.POST,
@@ -84,8 +84,16 @@ class RegattasApi extends BaseApi {
 
     return {
       ...response,
-      // redirectUrl: `/${locale}${ROUTE_PATHS.REGATTAS.root}`
+      redirectUrl: `/${locale}${ROUTE_PATHS.REGATTAS.root}/${regattaId}/registrations`
     };
+  }
+
+  async editRegattaRegistration (regattaId: string, registrationId: string) {
+    return await this.execute({
+      endpoint: `${this.baseUrl}/${regattaId}/registrations/${registrationId}`,
+      method: SERVER_METHODS.PUT,
+      revalidateTagOnSuccess: `regatta-${regattaId}-registrations`
+    });
   }
 }
 

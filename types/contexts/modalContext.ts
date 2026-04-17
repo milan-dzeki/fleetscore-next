@@ -25,7 +25,7 @@ interface ModalFormType extends ModalType {
   form: FormType;
   formApiConfig: FormApiConfigType;
   onPrepopulateForm?: () => Promise<FormType | { error: string; }> | FormType;
-  customSelectHandlers: {
+  customSelectHandlers?: {
     [inputName: string]: (params: {
       dispatch: Dispatch<UseFormAction>;
       input: SelectInputType;

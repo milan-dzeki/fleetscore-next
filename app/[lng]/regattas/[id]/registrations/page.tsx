@@ -48,7 +48,13 @@ const RegattaRegistrationsPage = async ({
         {
           registrations.data.length === 0
             ? <p>{t('noRegistrations')}</p>
-            : <RegattaRegistrationsTable registrations={registrations.data} translations={tableTranslations} />
+            : <RegattaRegistrationsTable
+                locale={lng}
+                regattaId={regatta.data.id}
+                regattaSailingClasses={regatta.data.sailingClasses}
+                registrations={registrations.data}
+                translations={tableTranslations}
+              />
         }
       </Container>
     </>

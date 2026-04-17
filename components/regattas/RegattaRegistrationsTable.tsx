@@ -1,9 +1,12 @@
-import type { RegattaRegistrationType } from '@/types/entities';
+import type { RegattaRegistrationType, RegattaType } from '@/types/entities';
 import classes from '@/styles/components/regattas/regattaRegistrationsTable.module.scss';
 import { getProfile } from '@/customApi/auth/authUtils';
 import RegattaRegistrationActions from './RegattaRegistrationActions';
 
 interface Props {
+  locale: string;
+  regattaId: number;
+  regattaSailingClasses: RegattaType['sailingClasses'];
   registrations: RegattaRegistrationType[];
   translations: {
     header: {
@@ -18,7 +21,7 @@ interface Props {
   }
 }
 
-const RegattaRegistrationsTable = async ({ registrations, translations }: Props) => {
+const RegattaRegistrationsTable = async ({ locale, regattaId, regattaSailingClasses, registrations, translations }: Props) => {
   const profile = await getProfile();
   return (
     <div className={classes.table}>
@@ -69,7 +72,15 @@ const RegattaRegistrationsTable = async ({ registrations, translations }: Props)
               </span>
             </span>
             <div className={classes.tableItemActions}>
-              {profile.success && profile.data.userId === reg.userId && <RegattaRegistrationActions />}
+              {profile.success && profile.data.userId === reg.userId && (
+                <RegattaRegistrationActions
+                  locale={locale}
+                  regattaId={regattaId}
+                  registration={reg}
+                  regattaSailingClasses={regattaSailingClasses}
+                />
+                )
+              }
             </div>
           </div>
         ))}

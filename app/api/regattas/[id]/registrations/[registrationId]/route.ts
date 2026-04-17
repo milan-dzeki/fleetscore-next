@@ -2,9 +2,8 @@ import COOKIE_NAMES from '@/configs/server/auth/cookieNames';
 import RegattasApi from '@/customApi/regattas/regattasApi';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST (req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT (req: NextRequest, { params }: { params: { id: string; registrationId: string } }) {
   const requestBody = await req.json();
-  const locale = req.cookies.get('i18next')?.value || 'en';
   const accessToken = req.cookies.get(COOKIE_NAMES.ACCESS_TOKEN)?.value;
 
   const regattasApi = new RegattasApi({ requestBody });
@@ -15,7 +14,7 @@ export async function POST (req: NextRequest, { params }: { params: { id: string
         'Authorization': `Bearer ${accessToken}`
       }
     })
-    .registerToRegatta(params.id, locale);
+    .editRegattaRegistration(params.id, params.registrationId);
 
   return NextResponse.json(response, { status: response.statusCode });
 }
