@@ -7,7 +7,7 @@ import ActionsContainer from '../buttons/ActionsContainer';
 import EditIcon from '../icons/EditIcon';
 import DeleteIcon from '../icons/DeleteIcon';
 import { MODAL_TYPES } from '@/types/contexts/modalContext';
-import { ClubType, OrganisationType } from '@/types/entities';
+import { ClubType, OrganisationType, SailingNationType } from '@/types/entities';
 import { API_ENDPOINTS } from '@/configs/server/apiEndpoints';
 import { FormType } from '@/types/forms';
 import { INPUT_TYPES, SelectInputType } from '@/types/inputs';
@@ -43,14 +43,18 @@ const ClubPageActions = ({ locale, club }: Props) => {
 
   const onPrepopulateForm = async (): Promise<FormType | { error: string }> => {
     try {
-      const organisations = await fetch(`${API_ENDPOINTS.ORGANISATIONS.get}`)
+      const [organisations, sailingNations] = await Promise.all([
+        fetch(`${API_ENDPOINTS.ORGANISATIONS.get}`),
+        fetch(`${API_ENDPOINTS.SAILING_NATIONS.get}`)
+      ]);
       
-      if (!organisations.ok) {
+      if (!organisations.ok || !sailingNations.ok) {
         return {
           error: t('getFormDataError')
         };
       }
       const organisationsData = await organisations.json();
+      const sailingNationsData = await sailingNations.json();
       const createClubForm = generateCreateClubForm(t);
 
       const clubFormInputs = { ...createClubForm.inputs };
@@ -78,6 +82,17 @@ const ClubPageActions = ({ locale, club }: Props) => {
 
       (clubFormInputs.organisationId as SelectInputType).options = organisationsForList;
       (clubFormInputs.organisationId as SelectInputType).searchedOptions = organisationsForList;
+
+      const sailingNationsForList = sailingNationsData.data.map((sNation: SailingNationType) => ({
+        id: sNation.id,
+        value: sNation.country
+      }));
+
+      (clubFormInputs.sailingNationId as SelectInputType).options = sailingNationsForList;
+      (clubFormInputs.sailingNationId as SelectInputType).searchedOptions = sailingNationsForList;
+      clubFormInputs.sailingNationId.touched = true;
+      clubFormInputs.sailingNationId.valid = true;
+      clubFormInputs.sailingNationId.value = club.sailingNationCountry || '';
 
       return {
         inputs: clubFormInputs,
