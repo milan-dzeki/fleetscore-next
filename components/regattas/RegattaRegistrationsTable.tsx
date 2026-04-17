@@ -48,7 +48,7 @@ const RegattaRegistrationsTable = async ({ locale, regattaId, regattaSailingClas
             </span>
             <span className={classes.tableBodyItem}>
               <span className={classes.tableBodyItemText}>
-                {reg.sailNumber}
+                {reg.sailingNation.code} {reg.sailNumber}
               </span>
             </span>
             <span className={classes.tableBodyItem}>
