@@ -1,3 +1,31 @@
+@use '../../utils/variables' as *;
+
 .regatta {
   padding: 0 2rem;
+
+  .regattaContent {
+    border-bottom: 1px solid $light-grey;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .regattaRegistration {
+    display: flex;
+    align-items: center;
+  }
+
+  .regattaRegister {
+    display: inline-block;
+    color: $main-blue;
+
+    & > * {
+      color: $main-blue;
+      font-weight: 600;
+    }
+
+    .separator {
+      display: inline-block;
+      margin: 0 0.25rem;
+    }
+  }
 }

@@ -30,5 +30,6 @@
   "sailingClubNameErrorMsg": "Please enter the sailing club name",
   "sailingClassIdPlaceholder": "Select sailing class",
   "sailingClassIdLabel": "Sailing Class",
-  "sailingClassIdErrorMsg": "Please select a sailing class"
+  "sailingClassIdErrorMsg": "Please select a sailing class",
+  "registerForClasses": "Register for class:"
 }

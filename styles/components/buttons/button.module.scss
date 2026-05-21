@@ -32,6 +32,13 @@
     }
   }
 
+  &--noHover {
+    &:hover {
+      background-color: initial;
+      color: initial;
+    }
+  }
+
   &:disabled {
     color: $medium-grey;
     border-color: $medium-grey;

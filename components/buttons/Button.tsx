@@ -12,6 +12,7 @@ interface Props {
   danger?: boolean;
   onClick?: () => void;
   disabled?: boolean;
+  noHoverChanges?: boolean;
 }
 
 const Button = ({
@@ -21,6 +22,7 @@ const Button = ({
   display = 'block',
   danger = false,
   hasBorder = true,
+  noHoverChanges = false,
   onClick = () => { return; }
 }: Props) => {
   const { pending } = useFormStatus();
@@ -33,6 +35,7 @@ const Button = ({
         ${classes[`button--${display}`]}
         ${!hasBorder ? classes['button--borderless'] : ''}
         ${danger ? classes[`button--danger`] : ''}
+        ${noHoverChanges ? classes['button--noHover'] : ''}
       `}
       onClick={onClick}
     >

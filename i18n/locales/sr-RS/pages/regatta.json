@@ -30,5 +30,6 @@
   "sailingClubNameErrorMsg": "Molimo unesite naziv jedriličarskog kluba",
   "sailingClassIdPlaceholder": "Izaberite klasu",
   "sailingClassIdLabel": "Jedriličarska klasa",
-  "sailingClassIdErrorMsg": "Molimo izaberite jedriličarsku klasu"
+  "sailingClassIdErrorMsg": "Molimo izaberite jedriličarsku klasu",
+  "registerForClasses": "Prijavite se za klasu:"
 }

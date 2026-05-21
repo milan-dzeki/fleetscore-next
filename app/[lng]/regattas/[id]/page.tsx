@@ -6,7 +6,6 @@ import PageTitle from '@/components/layout/PageTitle';
 import FormActionMessage from '@/components/forms/FormActionMessage';
 import RegattaFull from '@/components/regattas/RegattaFull';
 import RegattaPageActions from '@/components/regattas/RegattaPageActions';
-import RegattaRegistrations from '@/components/regattas/RegattaRegistrations';
 import RegattaDetails from '@/components/regattas/RegattaDetails';
 
 const SingleRegattaPage = async ({
@@ -40,11 +39,7 @@ const SingleRegattaPage = async ({
     phone: t('phone'),
     throwoutAfter: t('throwoutAfter'),
     throwoutLimit: t('throwoutLimit'),
-  };
-
-  const registrationsTranslations = {
-    seeRegistrations: t('seeRegistrations'),
-    register: t('register')
+    registerForClasses: t('registerForClasses')
   };
 
   const regatta = response.data;
@@ -53,13 +48,7 @@ const SingleRegattaPage = async ({
     <>
       <PageTitle title={regatta.name} />
       <RegattaPageActions locale={lng} regattaOwnerId={regatta.ownerId} regatta={regatta} />
-      <RegattaFull regatta={regatta} translations={translations} />
-      <RegattaRegistrations
-        locale={lng}
-        regattaId={regatta.id}
-        regattaSailingClasses={regatta.sailingClasses}
-        translations={registrationsTranslations}
-      />
+      <RegattaFull locale={lng} regatta={regatta} translations={translations} />
       <RegattaDetails
         lng={lng}
         regattaId={regatta.id.toString()}
