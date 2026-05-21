@@ -17,6 +17,7 @@ interface Props {
   onUnfocus: FocusEventHandler<HTMLInputElement>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   readOnly?: boolean;
+  noClear?: boolean;
 }
 
 const InputElement = forwardRef<HTMLInputElement, Props>(({
@@ -28,7 +29,8 @@ const InputElement = forwardRef<HTMLInputElement, Props>(({
   onFocus,
   onUnfocus,
   onChange,
-  readOnly
+  readOnly,
+  noClear
 }, ref) => {
   const setClassname = useCallback((): string => {
     if (focused) {
@@ -49,11 +51,13 @@ const InputElement = forwardRef<HTMLInputElement, Props>(({
   return (
     <input
       ref={ref}
-      className={`${classes.inputElement} ${setClassname()}`}
+      className={`${classes.inputElement} ${setClassname()} ${noClear ? classes.inputElementNoClear : ''}`}
       type={attributes.type}
       id={attributes.id}
       name={attributes.name}
       placeholder={attributes.placeholder}
+      min={attributes.min}
+      max={attributes.max}
       readOnly={readOnly || false}
       value={value}
       onFocus={onFocus}

@@ -7,13 +7,17 @@ import FormActionMessage from '@/components/forms/FormActionMessage';
 import RegattaFull from '@/components/regattas/RegattaFull';
 import RegattaPageActions from '@/components/regattas/RegattaPageActions';
 import RegattaRegistrations from '@/components/regattas/RegattaRegistrations';
+import RegattaDetails from '@/components/regattas/RegattaDetails';
 
 const SingleRegattaPage = async ({
   params: {
     lng,
     id
-  }
-}: PageWithIdParamsType) => {
+  },
+  searchParams
+}: PageWithIdParamsType & {
+  searchParams?: { tab?: 'registrations' | 'scores' };
+}) => {
   const { t } = await getTranslations(lng, REGATTA_PAGE_NS);
   const response = await getRegattaById(id);
 
@@ -55,6 +59,14 @@ const SingleRegattaPage = async ({
         regattaId={regatta.id}
         regattaSailingClasses={regatta.sailingClasses}
         translations={registrationsTranslations}
+      />
+      <RegattaDetails
+        lng={lng}
+        regattaId={regatta.id.toString()}
+        regattaSailingClasses={regatta.sailingClasses}
+        tab={searchParams?.tab}
+        regattaStartDate={regatta.startDate}
+        regattaEndDate={regatta.endDate}
       />
     </>
   );

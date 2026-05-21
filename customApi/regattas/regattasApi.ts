@@ -2,7 +2,7 @@ import SERVER_METHODS from '@/configs/server/methods';
 import BaseApi from '../baseApi';
 import { ApiParamsType, BaseApiResponseType } from '@/types/customApi/baseApi';
 import ROUTE_PATHS from '@/configs/routePaths';
-import { RegattaRegistrationType, RegattaType } from '@/types/entities';
+import { RegattaRegistrationType, RegattaScoresType, RegattaType } from '@/types/entities';
 
 class RegattasApi extends BaseApi {
   private baseUrl: string;
@@ -94,6 +94,36 @@ class RegattasApi extends BaseApi {
       method: SERVER_METHODS.PUT,
       revalidateTagOnSuccess: `regatta-${regattaId}-registrations`
     });
+  }
+
+  async getScores (regattaId: string): Promise<BaseApiResponseType<RegattaScoresType>> {
+    const response = await this.execute<RegattaScoresType>({
+      endpoint: `${this.baseUrl}/${regattaId}/scores`,
+      method: SERVER_METHODS.GET,
+      entityFetchTag: `regatta-${regattaId}-scores`
+    });
+
+    return response;
+  }
+
+  async createRaceResults (regattaId: string) {
+    const response = await this.execute({
+      endpoint: `${this.baseUrl}/${regattaId}/races`,
+      method: SERVER_METHODS.POST,
+      revalidateTagOnSuccess: `regatta-${regattaId}-scores`
+    });
+
+    return response;
+  }
+
+  async updateRactResults (regattaId: string, raceId: string) {
+    const response = await this.execute({
+      endpoint: `${this.baseUrl}/${regattaId}/races/${raceId}`,
+      method: SERVER_METHODS.PUT,
+      revalidateTagOnSuccess: `regatta-${regattaId}-scores`
+    });
+
+    return response;
   }
 }
 

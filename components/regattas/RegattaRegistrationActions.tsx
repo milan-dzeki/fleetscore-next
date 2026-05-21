@@ -19,7 +19,7 @@ import { UseFormAction, UseFormActionTypes } from "@/types/hooks/useForm";
 interface Props {
   locale: string;
   registration: RegattaRegistrationType;
-  regattaId: number;
+  regattaId: string;
   regattaSailingClasses: RegattaType['sailingClasses'];
 }
 

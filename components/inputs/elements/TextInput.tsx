@@ -21,8 +21,9 @@ interface Props {
   onFocus: FocusEventHandler<HTMLInputElement>;
   onUnfocus: FocusEventHandler<HTMLInputElement>;
   onChange: ChangeEventHandler<HTMLInputElement>;
-  onClear: (inputName: string) => void;
+  onClear?: (inputName: string) => void;
   onPasswordVisibilityToggle?: (inputName: string) => void;
+  noMargins?: boolean;
 }
 
 const TextInput = ({
@@ -39,11 +40,15 @@ const TextInput = ({
   onUnfocus,
   onChange,
   onClear,
-  onPasswordVisibilityToggle
+  onPasswordVisibilityToggle,
+  noMargins = false
 }: Props) => {
   const ref = useRef<HTMLInputElement | null>(null);
 
   const handleClear: MouseEventHandler<HTMLButtonElement> = (event) => {
+    if (!onClear) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     onClear(attributes.name);
@@ -51,7 +56,10 @@ const TextInput = ({
   };
 
   return (
-    <div className={classes.input}>
+    <div className={`
+      ${classes.input}
+      ${noMargins ? classes.inputNoMargins : ''}
+    `}>
       <InputLabel
         visible={!!value.trim() || attributes.type === 'date'}
         htmlFor={attributes.id}
@@ -61,6 +69,7 @@ const TextInput = ({
         ref={ref}
         attributes={attributes}
         value={value}
+        noClear={!onClear}
         focused={focused}
         touched={touched}
         valid={valid}
@@ -78,14 +87,16 @@ const TextInput = ({
             {attributes.type === 'text' ? <CrossedEyeIcon /> : <EyeIcon />}
           </button>
         )}
-        {value.trim() && (
+        {value.trim() && onClear && (
           <XFatIcon className={classes.clearBtn} onClick={handleClear} />
         )}
       </div>
-      <InputErrorMsg
-        visible={!focused && touched && !valid}
-        text={errorMsg}
-      />
+      {errorMsg && (
+        <InputErrorMsg
+          visible={!focused && touched && !valid}
+          text={errorMsg}
+        />
+      )}
     </div>
   );
 }

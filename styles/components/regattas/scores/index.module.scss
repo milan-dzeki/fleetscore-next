@@ -1,0 +1,179 @@
+@use '../../../utils/variables' as *;
+
+.scores {
+  position: relative;
+}
+
+.addRace {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scoresList {
+  .scoresListClass {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid $main-dark;
+  }
+
+  .scoresListClassName {
+    margin-bottom: 1rem;
+  }
+
+  .scoresListTableHeader {
+    display: flex;
+    background-color: $light-grey;
+  }
+
+  .scoresListTableHeaderItem {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  .scoresListTableHeaderItemEditable {
+    display: flex;
+  }
+
+  .scoreStandings {
+    display: flex;
+  }
+
+  .scoreStandingsItem {
+    flex: 1;
+    padding: 1rem;
+
+    .excluded {
+      font-weight: bold;
+    }
+  }
+}
+
+.scoresCancel {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.scoresFormText {
+  margin-bottom: 2rem;
+}
+
+.scoresSave {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.scoresTable {
+  border: 1px solid #ccc;
+}
+
+.scoresHeader {
+  display: flex;
+  font-weight: bold;
+  background-color: $light-grey;
+}
+
+.scoresHeaderGroup {
+  flex: 1;
+  display: flex;
+}
+
+.scoresHeaderItem {
+  flex: 0 0 33.3333%;
+  padding: 1rem 0;
+
+  &:first-child {
+    padding-left: 1rem;
+  }
+
+  &.showOnFirstHigherBreak {
+    display: none;
+  }
+}
+
+.scoresHeaderItemInputs {
+  flex: 1 1 4rem;
+}
+
+.scoresHeaderEmpty {
+  width: 2rem;
+}
+
+.scoresBody {
+  position: relative;
+}
+
+.scoresRow {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  border-bottom: 1px solid #eee;
+  background: white;
+  cursor: grab;
+  user-select: none;
+}
+
+.scoresRow:active {
+  cursor: grabbing;
+}
+
+.scoresRowInputs {
+  flex: 1 1 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoresRowPosition {
+  width: 4rem;
+  padding: 0.25rem 0 0.25rem 0.5rem;
+}
+
+.scoresRowEmpty {
+  height: 100%;
+  width: 2rem;
+  background-color: $main-dark;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // &.scoresRowEmptyInvisible {
+  //   background-color: white;
+  // }
+}
+
+.scoresRowGroup {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.scoresRowItem {
+  flex: 0 0 33.33333%;
+
+  &:first-child {
+    padding-left: 1rem;
+  }
+
+  &.showOnFirstHigherBreak {
+    display: none;
+  }
+}
+
+.dragOverlay {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1000;
+  height: 3rem;
+}
+
+.dragOverlay .scoresRow {
+  background: #f5f5f5;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
+}

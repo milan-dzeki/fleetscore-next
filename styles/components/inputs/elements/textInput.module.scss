@@ -5,6 +5,10 @@
   margin-bottom: 2.5rem;
   position: relative;
 
+  &.inputNoMargins {
+    margin-bottom: 0;
+  }
+
   .inputActions {
     position: absolute;
     top: 0;

@@ -8,6 +8,10 @@
   height: 2.25rem;
   padding: 0.2rem 4rem 0.2rem 0.5rem;
 
+  &.inputElementNoClear {
+    padding-right: 0;
+  }
+
   &:read-only {
     caret-color: transparent;
   }

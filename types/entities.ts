@@ -77,6 +77,44 @@ export interface RegattaRegistrationType {
   sailNumber: number;
 }
 
+export interface RegattaScoresPerClassType {
+  regattaId: number;
+  sailingClassId: number;
+  sailingClassName: string;
+  throwoutAfter: number;
+  throwoutLimit: number;
+  appliedThrowouts: number;
+  races: {
+    raceId: number;
+    raceDate: string;
+    raceNumber: number;
+  }[];
+  standings: {
+    rank: number;
+    registrationId: number;
+    sailorName: string;
+    sailNumber: number;
+    nationCode: string;
+    sailingClubName: string;
+    yearOfBirth: string;
+    netPoints: number;
+    totalPoints: number;
+    raceResults: {
+      raceId: number;
+      raceNumber: number;
+      position: number;
+      circumstance?: string;
+      points: number;
+      excluded: boolean;
+    }[];
+  }[];
+}
+
+export interface RegattaScoresType {
+  regattaId: number;
+  classes: RegattaScoresPerClassType[];
+}
+
 export interface ClubType {
   id: number;
   name: string;

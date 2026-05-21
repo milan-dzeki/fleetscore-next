@@ -5,6 +5,10 @@
   margin-bottom: 2.5rem;
   position: relative;
 
+  &.inputNoMargins {
+    margin-bottom: 0;
+  }
+
   .clearBtn {
     position: absolute;
     top: 0.3rem;
@@ -20,7 +24,15 @@
     max-height: 10rem;
     overflow-y: auto;
     overflow-x: hidden;
-    position: relative;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+
+    &.inputDropdownTop {
+      bottom: 100%;
+      margin-bottom: -2px;
+    }
 
     .inputDropdownItem {
       padding: 0.25rem 0.5rem;

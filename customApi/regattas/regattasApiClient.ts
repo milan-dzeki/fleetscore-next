@@ -70,3 +70,10 @@ export const getCreateRegattaForm = async (t: TranslationFunctionType): Promise<
 
   return formWithAllData;
 };
+
+export const getRegattaScores = async (id: string) => {
+  const regattasApi = new RegattasApi({});
+  const response = await regattasApi.getScores(id);
+
+  return response;
+};

@@ -5,7 +5,7 @@ import RegattaRegistrationActions from './RegattaRegistrationActions';
 
 interface Props {
   locale: string;
-  regattaId: number;
+  regattaId: string;
   regattaSailingClasses: RegattaType['sailingClasses'];
   registrations: RegattaRegistrationType[];
   translations: {

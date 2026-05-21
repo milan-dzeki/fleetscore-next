@@ -10,6 +10,8 @@ export interface InputAttributesType {
   id: string;
   name: string;
   placeholder: string;
+  min?: string;
+  max?: string;
 }
 
 export interface InputValidationType {
